@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Questionnaire</title>
+    <!-- Import Chart.js for the results chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Import Poppins font for styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Basic Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f0f4f9; 
+            color: #333;
+            line-height: 1.6;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto; 
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+        }
+        
+        h1 { 
+            margin-bottom: 30px; 
+            font-size: 2rem; 
+            font-weight: 700; 
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        /* --- Question Styles (from original file) --- */
+        .question-container {
+            margin-bottom: 25px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(37, 117, 252, 0.3);
+            flex-shrink: 0;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 1.25rem;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center text */
+            text-align: center; /* Center text */
+            padding: 20px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(248, 249, 250, 0.8);
+            min-height: 80px; /* Ensure options have same height */
+        }
+        
+        .option:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-color: #a0b4c8;
+        }
+        
+        .option.selected {
+            background-color: #e3f2fd;
+            border-color: #2575fc;
+            box-shadow: 0 8px 25px rgba(37, 117, 252, 0.2);
+            transform: translateY(-4px);
+            color: #2575fc; /* Change text color when selected */
+            font-weight: 600; /* Make text bold when selected */
+        }
+        
+        .option input {
+            display: none; /* Hide the radio button */
+        }
+        
+        /* --- Navigation Styles (from original file) --- */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 28px;
+            background: linear-gradient(145deg, #5a29e4, #3a68d8);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+        
+        button:hover {
+            background: linear-gradient(145deg, #6b3ef0, #4c7ce0);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 
+                        0 3px 6px rgba(0, 0, 0, 0.08),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        }
+
+        button:active {
+            transform: translateY(1px);
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 
+                        inset 0 2px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            color: #7f8c8d;
+            text-shadow: none;
+        }
+
+        /* --- Results Page Styles --- */
+        #resultsPage {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .restart-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* --- Mobile Styles --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+            .container {
+                border-radius: 0;
+                padding: 20px;
+                min-height: 100vh;
+            }
+            .options-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .navigation { 
+                flex-direction: column-reverse; /* Stack buttons, with Next/Finish on top */
+                gap: 15px; 
+            }
+            .navigation button {
+                width: 100%; /* Make buttons full width */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container" id="mainContainer">
+        
+        <div id="quizSection">
+            <h1>Personality Questionnaire</h1>
+            <div id="questionnaire">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+            
+            <div class="navigation" id="mainNavigation">
+                <button id="prevBtn">Previous</button>
+                <button id="nextBtn">Next</button>
+                <button id="finishBtn" style="display: none;">Show Results</button>
+            </div>
+        </div>
+
+        <div id="resultsPage">
+            <h1>Your Results</h1>
+            <div class="chart-container">
+                <canvas id="resultsChart"></canvas>
+            </div>
+            <div class="restart-button-container">
+                 <button id="restartBtn">Take Again</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Data ---
+        // Questions parsed from the "questions in order coretto.docx" file
+        const questions = [
+            { type: "S/N", question: "Are you", option1: "observant of your surroundings", option2: "introspective and thinking" },
+            { type: "E/I", question: "Waiting for the train, do you?", option1: "chat to others", option2: "stay silent" },
+            { type: "T/F", question: "When dealing with people are you?", option1: "Direct", option2: "gentle" },
+            { type: "J/P", question: "Does workplace clutter?", option1: "stress you", option2: "are you indifferent" },
+            { type: "T/F", question: "Which is easier for you to give?", option1: "critical/direct feedback", option2: "avoid the vital details" },
+            { type: "S/N", question: "Do you?", option1: "Keep to the tried and trusted", option2: "speculate about possibilities" },
+            { type: "J/P", question: "Do you?", option1: "decide instantaneously", option2: "linger over decision making" },
+            { type: "S/N", question: "Are you?", option1: "factual", option2: "imaginative" },
+            { type: "E/I", question: "When the phone rings do you?", option1: "rush to it", option2: "leave others get it" },
+            { type: "T/F", question: "Do you place importance on?", option1: "hard data", option2: "opinion" },
+            { type: "J/P", question: "Do you prefer agreements to?", option1: "be written up and signed", option2: "agreed on word and a handshake" },
+            { type: "T/F", question: "When evaluating others are you?", option1: "impersonal and objective", option2: "subjective and personal" },
+            { type: "S/N", question: "Are you more interested in?", option1: "what is real", option2: "what is possible" },
+            { type: "J/P", question: "Are you more at ease?", option1: "When matters are complete", option2: "with work in progress" },
+            { type: "S/N", question: "Are you always", option1: "Up to date with the news", option2: "some what out of touch" },
+            { type: "E/I", question: "When socialising do you?", option1: "speak with many people", option2: "a few friends" },
+            { type: "T/F", question: "When you are communicating with others do you?", option1: "talk directly", option2: "talk diplomatically" },
+            { type: "J/P", question: "Do you prefer?", option1: "a detailed outline of work done", option2: "a list of completed tasks" },
+            { type: "T/F", question: "Do you prefer?", option1: "A rational consistent approach", option2: "harmonious personal approach" },
+            { type: "S/N", question: "Do you like authors who?", option1: "write hard facts", option2: "use metaphors" },
+            { type: "J/P", question: "Are you more comfortable?", option1: "after a decision", option2: "before a decision" },
+            { type: "S/N", question: "Are visionaries?", option1: "annoying", option2: "fascinating" },
+            { type: "E/I", question: "Does being at a party?", option1: "energise you", option2: "drain you" },
+            { type: "T/F", question: "In an argument/discussion do you?", option1: "act confrontational", option2: "do you seek collaborative solutions" },
+            { type: "J/P", question: "For you is giving feedback?", option1: "easy", option2: "difficult" },
+            { type: "T/F", question: "Which is preferable for you?", option1: "to be just", option2: "to be understanding" },
+            { type: "S/N", question: "‘’Common sense’’ is?", option1: "usually reliable", option2: "occasionally questionable" },
+            { type: "J/P", question: "Do you?", option1: "do one job at a time", option2: "work at many jobs simultaneously" },
+            { type: "S/N", question: "Do you say?", option1: "what is on your mind", option2: "express many opinions" },
+            { type: "E/I", question: "In a group of people do you?", option1: "talk a lot", option2: "listen mostly" },
+            { type: "T/F", question: "Which sums you up best?", option1: "cool headed", option2: "warm hearted" },
+            { type: "J/P", question: "Are you?", option1: "organised", option2: "spontaneous" },
+            { type: "T/F", question: "In work situations do you?", option1: "give orders", option2: "get everyone to find solutions" },
+            { type: "S/N", question: "Do you prefer?", option1: "sensible /factual people", option2: "people who explore options" },
+            { type: "J/P", question: "Do you prefer to?", option1: "work to deadlines", option2: "work whenever" },
+            { type: "S/N", question: "Which do you consider best?", option1: "ability to follow a plan", option2: "adapt and adjust plans" },
+            { type: "E/I", question: "Are you?", option1: "a social person", option2: "a private person" },
+            { type: "T/F", question: "Which are you?", option1: "a logical person", option2: "a feeling person" },
+            { type: "J/P", question: "Do you decide?", option1: "based on analysis", option2: "on a considered hunch" },
+            { type: "T/F", question: "Which is most satisfying for you?", option1: "thorough discussion", option2: "reaching agreement" },
+            { type: "S/N", question: "After a meal do you?", option1: "tidy up immediately", option2: "leave it until later" },
+            { type: "J/P", question: "Does your behaviour be?", option1: "hurried", option2: "laid back" },
+            { type: "S/N", question: "Do you hear what is said as?", option1: "all the story", option2: "most of the story" },
+            { type: "E/I", question: "Do you?", option1: "share your feelings easily", option2: "act reserved" },
+            { type: "T/F", question: "Are you?", option1: "an uncompromising person", option2: "a collaborative person" },
+            { type: "J/P", question: "Do you find it?", option1: "is stressful to change", option2: "easy to reschedule meetings" },
+            { type: "T/F", question: "Are you?", option1: "tough minded", option2: "fair minded" },
+            { type: "S/N", question: "When evaluating a situation do you", option1: "see only what is in front of you", option2: "can you imagine more possibilities" },
+            { type: "J/P", question: "Is your approach?", option1: "ensure everything is arranged", option2: "just let things happen" },
+            { type: "S/N", question: "Do you only trust?", option1: "past experiences", option2: "all possibilities are worth checking" },
+            { type: "E/I", question: "Do you?", option1: "know a little about everything", option2: "know much about a few things" },
+            { type: "T/F", question: "Are you convinced, more often, by?", option1: "hard evidence", option2: "possible outside the box solutions" },
+            { type: "J/P", question: "Is your approach to life?", option1: "structure", option2: "flexible" },
+            { type: "T/F", question: "Which is the greatest asset?", option1: "strength of will", option2: "strength of fair compassion" },
+            { type: "S/N", question: "Do you always feel?", option1: "down to earth", option2: "day dream a little" },
+            { type: "J/P", question: "How do you cope with unexpected events?", option1: "get a good handle on things", option2: "get very stressed" },
+            { type: "S/N", question: "Do you act in?", option1: "Routine way", option2: "whimsical way" },
+            { type: "E/I", question: "Are you?", option1: "a good conversationalist", option2: "a good listener" },
+            { type: "T/F", question: "Are you?", option1: "tough skinned", option2: "sensitive" },
+            { type: "J/P", question: "Do you tend to?", option1: "rely on old ways of doing", option2: "be on the look out for new ways" },
+            { type: "T/F", question: "Do you prefer to?", option1: "operate the production machine", option2: "manage the team of people" },
+            { type: "S/N", question: "Are you more?", option1: "practical", option2: "ingenious" },
+            { type: "J/P", question: "Are you?", option1: "more punctual", option2: "leisurely /nonchalant" },
+            { type: "S/N", question: "Do you approach work in?", option1: "an organised and principaled way", option2: "in an innovative and flexible way" },
+            { type: "E/I", question: "Are you?", option1: "social and outgoing", option2: "reserved and quite" },
+            { type: "T/F", question: "Do you most trust?", option1: "your experience", option2: "your hunches" },
+            { type: "J/P", question: "Do you", option1: "are always on the go", option2: "relax, easy going" },
+            { type: "T/F", question: "Which is the greatest error?", option1: "being too passionate", option2: "being too objective" },
+            { type: "S/N", question: "Do you tend to be more?", option1: "More deliberate", option2: "more spontaneous" },
+            { type: "J/P", question: "In evaluating others what influences you most?", option1: "laws", option2: "circumstances" },
+            { type: "S/N", question: "Which do you prefer in stories/film?", option1: "action", option2: "fantasy" },
+            { type: "E/I", question: "In your sports club do you?", option1: "promote activities", option2: "do you do the administration" },
+            { type: "T/F", question: "Which is more difficult for you to?", option1: "to identify with others", option2: "to utilise others" },
+            { type: "J/P", question: "Are you?", option1: "a deadlines person", option2: "a just whenever person" },
+            { type: "T/F", question: "Which is most vital?", option1: "following the to do list", option2: "teamwork" },
+            { type: "S/N", question: "Are you?", option1: "easy to talk to/approach", option2: "shy and reserved" },
+            { type: "J/P", question: "When do you plan your annual holidays?", option1: "months before", option2: "weeks before" },
+            { type: "S/N", question: "Are you attracted to?", option1: "the fundamentals", option2: "the promise" },
+            { type: "T/F", question: "For you which is more important?", option1: "follow the rules", option2: "everyone take full responsibility" },
+            { type: "J/P", question: "Do you use?", option1: "written work schedules", option2: "rely on my memory" }
+        ];
+
+        // --- State ---
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let resultsChartInstance = null;
+        let isAdvancing = false; // Add this lock variable
+
+        // --- DOM Elements ---
+        const quizSection = document.getElementById('quizSection');
+        const questionnaireEl = document.getElementById('questionnaire');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        const resultsPage = document.getElementById('resultsPage');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // --- Functions ---
+
+        /**
+         * Renders the question at the current index.
+         */
+        function showQuestion() {
+            const q = questions[currentQuestionIndex];
+            // FIX: Trim whitespace from letters in case of copy-paste errors
+            const [letter1_raw, letter2_raw] = q.type.split('/'); 
+            const letter1 = letter1_raw.trim();
+            const letter2 = letter2_raw.trim();
+
+            questionnaireEl.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">${currentQuestionIndex + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-container">
+                        <div class="option" data-value="${letter1}">
+                            <label>${q.option1}</label>
+                        </div>
+                        <div class="option" data-value="${letter2}">
+                            <label>${q.option2}</label>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add click listeners to the new options
+            document.querySelectorAll('.option').forEach(optionEl => {
+                optionEl.addEventListener('click', () => handleOptionClick(optionEl));
+            });
+
+            // Re-select the previous answer if it exists
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            if (previousAnswer) {
+                const selectedOption = questionnaireEl.querySelector(`.option[data-value="${previousAnswer}"]`);
+                if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+            }
+            
+            updateNavigation();
+        }
+
+        /**
+         * Handles clicking on an answer option.
+         * @param {HTMLElement} selectedOptionEl - The option element that was clicked.
+         */
+        function handleOptionClick(selectedOptionEl) {
+            // If we are already transitioning, ignore this click
+            if (isAdvancing) return;
+            isAdvancing = true; // Lock controls
+
+            // Store the answer (e.g., 'S', 'N', 'E', 'I')
+            userAnswers[currentQuestionIndex] = selectedOptionEl.dataset.value;
+
+            // Update visual selection
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            selectedOptionEl.classList.add('selected');
+
+            // Automatically move to the next question
+            setTimeout(() => {
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex++;
+                    showQuestion();
+                } else {
+                    // This was the last question
+                    updateNavigation();
+                }
+                isAdvancing = false; // Unlock controls after transition
+            }, 300); // 300ms delay for user to see selection
+        }
+
+        /**
+         * Updates the visibility and state of navigation buttons.
+         */
+        function updateNavigation() {
+            // Disable 'Previous' on the first question
+            prevBtn.disabled = currentQuestionIndex === 0;
+
+            // Check if the current question has been answered
+            const isAnswered = userAnswers[currentQuestionIndex] !== null;
+
+            if (currentQuestionIndex === questions.length - 1) {
+                // Last question
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'inline-block';
+                // Enable 'Finish' only if the last question is answered
+                finishBtn.disabled = !isAnswered; 
+            } else {
+                // Not the last question
+                nextBtn.style.display = 'inline-block';
+                finishBtn.style.display = 'none';
+                // Enable 'Next' only if the current question is answered
+                nextBtn.disabled = !isAnswered;
+            }
+        }
+
+        /**
+         * Calculates scores and displays the results chart.
+         */
+        function showResults() {
+            // Hide the quiz, show the results
+            quizSection.style.display = 'none';
+            resultsPage.style.display = 'block';
+
+            // 1. Calculate scores
+            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            userAnswers.forEach(answer => {
+                if (answer) {
+                    scores[answer]++;
+                }
+            });
+
+            // 2. Get chart canvas
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+
+            // 3. Destroy old chart if it exists (for restart)
+            if (resultsChartInstance) {
+                resultsChartInstance.destroy();
+            }
+
+            // 4. Create new bar chart
+            resultsChartInstance = new Chart(ctx, {
+                type: 'bar', // Vertical bar chart
+                data: {
+                    labels: ['E / I', 'S / N', 'T / F', 'J / P'],
+                    datasets: [
+                        {
+                            label: 'E, S, T, J', // This label won't be visible
+                            data: [
+                                scores.E, 
+                                scores.S, 
+                                scores.T, 
+                                scores.J 
+                            ],
+                            backgroundColor: [
+                                'rgba(255, 205, 86, 0.7)', // E - yellow
+                                'rgba(0, 100, 0, 0.7)',     // S - dark green
+                                'rgba(0, 0, 139, 0.7)',     // T - blue navy
+                                'rgba(231, 76, 60, 0.7)',  // J - more red
+                            ],
+                            borderColor: [
+                                'rgba(255, 205, 86, 1)',   // E
+                                'rgba(0, 100, 0, 1)',     // S
+                                'rgba(0, 0, 139, 1)',     // T
+                                'rgba(231, 76, 60, 1)',  // J
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 5,
+                            borderSkipped: false,
+                        },
+                        {
+                            label: 'I, N, F, P', // This label won't be visible
+                            data: [
+                                scores.I, 
+                                scores.N, 
+                                scores.F, 
+                                scores.P
+                            ],
+                            backgroundColor: [
+                                'rgba(135, 206, 235, 0.7)', // I - light blue (less green)
+                                'rgba(142, 68, 173, 0.7)', // N - more purple
+                                'rgba(75, 192, 192, 0.7)',  // F - green
+                                'rgba(255, 159, 64, 0.7)'   // P - orange
+                            ],
+                            borderColor: [
+                                'rgba(135, 206, 235, 1)', // I
+                                'rgba(142, 68, 173, 1)', // N
+                                'rgba(75, 192, 192, 1)',  // F
+                                'rgba(255, 159, 64, 1)'    // P
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 5,
+                            borderSkipped: false,
+                        }
+                    ]
+                },
+                options: {
+                    // indexAxis: 'y', // REMOVED - to make it vertical
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false // Hide the legend
+                        },
+                        title: {
+                            display: true,
+                            text: 'Your Personality Trait Scores',
+                            font: {
+                                family: 'Poppins',
+                                size: 18,
+                                weight: '600'
+                            },
+                            color: '#2c3e50'
+                        },
+                        tooltip: {
+                            // Custom tooltip to show the correct letter
+                            callbacks: {
+                                label: function(context) {
+                                    const datasetIndex = context.datasetIndex;
+                                    const dataIndex = context.dataIndex;
+                                    let label = '';
+                                    if (datasetIndex === 0) {
+                                        label = ['E', 'S', 'T', 'J'][dataIndex];
+                                    } else {
+                                        label = ['I', 'N', 'F', 'P'][dataIndex];
+                                    }
+                                    return `${label}: ${context.parsed.y}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { // This is now the horizontal axis (labels)
+                            grid: {
+                                display: false, // Remove vertical grid lines
+                                borderColor: 'transparent'
+                            },
+                             ticks: {
+                                font: {
+                                    family: 'Poppins',
+                                    size: 14,
+                                    weight: '500'
+                                },
+                                color: '#2c3e50'
+                            }
+                        },
+                        y: { // This is now the vertical axis (score)
+                            beginAtZero: true,
+                            grid: {
+                                color: '#e0e6ed', // Lighter grid lines
+                                borderColor: '#ccc'
+                            },
+                            ticks: {
+                                // Ensure only whole numbers are shown
+                                stepSize: 1,
+                                font: {
+                                    family: 'Poppins'
+                                },
+                                color: '#333'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        /**
+         * Resets the quiz to the beginning.
+         */
+        function restartQuiz() {
+            // Reset state
+            currentQuestionIndex = 0;
+            userAnswers.fill(null);
+            
+            // Show quiz, hide results
+            resultsPage.style.display = 'none';
+            quizSection.style.display = 'block';
+            
+            // Show the first question
+            showQuestion();
+        }
+
+        // --- Event Listeners ---
+        prevBtn.addEventListener('click', () => {
+            if (isAdvancing) return; // Check lock
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (isAdvancing) return; // Check lock
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            }
+        });
+
+        finishBtn.addEventListener('click', () => {
+            // Only show results if the last question is answered
+            if (userAnswers[currentQuestionIndex] !== null) {
+                showResults();
+            }
+        });
+        
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // --- Initial Load ---
+        showQuestion();
+
+    </script>
+</body>
+</html>
+
+
+
+
+
