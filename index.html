@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personality Questionnaire</title>
+    <title>JUNG TYPOLOGY</title>
     
     <!-- Chart.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,6 +18,23 @@
             margin: 0;
             padding: 0;
         }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes modalFadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px) scale(0.95);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
         
         body {
             background-color: #f0f4f9; 
@@ -27,14 +42,12 @@
             line-height: 1.6;
             font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
-            /* Padding/display removed, handled by container */
         }
 
-        /* --- ADDED BACK --- */
         .container {
             max-width: 900px;
             width: 100%;
-            margin: 20px auto; /* Added margin for spacing */ 
+            margin: 20px auto; 
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -53,33 +66,22 @@
             height: 6px;
             background: linear-gradient(90deg, #6a11cb, #2575fc);
         }
-        /* --- END ADDED BACK --- */
 
-        /* --- REMOVED --- */
-        /* @keyframes fadeIn ... */
-        /* @keyframes fadeOut ... */
-        /* .question-container.fade-out ... */
-
-        /* --- MODIFIED --- */
         .question-container {
             margin-bottom: 25px;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            
-            /* Replaced animation with transition */
             opacity: 1;
             transform: translateY(0);
             transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
         }
 
-        /* --- ADDED --- */
         .question-container.transitioning {
             opacity: 0;
             transform: translateY(-10px); /* Fades out by moving up */
         }
-        /* --- END CHANGES --- */
 
         .question-number {
             width: 40px;
@@ -200,50 +202,83 @@
             align-items: center;
             justify-content: center; /* Center vertically */
             text-align: center;
-            
-            /* REMOVED: position: fixed; and other overlay styles */
-            
             padding: 20px 0; /* Add some vertical padding */
-            /* REMOVED: transition, visibility, opacity */
+        }
+
+        /* --- Feature List Styles --- */
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Increased gap */
+            margin: 30px 0;
+            width: 100%;
+            max-width: 600px; /* Increased max-width */
+            align-items: flex-start; /* Align items to the left of the container */
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start; /* Align icon to the top */
+            gap: 20px;
+        }
+
+        .feature-icon {
+            width: 100px; /* Standardized size */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 0; 
+            object-fit: contain; 
+            background-color: transparent; 
+            box-shadow: none; 
+            flex-shrink: 0;
+            margin-top: 4px; /* Align icon with first line of text */
+        }
+
+        .feature-text-content {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 4px; /* Small gap between title and description */
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: 600; /* Bolder */
         }
         
-        /* REMOVED: #coverPage.hidden rule */
-
-        #coverImage {
-            max-width: 450px; /* Constrained max width */
-            width: 80%; /* Responsive width */
-            height: auto;
-            /* border-radius: 10px; */ /* REMOVED per request */
-            margin-bottom: 30px;
-            /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); */ /* REMOVED per request */
+        .feature-description {
+            font-size: 0.95rem; /* Slightly smaller */
+            color: #34495e; 
+            font-weight: 400; /* Regular weight */
+            line-height: 1.5;
         }
 
-        /* Title style from index.html */
         #coverTitle.cover-title {
             font-family: 'Cinzel', serif;
             font-size: 2.5rem;
             font-weight: 400;
-            margin-bottom: 30px; /* Increased space */
+            margin-bottom: 30px; 
             letter-spacing: 1px;
             color: #2c3e50;
         }
         
-        /* Logo style from index.html */
+        /* Logo style from index.html (REMOVED) */
+        /*
         #coverTitle .itt-logo {
             font-family: 'Comfortaa', cursive;
             font-weight: 400; 
-            font-size: 1.0em; /* Relative to the h1 */
+            font-size: 1.0em; 
             vertical-align: middle; 
         }
+        */
 
-        /* Restored original button style from index.html */
         #startBtn {
             font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
             font-weight: 600;
             padding: 15px 40px;
-            border-radius: 50px; /* Original style */
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Original style */
+            border-radius: 50px; 
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); 
             border: none;
             color: white;
             cursor: pointer;
@@ -253,7 +288,7 @@
         }
         
         #startBtn:hover {
-            transform: translateY(-3px) scale(1.05); /* Original style */
+            transform: translateY(-3px) scale(1.05); 
             box-shadow: 0 8px 25px rgba(37, 117, 252, 0.4);
         }
 
@@ -273,28 +308,25 @@
         }
         
         .personality-type-display {
-            font-size: 3.5rem; /* Big text */
-            font-weight: 700; /* Bold */
-            color: #2c3e50; /* Dark blue-grey */
-            text-align: center; /* Centered */
-            margin-top: 25px; /* Space below the chart */
-            letter-spacing: 2px; /* A bit of spacing */
+            font-size: 3.5rem; 
+            font-weight: 700; 
+            color: #2c3e50; 
+            text-align: center; 
+            margin-top: 25px; 
+            letter-spacing: 2px; 
         }
 
         .personality-words-display {
             font-size: 1.25rem;
-            /* color: #34495e; */ /* OLD */
-            color: #2c3e50; /* NEW */
+            color: #2c3e50; 
             text-align: center;
-            /* margin-top: 10px; */ /* OLD */
             letter-spacing: 1px;
-            font-weight: 600; /* NEW */
-            padding: 18px 25px; /* NEW */
-            border-bottom: 1px solid #e0e6ed; /* NEW */
+            font-weight: 600; 
+            padding: 18px 25px; 
+            border-bottom: 1px solid #e0e6ed; 
         }
         
         .personality-words-display strong {
-             /* color: #2c3e50; Make the bold letter a bit darker */
              color: #2575fc; /* Use main accent blue */
              font-size: 1.1em; /* Make it slightly larger */
              font-weight: 700; /* Ensure it's bold */
@@ -306,7 +338,15 @@
             margin-top: 30px;
         }
 
-        /* --- NEW: Style for the toggle button --- */
+        .opposite-type-header {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #34495e; 
+            font-weight: 600;
+            margin-bottom: 20px;
+            margin-top: 10px; 
+        }
+
         .toggle-other-container {
             display: flex;
             justify-content: center;
@@ -333,12 +373,11 @@
             transform: translateY(-2px) scale(1.03);
             box-shadow: 0 0 15px #a881ef, 0 0 30px #a881ef, inset 0 0 5px rgba(255, 255, 255, 0.3);
         }
-        /* --- END NEW --- */
 
-        /* --- ADDED: Letter Definition Grid Styles --- */
+        /* --- Letter Definition Grid Styles --- */
         .letter-definitions-grid {
             display: grid;
-            grid-template-columns: 1fr; /* CHANGED: Was 1fr 1fr */
+            grid-template-columns: 1fr; 
             gap: 20px;
             margin: 30px 0;
             display: none; /* Hidden by default, shown by JS */
@@ -347,11 +386,10 @@
         .letter-card {
             background: #fff;
             border-radius: 10px;
-            /* padding: 20px; */ /* REMOVED padding from main element */
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-top: 5px solid #ccc; /* Default border, color set by JS */
             transition: all 0.3s ease;
-            overflow: hidden; /* ADDED */
+            overflow: hidden; 
         }
 
         .letter-card:hover {
@@ -363,24 +401,23 @@
             font-weight: 700;
             font-size: 1.25rem;
             color: #2c3e50;
-            margin-bottom: 0; /* CHANGED */
-            padding: 20px; /* ADDED */
-            padding-right: 50px; /* ADDED for icon */
-            cursor: pointer; /* ADDED */
-            position: relative; /* ADDED */
-            list-style: none; /* ADDED */
+            margin-bottom: 0; 
+            padding: 20px; 
+            padding-right: 50px; /* for icon */
+            cursor: pointer; 
+            position: relative; 
+            list-style: none; 
         }
         
-        /* ADDED: Hide default marker */
         .letter-card-title::-webkit-details-marker {
             display: none;
         }
 
-        /* ADDED: Custom arrow for letter card */
+        /* Custom arrow for letter card */
         .letter-card-title::after {
             content: '+';
             font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem; /* Smaller than other sections */
+            font-size: 1.5rem; 
             font-weight: 300;
             color: #2575fc;
             position: absolute;
@@ -394,45 +431,28 @@
             content: '−';
             transform: translateY(-50%) rotate(180deg);
         }
-        /* --- END ADDED --- */
 
         .letter-card-desc {
             font-size: 0.95rem;
             line-height: 1.6;
             color: #34495e;
-            padding: 0 20px 20px 20px; /* ADDED padding */
+            padding: 0 20px 20px 20px; 
         }
-        /* --- END ADDED STYLES --- */
 
-
-        /* --- REMOVED: Styles for static Overview title --- */
-        /*
-        .result-section-static {
-            ...
-        }
-        
-        .other-letter-card .letter-card-title {
-            font-weight: 500;
-            color: #555;
-        }
-        /* --- END ADDED STYLES --- */
-
-
-        /* --- ADDED: Result Details Section Styles --- */
+        /* --- Result Details Section Styles (Empty) --- */
         .results-details {
             margin-top: 40px;
             padding-top: 30px;
-            border-top: 1px solid #e0e6ed;
+            border-top: 5px solid #000; 
         }
 
-        /* --- MODIFIED: For <details> accordion --- */
         .result-section {
-            margin-bottom: 15px; /* Switched to details */
+            margin-bottom: 15px; 
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border: 1px solid #e0e6ed;
-            overflow: hidden; /* For clean radius */
+            overflow: hidden; 
         }
 
         .result-section[open] {
@@ -440,20 +460,20 @@
         }
 
         .result-section-title {
-            font-size: 1.25rem; /* Made slightly smaller */
+            font-size: 1.25rem; 
             font-weight: 600;
             color: #2c3e50;
-            margin-bottom: 0; /* Handled by padding */
+            margin-bottom: 0; 
             padding: 18px 25px;
-            border-bottom: none; /* Removed border */
-            display: block; /* Make summary full width */
+            border-bottom: none; 
+            display: block; 
             cursor: pointer;
             position: relative;
             list-style: none; /* Remove default marker */
         }
 
         .result-section-title::-webkit-details-marker {
-            display: none; /* Hide for Chrome/Safari */
+            display: none; 
         }
 
         /* Custom Accordion Arrow */
@@ -479,8 +499,7 @@
             font-size: 1.05rem;
             line-height: 1.7;
             color: #34495e;
-            /* padding: 0 25px 25px 25px; */ /* OLD */
-            padding: 25px; /* NEW */
+            padding: 25px; 
         }
 
         /* Style for the main overview paragraph */
@@ -494,7 +513,184 @@
             color: #7f8c8d;
             font-style: italic;
         }
-        /* --- END ADDED STYLES --- */
+
+        /* --- NEW: Profile Grid Styles --- */
+        .profile-grid-container {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e6ed;
+        }
+
+        .profile-grid-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #34495e; 
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            /* overflow: hidden; */ /* --- FIX: Removed to prevent highlight clipping --- */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .profile-cell {
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease; /* Added border */
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        /* Remove extra borders */
+        .profile-cell:nth-child(4n) {
+            border-right: none;
+        }
+        .profile-cell:nth-child(n+13) { /* Last row */
+            border-bottom: none;
+        }
+
+        .profile-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        /* --- MODIFIED: New Highlight Style --- */
+        .profile-cell.highlight {
+            /* Use a distinct background color for the new highlight */
+            background-color: #e3f2fd; /* Light blue (from quiz option selected) */
+            border: 2px solid #2575fc;
+            /* Remove old transform and shadow */
+            transform: none; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Keep a subtle shadow */
+            z-index: 11; 
+        }
+        
+        /* Ensure text is readable on new highlight */
+        .profile-cell.highlight .profile-cell-type,
+        .profile-cell.highlight .profile-cell-title {
+            color: #2c3e50; 
+        }
+
+        /* Prevent hover effect on the already-highlighted cell */
+        .profile-cell.highlight:hover {
+             transform: none;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        /* --- END MODIFIED --- */
+
+        .profile-cell-type {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 8px;
+        }
+        
+        .profile-cell-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        /* Colors based on user image */
+        .cell-color-a {
+            background-color: #f7ead0; /* Lighter tan/orange */
+            color: #2c3e50;
+        }
+        .cell-color-b {
+            background-color: #2c3e50; /* Dark blue/grey */
+            color: #f7ead0;
+        }
+        /* --- END NEW: Profile Grid Styles --- */
+
+
+        /* --- NEW: Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #aaa;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0; /* Reset button padding */
+            box-shadow: none; /* Reset button shadow */
+            font-weight: 300;
+        }
+        .modal-close:hover {
+            color: #333;
+            transform: none; /* Reset button hover */
+            box-shadow: none;
+        }
+
+        .modal-profile-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .modal-profile-subtitle {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #555;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e6ed;
+            padding-bottom: 15px;
+        }
+
+        .modal-profile-description {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #34495e;
+            font-style: italic;
+        }
+        /* --- END NEW: Modal Styles --- */
+
         
         /* --- Mobile Optimizations --- */
         @media (max-width: 768px) {
@@ -532,30 +728,31 @@
                 gap: 15px;
             }
 
-            /* --- ADDED: Mobile grid --- */
-            .letter-definitions-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-            .question-text {
-                font-size: 1.1rem;
+            .features-list {
+                align-items: center; /* Center list container on mobile */
+                max-width: 100%;
+                padding: 0 10px;
             }
             
-            .personality-type-display {
-                font-size: 2.5rem; /* A bit smaller on mobile */
-                margin-top: 20px;
+            .feature-item {
+                gap: 15px;
+                width: 100%; /* Make items take full width */
+                max-width: 350px; /* But not too wide */
+                align-items: center; /* Center icon and text block vertically */
             }
-
-            .personality-words-display {
-                font-size: 1rem;
+            
+            .feature-icon {
+                width: 80px; /* Adjusted mobile size */
+                height: auto; /* Maintain aspect ratio */
+                margin-top: 0; /* Reset margin */
             }
-
-            #coverImage {
-                max-width: 95%; /* Make image take more width on small screens */
-                margin-bottom: 20px;
+            
+            .feature-title {
+                font-size: 1rem; 
+            }
+            
+            .feature-description {
+                font-size: 0.9rem;
             }
             
             #coverTitle.cover-title {
@@ -565,28 +762,103 @@
                 padding: 12px 30px;
                 font-size: 1rem;
             }
+
+            /* --- NEW: Mobile Profile Grid --- */
+            /* --- MODIFIED: Make container scroll horizontally on mobile --- */
+            .profile-grid-container {
+                overflow-x: auto;
+                padding-bottom: 10px; /* Space for scrollbar */
+            }
+
+            .profile-grid {
+                /* Keep the 4-column layout and force a min-width */
+                min-width: 600px; 
+                /* REMOVED: grid-template-columns: repeat(2, 1fr); */
+            }
+            
+            /* --- REMOVED all 2-column border fix rules --- */
+            /*
+            .profile-cell:nth-child(4n) {
+                border-right: 1px solid #ddd; 
+            }
+            .profile-cell:nth-child(2n) {
+                border-right: none; 
+            }
+            .profile-cell:nth-child(n+13) { 
+                border-bottom: 1px solid #ddd; 
+            }
+            .profile-cell:nth-child(n+15) { 
+                border-bottom: none;
+            }
+            */
+
+            .profile-cell {
+                min-height: 100px;
+                padding: 10px 5px;
+            }
+            .profile-cell-type {
+                font-size: 1.2rem;
+            }
+            .profile-cell-title {
+                font-size: 0.75rem;
+            }
+            /* --- END NEW: Mobile Profile Grid --- */
         }
 
     </style>
 </head>
 <body>
     
-    <!-- MOVED: Cover Page is now INSIDE the container -->
-    <!-- REMOVED: style="display: none;" from container -->
     <div class="container">
         
         <div id="coverPage">
-            <h1 id="coverTitle" class="cover-title"><span class="itt-logo">2 ITT</span> (Innate taste test)</h1>
-            <img id="coverImage" src="2heads.jpg" alt="Two stylized heads communicating with satellite dishes">
+            <h1 id="coverTitle" class="cover-title">JUNG TYPOLOGY</h1>
+            
+            <!-- --- MODIFIED: Feature List --- -->
+            <div class="features-list">
+                
+                <div class="feature-item">
+                    <img src="conflict.png" alt="Improving communications" class="feature-icon" onerror="this.src='https://placehold.co/100x100/6a11cb/ffffff?text=Icon'; this.onerror=null;">
+                    <div class="feature-text-content">
+                        <h4 class="feature-title">Improving Communications</h4>
+                        <p class="feature-description">The test helps build self-esteem and manage conflict by focusing on the positive contributions of each personality type. It gives people a framework for valuing their differences.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <img src="podium.png" alt="Develop individual success" class="feature-icon" onerror="this.src='https://placehold.co/100x100/2575fc/ffffff?text=Icon'; this.onerror=null;">
+                    <div class="feature-text-content">
+                        <h4 class="feature-title">Develop Individual Success</h4>
+                        <p class="feature-description">The test provides practical insight into what motivates and de-motivates an individual. This allows you to map your own personal success and create a plan for improvement.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <img src="light.png" alt="Better self-understanding" class="feature-icon" onerror="this.src='https://placehold.co/100x100/6a11cb/ffffff?text=Icon'; this.onerror=null;">
+                    <div class="feature-text-content">
+                        <h4 class="feature-title">Better Self-Understanding</h4>
+                        <p class="feature-description">The test helps individuals get to know themselves better, which is a source of great satisfaction. It helps you understand what motivates you and discover your unique potential.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <img src="career.png" alt="Career guidance" class="feature-icon" onerror="this.src='https://placehold.co/100x100/2575fc/ffffff?text=Icon'; this.onerror=null;">
+                    <div class="feature-text-content">
+                        <h4 class="feature-title">Career Guidance</h4>
+                        <p class="feature-description">Self-awareness is the key to good career guidance, as personal style affects motivation. The MBTI helps individuals assess which careers or job opportunities are a good fit.</p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- --- END MODIFIED --- -->
+
              <button id="startBtn">Begin the Evaluation</button>
         </div>
 
-        <!-- ADDED: style="display: none;" to hide container initially -->
         <!-- Quiz Section -->
-        <div id="quizSection" style="display: none;"> <!-- Hidden by default, shown after cover -->
-            <h1>Personality Questionnaire</h1>
+        <div id="quizSection" style="display: none;"> 
+            <h1>JUNG TYPOLOGY</h1>
             
-            <!-- --- MODIFIED: Content is now static --- -->
             <div id="questionnaire">
                 <div class="question-container" id="q-container" style="opacity: 0;"> <!-- Start hidden -->
                     <div class="question-number" id="q-number">1</div>
@@ -603,7 +875,6 @@
                     </div>
                 </div>
             </div>
-            <!-- --- END MODIFIED --- -->
             
             <!-- Dev Button -->
             <div class="dev-navigation" style="text-align: right; margin-bottom: 10px; margin-top: 15px;">
@@ -625,19 +896,13 @@
             </div>
             
             <div id="personalityType" class="personality-type-display"></div> 
-            <!-- MOVED: <div id="personalityWords" class="personality-words-display"></div> -->
 
-            <!-- --- ADDED: Static Overview Section (MOVED) --- -->
             <div class="result-section-static">
-                <!-- REMOVED: <h2 class="result-section-title-static">Overview</h2> -->
-                <div id="personalityWords" class="personality-words-display"></div> <!-- MOVED HERE -->
+                <div id="personalityWords" class="personality-words-display"></div> 
                 <p id="desc-overview" class="result-section-content"></p>
             </div>
-            <!-- --- END ADDED --- -->
 
-            <!-- --- ADDED: Letter Definitions Grid --- -->
             <div class="letter-definitions-grid" id="letter-grid">
-                <!-- MODIFIED: Changed from <div> to <details> -->
                 <details class="letter-card" id="letter-card-0">
                     <summary class="letter-card-title" id="letter-title-0"></summary>
                     <p class="letter-card-desc" id="letter-desc-0"></p>
@@ -651,49 +916,21 @@
                     <p class="letter-card-desc" id="letter-desc-2"></p>
                 </details>
                 <details class="letter-card" id="letter-card-3">
-                    <!-- 
-                      FIX: Added a space between class="letter-card-title" and id="letter-title-3"
-                      This was the cause of the bug.
-                    -->
                     <summary class="letter-card-title" id="letter-title-3"></summary>
                     <p class="letter-card-desc" id="letter-desc-3"></p>
                 </details>
-                <!-- --- END MODIFIED --- -->
             </div>
-            <!-- --- END ADDED --- -->
 
-            <!-- --- MODIFIED: Results Details Section (now an accordion) --- -->
             <div class="results-details">
-                <!-- Section 1: Overview -->
-                <!-- MOVED ABOVE LETTER GRID -->
-
-                <!-- Section 2: Partner -->
-                <details class="result-section">
-                    <summary id="title-partner" class="result-section-title">As a Partner</summary>
-                    <p class="result-section-content placeholder">Content coming soon...</p>
-                </details>
-
-                <!-- Section 3: Workplace -->
-                <details class="result-section">
-                    <summary id="title-workplace" class="result-section-title">In the Workplace</summary>
-                    <p class="result-section-content placeholder">Content coming soon...</p>
-                </details>
-
-                <!-- Section 4: Leader -->
-                <details class="result-section">
-                    <summary id="title-leader" class="result-section-title">As a Leader</summary>
-                    <p class="result-section-content placeholder">Content coming soon...</p>
-                </details>
+                <!-- Empty as requested -->
             </div>
-            <!-- --- END MODIFIED --- -->
 
-            <!-- --- NEW: Toggle button for other letters --- -->
             <div class="toggle-other-container">
-                <button id="showOtherBtn" class="other-toggle-btn">Show Opposite Types</button>
+                <button id="showOtherBtn" class="other-toggle-btn">Show Converse Profile</button> 
             </div>
-            <!-- --- END NEW --- -->
 
-            <!-- --- NEW: Grid for other letters (hidden by default) --- -->
+            <h3 id="oppositeTypeHeader" class="opposite-type-header" style="display: none;"></h3>
+
             <div class="letter-definitions-grid other-letter-grid" id="other-letter-grid">
                 <details class="letter-card other-letter-card" id="other-letter-card-0">
                     <summary class="letter-card-title" id="other-letter-title-0"></summary>
@@ -712,7 +949,16 @@
                     <p class="letter-card-desc" id="other-letter-desc-3"></p>
                 </details>
             </div>
+
+            <!-- --- NEW: Profile Grid Section --- -->
+            <div class="profile-grid-container">
+                <h3 class="profile-grid-title">Discover Jung's 16 Profiles</h3>
+                <div id="profileGrid" class="profile-grid">
+                    <!-- This will be populated by JavaScript -->
+                </div>
+            </div>
             <!-- --- END NEW --- -->
+
 
             <div class="restart-button-container">
                  <button id="restartBtn">Take Again</button>
@@ -720,8 +966,20 @@
         </div>
     </div>
 
+    <!-- --- NEW: Profile Modal --- -->
+    <div id="profileModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button id="modalCloseBtn" class="modal-close">&times;</button>
+            <h4 id="modalTitle" class="modal-profile-title"></h4>
+            <p id="modalSubtitle" class="modal-profile-subtitle"></p>
+            <p id="modalDescription" class="modal-profile-description"></p>
+        </div>
+    </div>
+    <!-- --- END NEW --- -->
+
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
 
             // --- Questions Data ---
             const questions = [
@@ -786,7 +1044,7 @@
                 { type: "T/F", text: "Are you?", options: ["tough skinned", "sensitive"] },
                 { type: "J/P", text: "Do you tend to?", options: ["rely on old ways of doing", "be on the look out for new ways"] },
                 { type: "T/F", text: "Do you prefer to?", options: ["operate the production machine", "manage the team of people"] },
-                { type: "S/N", text: "Are you more?", options: ["practical", "ingenious"] }, // <-- THIS WAS THE BUG (type:D)
+                { type: "S/N", text: "Are you more?", options: ["practical", "ingenious"] }, 
                 { type: "J/P", text: "Are you?", options: ["more punctual", "leisurely /nonchalant"] },
                 { type: "S/N", text: "Do you approach work in?", options: ["an organised and principaled way", "in an innovative and flexible way"] },
                 { type: "E/I", text: "Are you?", options: ["social and outgoing", "reserved and quite"] },
@@ -818,7 +1076,6 @@
                 'P': 'Perceiving'
             };
 
-            // --- ADDED: Letter Descriptions ---
             const letterDescriptions = {
                 'E': `The extrovert seeks life in the outer world, drawing energy through engagement and relationships. Yet meaning is not found in activity alone; it emerges when outward action serves a higher purpose, transforming social connection into authentic participation in life.`,
                 'I': `The introvert turns inward, seeking understanding through reflection and solitude. True fulfillment arises not from isolation, but from using inner insight to guide purposeful engagement with the world, allowing self-knowledge to become a tool for meaningful contribution.`,
@@ -830,7 +1087,6 @@
                 'P': `The perceiving type values openness, flexibility, and responsiveness to life’s unfolding. Meaning is not found in freedom alone but in conscious engagement—choosing how to respond, embracing opportunity responsibly, and allowing curiosity to become directed action in service of life’s purpose.`
             };
 
-            // --- ADDED: Personality Descriptions ---
             const personalityDescriptions = {
                 'ISTJ': `Order brings safety. The ISTJ moves through life with steady hands and quiet conviction, upholding what is proven and true. Responsibility is their silent creed. Yet, beneath their reliability, there often lies an unspoken yearning—to be valued not only for their dependability, but for the tenderness they rarely allow the world to see.`,
                 'ISFJ': `The ISFJ gives with quiet devotion, creating sanctuary in a world that seldom pauses. Their strength hides in humility; their love, in service. They tend to others’ needs instinctively, often forgetting their own. Behind their care lies a soul that longs to be cared for with the same gentleness they so effortlessly extend.`,
@@ -849,7 +1105,29 @@
                 'ENFJ': `ENFJs sense emotion like weather, responding with instinctive empathy. They uplift others through warmth and vision. Their gift is connection; their wound, self-neglect. In their quest to inspire, they may lose touch with their own needs. Yet when they remember to include themselves in their compassion, they become healers in motion.`,
                 'ENTJ': `ENTJs lead with purpose and precision, turning ideas into structure and vision into strategy. They see potential where others see limits. Yet their drive can isolate them—control masking vulnerability, ambition hiding tenderness. When they allow softness alongside strength, they reveal not dominance, but deep devotion to creating a world that works.`
             };
-            // --- END ADDED ---
+            
+            // --- NEW: Data for the profile grid ---
+            const profileGridData = [
+                { type: 'ISTJ', title: "Life's Natural Organizers", color: 'a' },
+                { type: 'ISFJ', title: "Committed to Getting the Job Done", color: 'b' },
+                { type: 'INFJ', title: "An Inspiring Leader and Follower", color: 'a' },
+                { type: 'INTJ', title: "Life's Independent Thinkers", color: 'b' },
+
+                { type: 'ISTP', title: "Just Do It", color: 'b' },
+                { type: 'ISFP', title: "Action Speaks Louder Than Words", color: 'a' },
+                { type: 'INFP', title: "Making Life Kinder and Gentler", color: 'b' },
+                { type: 'INTP', title: "Life's Problem Solvers", color: 'a' },
+
+                { type: 'ESTP', title: "Making the Most of the Moment", color: 'a' },
+                { type: 'ESFP', title: "Let's Make Work Fun", color: 'b' },
+                { type: 'ENFP', title: "People Are the Product", color: 'a' },
+                { type: 'ENTP', title: "Progress Is the Product", color: 'b' },
+
+                { type: 'ESTJ', title: "Life's Natural Administrators", color: 'b' },
+                { type: 'ESFJ', title: "Everyone's Trusted Friend", color: 'a' },
+                { type: 'ENFJ', title: "Smooth-Talking Persuaders", color: 'b' },
+                { type: 'ENTJ', title: "Life's Natural Leaders", color: 'a' },
+            ];
 
             // --- App State ---
             let currentQuestionIndex = 0;
@@ -860,9 +1138,7 @@
             // --- DOM Elements ---
             const coverPage = document.getElementById('coverPage');
             const startBtn = document.getElementById('startBtn');
-            const quizContainer = document.querySelector('.container'); // Get container
             const quizSection = document.getElementById('quizSection');
-            const questionnaireEl = document.getElementById('questionnaire');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const finishBtn = document.getElementById('finishBtn');
@@ -871,8 +1147,6 @@
             const randomBtn = document.getElementById('randomBtn'); 
             const personalityTypeEl = document.getElementById('personalityType'); 
             const personalityWordsEl = document.getElementById('personalityWords'); 
-
-            // --- ADDED: Static element references ---
             const qContainer = document.getElementById('q-container');
             const qNumber = document.getElementById('q-number');
             const qText = document.getElementById('q-text');
@@ -880,31 +1154,74 @@
             const qOption1 = document.getElementById('q-option-1');
             const qLabel0 = document.getElementById('q-label-0');
             const qLabel1 = document.getElementById('q-label-1');
-            const qRadio0 = document.getElementById('option0'); // input
-            const qRadio1 = document.getElementById('option1'); // input
-            // --- END ADDED ---
+            const qRadio0 = document.getElementById('option0'); 
+            const qRadio1 = document.getElementById('option1'); 
+
+            // --- NEW: Modal and Grid DOM Elements ---
+            const profileGrid = document.getElementById('profileGrid');
+            const profileModal = document.getElementById('profileModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalSubtitle = document.getElementById('modalSubtitle');
+            const modalDescription = document.getElementById('modalDescription');
 
             // --- Functions ---
 
-            // --- REMOVED: getQuestionHTML function is no longer needed ---
+            // --- NEW: Function to populate the 16-profile grid ---
+            function populateProfileGrid() {
+                if (!profileGrid) return;
+                profileGrid.innerHTML = ''; // Clear existing
+                
+                profileGridData.forEach(profile => {
+                    const cell = document.createElement('div');
+                    cell.className = 'profile-cell ' + (profile.color === 'a' ? 'cell-color-a' : 'cell-color-b');
+                    cell.dataset.type = profile.type;
+                    
+                    cell.innerHTML = `
+                        <div class="profile-cell-type">${profile.type}</div>
+                        <div class="profile-cell-title">${profile.title}</div>
+                    `;
+                    
+                    profileGrid.appendChild(cell);
+                });
+            }
 
-            // --- REWRITTEN: showQuestion to update in-place ---
+            // --- NEW: Functions to show/hide the profile modal ---
+            function showProfileModal(type) {
+                const profileData = profileGridData.find(p => p.type === type);
+                const description = personalityDescriptions[type];
+
+                if (!profileData || !description) {
+                    console.error('Could not find data for type:', type);
+                    return;
+                }
+
+                modalTitle.textContent = type;
+                modalSubtitle.textContent = profileData.title;
+                modalDescription.textContent = description;
+                
+                profileModal.style.display = 'flex';
+            }
+
+            function hideProfileModal() {
+                profileModal.style.display = 'none';
+            }
+            // --- END NEW ---
+
+
             function showQuestion(isInitial = false) {
                 const question = questions[currentQuestionIndex];
                 const [letter1_raw, letter2_raw] = question.type.split('/');
                 const letter1 = letter1_raw.trim();
                 const letter2 = letter2_raw.trim();
 
-                const transitionTime = isInitial ? 0 : 200; // 200ms fade-out time
+                const transitionTime = isInitial ? 0 : 200; 
 
-                // 1. Start fade-out (if not initial)
                 if (!isInitial) {
                     qContainer.classList.add('transitioning');
                 }
 
-                // 2. Wait for fade-out to complete
                 setTimeout(() => {
-                    // 3. Update all the content
                     qNumber.textContent = currentQuestionIndex + 1;
                     qText.textContent = question.text;
                     
@@ -916,13 +1233,11 @@
                     qOption1.dataset.value = letter2;
                     qRadio1.value = letter2;
 
-                    // 4. Reset options
                     qOption0.classList.remove('selected');
                     qOption1.classList.remove('selected');
                     qRadio0.checked = false;
                     qRadio1.checked = false;
 
-                    // 5. Restore previous answer
                     const previousAnswer = userAnswers[currentQuestionIndex];
                     if (previousAnswer) {
                         if (previousAnswer === letter1) {
@@ -934,43 +1249,31 @@
                         }
                     }
 
-                    // 6. Update navigation
                     updateNavigation();
 
-                    // 7. Prepare for fade-in (move to start position)
                     if (!isInitial) {
-                        // Set start transform (invisible)
                         qContainer.style.transform = 'translateY(10px)';
-                        qContainer.style.transition = 'none'; // No transition for this snap
-
-                        // 8. Force browser reflow
+                        qContainer.style.transition = 'none'; 
                         void qContainer.offsetHeight; 
-
-                        // 9. Re-enable transitions and remove class to fade in
                         qContainer.style.transition = 'opacity 0.2s ease-in-out, transform 0.2s ease-in-out';
                         qContainer.style.transform = 'translateY(0)';
-                        qContainer.classList.remove('transitioning'); // Fades in (opacity 0 -> 1)
+                        qContainer.classList.remove('transitioning'); 
                     } else {
-                        // For initial load, just make it visible
                         qContainer.style.opacity = 1; 
                     }
                     
-                    // 10. Release lock
                     isAdvancing = false;
 
                 }, transitionTime);
             }
-            // --- END REWRITTEN ---
 
-            // --- REWRITTEN: handleOptionClick to work with new elements ---
             function handleOptionClick(optionEl) {
                 if (isAdvancing) return; 
-                isAdvancing = true; // Prevent multiple clicks
+                isAdvancing = true; 
 
                 const selectedValue = optionEl.dataset.value;
                 userAnswers[currentQuestionIndex] = selectedValue;
 
-                // Update UI for selection
                 qOption0.classList.remove('selected');
                 qOption1.classList.remove('selected');
                 optionEl.classList.add('selected');
@@ -981,35 +1284,26 @@
                     qRadio1.checked = true;
                 }
 
-                // Advance
                 setTimeout(() => {
                     if (currentQuestionIndex < questions.length - 1) {
                         currentQuestionIndex++;
-                        showQuestion(); // showQuestion will release the lock
+                        showQuestion(); 
                     } else {
-                        // On the last question, just update navigation
                         updateNavigation();
-                        isAdvancing = false; // Release lock
+                        isAdvancing = false; 
                     }
                 }, 200); 
             }
-            // --- END REWRITTEN ---
 
             function updateNavigation() {
                 prevBtn.disabled = currentQuestionIndex === 0;
-                
-                // --- BUG FIX 2: Always hide the 'Next' button per user request ---
                 nextBtn.style.display = 'none'; 
                 
                 if (currentQuestionIndex === questions.length - 1) {
-                    // Only show Finish button on the last question
                     finishBtn.style.display = 'inline-block';
-                    
-                    // Check if all questions are answered to enable/disable Finish
                     const allAnswered = userAnswers.every(answer => answer !== null);
                     finishBtn.disabled = !allAnswered;
                 } else {
-                    // Not the last question, hide Finish button
                     finishBtn.style.display = 'none';
                 }
             }
@@ -1028,79 +1322,106 @@
                 scores.E *= 2;
                 scores.I *= 2;
                 
+                // --- NEW: Define max scores for percentage calculation ---
+                const maxScores = { E: 22, I: 22, S: 23, N: 23, T: 23, F: 23, J: 23, P: 23 };
+
                 const colorMap = {
-                    'E': { bg: 'rgba(68, 179, 225, 0.9)', border: 'rgba(68, 179, 225, 1)' },     // User: #44B3E1
-                    'I': { bg: 'rgba(234, 228, 0, 0.9)', border: 'rgba(234, 228, 0, 1)' },     // User: #EAE400
-                    'S': { bg: 'rgba(255, 153, 0, 0.9)', border: 'rgba(255, 153, 0, 1)' },     // User: #FF9900
-                    'N': { bg: 'rgba(120, 33, 112, 0.9)', border: 'rgba(120, 33, 112, 1)' },     // User: #782170
-                    'T': { bg: 'rgba(33, 92, 152, 0.9)', border: 'rgba(33, 92, 152, 1)' },     // User: #215C98
-                    'F': { bg: 'rgba(78, 167, 46, 0.9)', border: 'rgba(78, 167, 46, 1)' },     // User: #4EA72E
-                    'J': { bg: 'rgba(235, 21, 21, 0.9)', border: 'rgba(235, 21, 21, 1)' },     // User: #EB1515
-                    'P': { bg: 'rgba(153, 102, 51, 0.9)', border: 'rgba(153, 102, 51, 1)' }      // User: #996633
+                    'E': { bg: 'rgba(68, 179, 225, 0.9)', border: 'rgba(68, 179, 225, 1)' },
+                    'I': { bg: 'rgba(234, 228, 0, 0.9)', border: 'rgba(234, 228, 0, 1)' },
+                    'S': { bg: 'rgba(255, 153, 0, 0.9)', border: 'rgba(255, 153, 0, 1)' },
+                    'N': { bg: 'rgba(120, 33, 112, 0.9)', border: 'rgba(120, 33, 112, 1)' },
+                    'T': { bg: 'rgba(33, 92, 152, 0.9)', border: 'rgba(33, 92, 152, 1)' },
+                    'F': { bg: 'rgba(78, 167, 46, 0.9)', border: 'rgba(78, 167, 46, 1)' },
+                    'J': { bg: 'rgba(235, 21, 21, 0.9)', border: 'rgba(235, 21, 21, 1)' },
+                    'P': { bg: 'rgba(153, 102, 51, 0.9)', border: 'rgba(153, 102, 51, 1)' }
                 };
 
                 const finalData = [];
-                const otherLetters = []; // <-- NEW: To store the "losing" letters
-                let realScore, displayScore;
+                const otherLetters = []; 
+                let realScore, maxScore, percentage; // --- MODIFIED ---
 
                 if (scores.E >= scores.I) {
                     realScore = scores.E;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'E', score: displayScore, realScore: realScore });
-                    otherLetters.push('I'); // <-- NEW
+                    maxScore = maxScores.E; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'E', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('I'); 
                 } else {
                     realScore = scores.I;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'I', score: displayScore, realScore: realScore });
-                    otherLetters.push('E'); // <-- NEW
+                    maxScore = maxScores.I; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'I', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('E'); 
                 }
 
                 if (scores.S >= scores.N) {
                     realScore = scores.S;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'S', score: displayScore, realScore: realScore });
-                    otherLetters.push('N'); // <-- NEW
+                    maxScore = maxScores.S; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'S', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('N'); 
                 } else {
                     realScore = scores.N;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'N', score: displayScore, realScore: realScore });
-                    otherLetters.push('S'); // <-- NEW
+                    maxScore = maxScores.N; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'N', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('S'); 
                 }
 
                 if (scores.T >= scores.F) {
                     realScore = scores.T;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'T', score: displayScore, realScore: realScore });
-                    otherLetters.push('F'); // <-- NEW
+                    maxScore = maxScores.T; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'T', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('F'); 
                 } else {
                     realScore = scores.F;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'F', score: displayScore, realScore: realScore });
-                    otherLetters.push('T'); // <-- NEW
+                    maxScore = maxScores.F; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'F', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('T'); 
                 }
 
                 if (scores.J >= scores.P) {
                     realScore = scores.J;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'J', score: displayScore, realScore: realScore });
-                    otherLetters.push('P'); // <-- NEW
+                    maxScore = maxScores.J; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'J', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('P'); 
                 } else {
                     realScore = scores.P;
-                    displayScore = Math.min(realScore, 20); 
-                    finalData.push({ letter: 'P', score: displayScore, realScore: realScore });
-                    otherLetters.push('J'); // <-- NEW
+                    maxScore = maxScores.P; // --- NEW ---
+                    percentage = (realScore / maxScore) * 100; // --- NEW ---
+                    finalData.push({ letter: 'P', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    otherLetters.push('J'); 
                 }
                 
                 const chartLabels = finalData.map(d => d.letter);
-                const chartData = finalData.map(d => d.score); 
+                const chartData = finalData.map(d => d.score); // This is now percentage
                 const chartRealScores = finalData.map(d => d.realScore); 
+                const chartMaxScores = finalData.map(d => d.maxScore); // --- NEW ---
                 const chartBackgroundColors = finalData.map(d => colorMap[d.letter].bg);
                 const chartBorderColors = finalData.map(d => colorMap[d.letter].border);
 
                 const personalityTypeString = chartLabels.join('');
                 
+                // --- NEW: Highlight the result in the profile grid ---
+                // First, clear any existing highlights
+                document.querySelectorAll('.profile-cell.highlight').forEach(cell => {
+                    cell.classList.remove('highlight');
+                });
+                
+                // Then, add the highlight to the matching cell
+                const resultCell = document.querySelector(`.profile-cell[data-type="${personalityTypeString}"]`);
+                if (resultCell) {
+                    resultCell.classList.add('highlight');
+                }
+                // --- END NEW ---
+                
+                const oppositeTypeString = otherLetters.join('');
+                
                 const personalityWordsArray = chartLabels.map(letter => {
-                    const fullWord = wordMap[letter]; // Es: "iNtuitive"
+                    const fullWord = wordMap[letter]; 
                     const keyIndex = fullWord.toLowerCase().indexOf(letter.toLowerCase());
                     if (keyIndex === -1) { return fullWord; }
                     const before = fullWord.substring(0, keyIndex); 
@@ -1117,36 +1438,35 @@
                     personalityWordsEl.innerHTML = personalityWordsHTML; 
                 }
 
-                // --- ADDED: Populate letter definitions grid ---
+                const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
+                if (oppositeHeaderEl) {
+                    oppositeHeaderEl.textContent = `Your converse profile: ${oppositeTypeString}`; 
+                }
+
                 const letterGrid = document.getElementById('letter-grid');
                 if (chartLabels.length === 4) {
-                    letterGrid.style.display = 'grid'; // Show the grid
+                    letterGrid.style.display = 'grid'; 
                     for (let i = 0; i < 4; i++) {
                         const letter = chartLabels[i];
                         const fullWord = wordMap[letter];
                         const description = letterDescriptions[letter];
-                        const color = colorMap[letter].border; // Get color from chart map (e.g., 'rgba(R, G, B, 1)')
-
-                        // NEW: Create a light background shade (10% opacity)
+                        const color = colorMap[letter].border; 
                         const bgColor = color.replace(', 1)', ', 0.1)');
 
-                        const cardElement = document.getElementById(`letter-card-${i}`); // Get the <details> element
+                        const cardElement = document.getElementById(`letter-card-${i}`); 
                         
                         cardElement.style.borderColor = color;
-                        cardElement.style.backgroundColor = bgColor; // <-- ADDED BACKGROUND SHADE
+                        cardElement.style.backgroundColor = bgColor; 
 
                         document.getElementById(`letter-title-${i}`).textContent = fullWord;
                         document.getElementById(`letter-desc-${i}`).textContent = description;
                     }
                 } else {
-                    letterGrid.style.display = 'none'; // Hide if something's wrong
+                    letterGrid.style.display = 'none'; 
                 }
-                // --- END ADDED ---
 
-                // --- NEW: Populate other letters grid ---
                 const otherLetterGrid = document.getElementById('other-letter-grid');
                 if (otherLetters.length === 4) {
-                    // otherLetterGrid.style.display = 'grid'; // Don't show by default
                     for (let i = 0; i < 4; i++) {
                         const letter = otherLetters[i];
                         const fullWord = wordMap[letter];
@@ -1156,26 +1476,14 @@
                         const cardElement = document.getElementById(`other-letter-card-${i}`);
                         
                         cardElement.style.borderColor = color;
-                        // cardElement.style.backgroundColor = 'transparent'; // Use CSS style
-
                         document.getElementById(`other-letter-title-${i}`).textContent = fullWord;
                         document.getElementById(`other-letter-desc-${i}`).textContent = description;
                     }
                 }
-                // --- END NEW ---
 
-
-                // --- ADDED: Populate new description sections ---
                 const description = personalityDescriptions[personalityTypeString] || "Your personality description will appear here.";
-                
                 document.getElementById('desc-overview').textContent = description;
                 
-                // Update dynamic titles
-                document.getElementById('title-partner').textContent = `${personalityTypeString} as a Partner`;
-                document.getElementById('title-workplace').textContent = `${personalityTypeString} in the Workplace`;
-                document.getElementById('title-leader').textContent = `${personalityTypeString} as a Leader`;
-                // --- END ADDED ---
-
                 const ctx = document.getElementById('resultsChart').getContext('2d');
 
                 if (resultsChartInstance) {
@@ -1191,6 +1499,7 @@
                                 label: 'Score',
                                 data: chartData, 
                                 realScores: chartRealScores, 
+                                maxScores: chartMaxScores, // --- NEW ---
                                 backgroundColor: chartBackgroundColors,
                                 borderColor: chartBorderColors,
                                 borderWidth: 1,
@@ -1208,14 +1517,19 @@
                             },
                             tooltip: {
                                 callbacks: {
+                                    // --- MODIFIED: Tooltip to show % and raw score ---
                                     label: function(context) {
                                         const label = context.label || '';
                                         const realScore = context.dataset.realScores[context.dataIndex];
+                                        const maxScore = context.dataset.maxScores[context.dataIndex];
+                                        const percentage = context.dataset.data[context.dataIndex];
+                                        
                                         if (label) {
-                                            return `${label}: ${realScore}`;
+                                            return `${label}: ${percentage.toFixed(1)}% (${realScore}/${maxScore})`;
                                         }
-                                        return `${realScore}`;
+                                        return `${percentage.toFixed(1)}%`;
                                     }
+                                    // --- END MODIFIED ---
                                 }
                             }
                         },
@@ -1236,12 +1550,17 @@
                             },
                             y: { 
                                 beginAtZero: true,
-                                max: 23, 
+                                max: 100, // --- MODIFIED: Set max to 100% ---
                                 grid: {
                                     color: '#e0e6ed', 
                                     borderColor: '#ccc'
                                 },
                                 ticks: {
+                                    // --- NEW: Add '%' suffix to Y-axis labels ---
+                                    callback: function(value) {
+                                        return value + '%';
+                                    },
+                                    // --- END NEW ---
                                     font: {
                                         family: 'Poppins'
                                     },
@@ -1258,10 +1577,8 @@
                 userAnswers.fill(null);
                 
                 resultsPage.style.display = 'none';
-                quizSection.style.display = 'none'; // ADDED: Hide quiz section
-                /* quizContainer.style.display = 'none'; */ // REMOVED: Container stays visible
-                coverPage.style.display = 'flex'; // Show cover view
-                /* coverPage.classList.remove('hidden'); */ // REMOVED: Not needed
+                quizSection.style.display = 'none'; 
+                coverPage.style.display = 'flex'; 
 
                 if (resultsChartInstance) {
                     resultsChartInstance.destroy();
@@ -1275,49 +1592,49 @@
                     personalityWordsEl.innerHTML = ''; 
                 }
 
-                // --- ADDED: Hide letter grid and reset accordions ---
                 document.getElementById('letter-grid').style.display = 'none';
-                // Reset main accordions
                 document.querySelectorAll('.result-section').forEach((detail, index) => {
-                    // Close all
                     detail.open = false;
                 });
-                // ADDED: Reset letter card accordions
                 document.querySelectorAll('.letter-card').forEach(detail => {
                     detail.open = false;
-                    // NEW: Reset inline styles
                     detail.style.borderColor = '';
                     detail.style.backgroundColor = '';
                 });
                 
-                // --- NEW: Reset other perspectives section ---
                 const otherGrid = document.getElementById('other-letter-grid');
                 const otherBtn = document.getElementById('showOtherBtn');
+                const oppositeHeaderEl = document.getElementById('oppositeTypeHeader'); 
+                
                 if (otherGrid) otherGrid.style.display = 'none';
-                if (otherBtn) otherBtn.textContent = 'Show Opposite Types';
+                if (otherBtn) otherBtn.textContent = 'Show Converse Profile'; 
+                if (oppositeHeaderEl) oppositeHeaderEl.style.display = 'none'; 
 
                 document.querySelectorAll('.other-letter-card').forEach(detail => {
                     detail.open = false;
                     detail.style.borderColor = '';
                 });
+
+                // --- NEW: Clear profile grid highlight ---
+                const highlightedCell = document.querySelector('.profile-cell.highlight');
+                if (highlightedCell) {
+                    highlightedCell.classList.remove('highlight');
+                }
                 // --- END NEW ---
+
+                hideProfileModal(); // NEW: Hide modal on restart
             }
 
             function generateRandomResults() {
                 if (isAdvancing) return; 
                 
-                /* coverPage.classList.add('hidden'); */ // REMOVED
-                /* setTimeout(() => { */
-                    coverPage.style.display = 'none'; // Hide cover view
-                    /* quizContainer.style.display = 'block'; */ // REMOVED: Container stays visible
-                    quizSection.style.display = 'block'; // Show quiz view
-                /* }, 500); */
+                coverPage.style.display = 'none'; 
+                quizSection.style.display = 'block'; 
 
                 userAnswers = questions.map(q => {
-                    // FIX: Ensure q.type is a string before splitting
                     if (typeof q.type !== 'string' || !q.type.includes('/')) {
                         console.error('Invalid question type:', q);
-                        return null; // Or a default value, but null is safer for score counting
+                        return null; 
                     }
                     const [letter1_raw, letter2_raw] = q.type.split('/');
                     const letter1 = letter1_raw.trim();
@@ -1325,45 +1642,39 @@
                     return Math.random() < 0.5 ? letter1 : letter2;
                 });
 
-                /* setTimeout(showResults, 600); */
-                showResults(); // Call directly, no timeout needed
+                showResults(); 
             }
 
 
             // --- Event Listeners ---
             startBtn.addEventListener('click', () => { 
-                if (isAdvancing) return; // <-- ADDED: Check lock
-                isAdvancing = true;     // <-- ADDED: Acquire lock
-                /* coverPage.classList.add('hidden'); */ // REMOVED
-                /* setTimeout(() => { */
-                    coverPage.style.display = 'none'; // Hide cover view
-                    /* quizContainer.style.display = 'block'; */ // REMOVED: Container stays visible
-                    quizSection.style.display = 'block'; // Show quiz view
-                    document.body.style.overflow = 'auto'; 
-                    showQuestion(true); // <-- MODIFIED: Pass true for initial load
-                /* }, 500); */
+                if (isAdvancing) return; 
+                isAdvancing = true;     
+                coverPage.style.display = 'none'; 
+                quizSection.style.display = 'block'; 
+                document.body.style.overflow = 'auto'; 
+                showQuestion(true); 
             });
 
             prevBtn.addEventListener('click', () => {
                 if (isAdvancing) return; 
-                isAdvancing = true; // <-- ADDED: Acquire lock on click
+                isAdvancing = true; 
                 if (currentQuestionIndex > 0) {
                     currentQuestionIndex--;
                     showQuestion();
                 } else {
-                    isAdvancing = false; // <-- ADDED: Release lock if no action is taken
+                    isAdvancing = false; 
                 }
             });
             
             nextBtn.addEventListener('click', () => {
-                // This button is hidden, but the listener does no harm
                 if (isAdvancing) return; 
-                isAdvancing = true; // <-- ADDED: Acquire lock on click (for robustness)
+                isAdvancing = true; 
                 if (currentQuestionIndex < questions.length - 1) {
                     currentQuestionIndex++;
                     showQuestion();
                 } else {
-                    isAdvancing = false; // <-- ADDED: Release lock if no action is taken
+                    isAdvancing = false; 
                 }
             });
             
@@ -1373,55 +1684,51 @@
             });
             
             restartBtn.addEventListener('click', restartQuiz);
-
             randomBtn.addEventListener('click', generateRandomResults); 
-
-            // --- ADDED: Static event listeners ---
             qOption0.addEventListener('click', () => handleOptionClick(qOption0));
             qOption1.addEventListener('click', () => handleOptionClick(qOption1));
-            // --- END ADDED ---
 
-            // --- ADDED: Accordion logic ---
-            function setupAccordion(containerSelector, itemSelector) {
-                const items = document.querySelectorAll(itemSelector);
-                if (!items.length) return;
-
-                items.forEach(item => {
-                    item.addEventListener('toggle', (e) => {
-                        // Only act if the details element is being opened
-                        if (item.open) {
-                            // Close all other items in this group
-                            items.forEach(otherItem => {
-                                if (otherItem !== item && otherItem.open) {
-                                    otherItem.open = false;
-                                }
-                            });
-                        }
-                    });
-                });
-            }
-
-            // Setup for the letter definitions grid
-            setupAccordion('.letter-definitions-grid', '.letter-card');
-
-            // Setup for the results details section
-            setupAccordion('.results-details', '.result-section');
-
-            // --- NEW: Setup for the other letter grid ---
-            setupAccordion('.other-letter-grid', '.other-letter-card');
-
+            // --- Toggle "Other Perspectives" logic ---
             const showOtherBtn = document.getElementById('showOtherBtn');
             const otherLetterGrid = document.getElementById('other-letter-grid');
+            const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
 
-            if (showOtherBtn && otherLetterGrid) {
+            if (showOtherBtn && otherLetterGrid && oppositeHeaderEl) { 
                 showOtherBtn.addEventListener('click', () => {
                     const isHidden = otherLetterGrid.style.display === 'none' || otherLetterGrid.style.display === '';
                     if (isHidden) {
                         otherLetterGrid.style.display = 'grid';
-                        showOtherBtn.textContent = 'Hide Opposite Types';
+                        oppositeHeaderEl.style.display = 'block'; 
+                        showOtherBtn.textContent = 'Hide Converse Profile'; 
                     } else {
                         otherLetterGrid.style.display = 'none';
-                        showOtherBtn.textContent = 'Show Opposite Types';
+                        oppositeHeaderEl.style.display = 'none'; 
+                        showOtherBtn.textContent = 'Show Converse Profile'; 
+                    }
+                });
+            }
+
+            // --- NEW: Grid and Modal Event Listeners ---
+            populateProfileGrid(); // Call the function to build the grid
+
+            if (profileGrid) {
+                profileGrid.addEventListener('click', (e) => {
+                    const cell = e.target.closest('.profile-cell');
+                    if (cell && cell.dataset.type) {
+                        showProfileModal(cell.dataset.type);
+                    }
+                });
+            }
+
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', hideProfileModal);
+            }
+
+            if (profileModal) {
+                profileModal.addEventListener('click', (e) => {
+                    // Close if clicking on the overlay (e.target), but not the content
+                    if (e.target === profileModal) {
+                        hideProfileModal();
                     }
                 });
             }
@@ -1432,11 +1739,6 @@
 
 </body>
 </html>
-
-
-
-
-
 
 
 
