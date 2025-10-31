@@ -3,10 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUNG TYPOLOGY</title>
     
-    <!-- Chart.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Comfortaa&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -766,44 +764,93 @@
             /* --- NEW: Mobile Profile Grid --- */
             /* --- MODIFIED: Make container scroll horizontally on mobile --- */
             .profile-grid-container {
-                overflow-x: auto;
-                padding-bottom: 10px; /* Space for scrollbar */
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* --- Print Styles --- */
+        @media print {
+            #coverPage, 
+            #quizSection, 
+            .dev-navigation, 
+            .toggle-other-container, 
+            .restart-button-container, 
+            .modal-overlay,
+            .container::before,
+            .other-toggle-btn,
+            #printBtn {
+                display: none !important;
             }
 
+            body {
+                background-color: #fff;
+                font-size: 10pt; /* Smaller font for print */
+            }
+
+            .container {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                overflow: visible !important;
+            }
+
+            #resultsPage {
+                display: block !important;
+            }
+
+            /* --- Request 1: Page Break Control --- */
+            h1, h3, .result-section-title, .letter-card-title, .profile-grid-title {
+                page-break-after: avoid;
+            }
+
+            .result-section, 
+            .letter-card, 
+            .profile-grid-container, 
+            .result-section-static, 
+            .chart-container,
             .profile-grid {
-                /* Keep the 4-column layout and force a min-width */
-                min-width: 600px; 
-                /* REMOVED: grid-template-columns: repeat(2, 1fr); */
+                page-break-inside: avoid;
+            }
+
+            /* --- Request 2: First Page Content --- */
+            #print-page-1 {
+                page-break-after: always;
             }
             
-            /* --- REMOVED all 2-column border fix rules --- */
-            /*
-            .profile-cell:nth-child(4n) {
-                border-right: 1px solid #ddd; 
+            /* Force open all accordions and show all content for printing */
+            details {
+                open: true !important;
+                page-break-inside: avoid;
             }
-            .profile-cell:nth-child(2n) {
-                border-right: none; 
+            
+            .letter-card-title::after, 
+            .result-section-title::after {
+                display: none !important; /* Hide the '+'/'−' icons */
             }
-            .profile-cell:nth-child(n+13) { 
-                border-bottom: 1px solid #ddd; 
-            }
-            .profile-cell:nth-child(n+15) { 
-                border-bottom: none;
-            }
-            */
 
-            .profile-cell {
-                min-height: 100px;
-                padding: 10px 5px;
+            #letter-grid,
+            #other-letter-grid,
+            #oppositeTypeHeader,
+            #oppositeDesc,
+            #personal-discover-section,
+            .profile-grid-container {
+                display: block !important; /* Ensure these are visible */
             }
-            .profile-cell-type {
-                font-size: 1.2rem;
+            
+            .chart-container {
+                /* Ensure chart is sized well for print */
+                height: 350px !important; 
+                max-width: 100% !important;
             }
-            .profile-cell-title {
-                font-size: 0.75rem;
+            
+            .profile-grid {
+                 /* Simplify grid for print if needed, but 'avoid' should be enough */
+                 grid-template-columns: repeat(4, 1fr);
             }
-            /* --- END NEW: Mobile Profile Grid --- */
         }
+        /* --- End Print Styles --- */
 
     </style>
 </head>
@@ -814,7 +861,6 @@
         <div id="coverPage">
             <h1 id="coverTitle" class="cover-title">JUNG TYPOLOGY</h1>
             
-            <!-- --- MODIFIED: Feature List --- -->
             <div class="features-list">
                 
                 <div class="feature-item">
@@ -834,7 +880,7 @@
                 </div>
                 
                 <div class="feature-item">
-                    <img src="self.png" alt="Better self-understanding" class="feature-icon" onerror="this.src='https://placehold.co/100x100/6a11cb/ffffff?text=Icon'; this.onerror=null;">
+                    <img src="light.png" alt="Better self-understanding" class="feature-icon" onerror="this.src='https://placehold.co/100x100/6a11cb/ffffff?text=Icon'; this.onerror=null;">
                     <div class="feature-text-content">
                         <h4 class="feature-title">Better Self-Understanding</h4>
                         <p class="feature-description">The test helps individuals get to know themselves better, which is a source of great satisfaction. It helps you understand what motivates you and discover your unique potential.</p>
@@ -842,7 +888,7 @@
                 </div>
                 
                 <div class="feature-item">
-                    <img src="career.png" alt="Career guidance" class="feature-icon" onerror="this.src='https://placehold.co/100x100/2575fc/ffffff?text=Icon'; this.onerror=null;">
+                    <img src="career.png" alt="Career guidance" class="feature-icon" onerror="this.src='https://placehold.co/100x1all-tools-on-black:100/2575fc/ffffff?text=Icon'; this.onerror=null;">
                     <div class="feature-text-content">
                         <h4 class="feature-title">Career Guidance</h4>
                         <p class="feature-description">Self-awareness is the key to good career guidance, as personal style affects motivation. The MBTI helps individuals assess which careers or job opportunities are a good fit.</p>
@@ -850,18 +896,14 @@
                 </div>
 
             </div>
-            <!-- --- END MODIFIED --- -->
-
-             <button id="startBtn">Begin the Evaluation</button>
+            <button id="startBtn">Begin the Evaluation</button>
         </div>
 
-        <!-- Quiz Section -->
         <div id="quizSection" style="display: none;"> 
             <h1>JUNG TYPOLOGY</h1>
             
             <div id="questionnaire">
-                <div class="question-container" id="q-container" style="opacity: 0;"> <!-- Start hidden -->
-                    <div class="question-number" id="q-number">1</div>
+                <div class="question-container" id="q-container" style="opacity: 0;"> <div class="question-number" id="q-number">1</div>
                     <div class="question-text" id="q-text">Loading...</div>
                     <div class="options-container">
                         <div class="option" id="q-option-0" data-value="">
@@ -876,7 +918,6 @@
                 </div>
             </div>
             
-            <!-- Dev Button -->
             <div class="dev-navigation" style="text-align: right; margin-bottom: 10px; margin-top: 15px;">
                 <button id="randomBtn" style="background: #f39c12; border-color: #f39c12;">Dev: Random Results</button>
             </div>
@@ -888,20 +929,21 @@
             </div>
         </div>
         
-        <!-- Results Section -->
         <div id="resultsPage" style="display: none;">
-            <h1>Your Results</h1>
-            <div class="chart-container">
-                <canvas id="resultsChart"></canvas>
-            </div>
             
-            <div id="personalityType" class="personality-type-display"></div> 
+            <div id="print-page-1">
+                <h1>Your Results</h1>
+                <div class="chart-container">
+                    <canvas id="resultsChart"></canvas>
+                </div>
+                
+                <div id="personalityType" class="personality-type-display"></div> 
 
-            <div class="result-section-static">
-                <div id="personalityWords" class="personality-words-display"></div> 
-                <p id="desc-overview" class="result-section-content"></p>
+                <div class="result-section-static">
+                    <div id="personalityWords" class="personality-words-display"></div> 
+                    <p id="desc-overview" class="result-section-content"></p>
+                </div>
             </div>
-
             <div class="letter-definitions-grid" id="letter-grid">
                 <details class="letter-card" id="letter-card-0">
                     <summary class="letter-card-title" id="letter-title-0"></summary>
@@ -922,15 +964,21 @@
             </div>
 
             <div class="results-details">
-                <!-- Empty as requested -->
-            </div>
+                </div>
 
+            <details class="result-section" id="personal-discover-section">
+                <summary class="result-section-title">Personal Discover</summary>
+                <div class="result-section-content">
+                    <p class="placeholder">[Your personal discovery text will go here...]</p>
+                </div>
+            </details>
             <div class="toggle-other-container">
                 <button id="showOtherBtn" class="other-toggle-btn">Show Converse Profile</button> 
             </div>
 
             <h3 id="oppositeTypeHeader" class="opposite-type-header" style="display: none;"></h3>
 
+            <p id="oppositeDesc" class="result-section-content" style="display: none; font-style: italic;"></p>
             <div class="letter-definitions-grid other-letter-grid" id="other-letter-grid">
                 <details class="letter-card other-letter-card" id="other-letter-card-0">
                     <summary class="letter-card-title" id="other-letter-title-0"></summary>
@@ -950,23 +998,17 @@
                 </details>
             </div>
 
-            <!-- --- NEW: Profile Grid Section --- -->
             <div class="profile-grid-container">
                 <h3 class="profile-grid-title">Discover Jung's 16 Profiles</h3>
                 <div id="profileGrid" class="profile-grid">
-                    <!-- This will be populated by JavaScript -->
-                </div>
+                    </div>
             </div>
-            <!-- --- END NEW --- -->
-
-
             <div class="restart-button-container">
-                 <button id="restartBtn">Take Again</button>
+                 <button id="printBtn">Download / Print Results</button>
             </div>
         </div>
     </div>
 
-    <!-- --- NEW: Profile Modal --- -->
     <div id="profileModal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <button id="modalCloseBtn" class="modal-close">&times;</button>
@@ -975,9 +1017,6 @@
             <p id="modalDescription" class="modal-profile-description"></p>
         </div>
     </div>
-    <!-- --- END NEW --- -->
-
-
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -1101,7 +1140,7 @@
                 'ENFP': `ENFPs are guided by vision and possibility, moved by causes that ignite their hearts. They love deeply, dream vividly, and rebel against conformity. Yet their passion can scatter, their fire dimmed by overwhelm. Beneath their enthusiasm lies a quiet yearning—to find grounding without losing the wonder that makes them who they are.`,
                 'ENTP': `ENTPs thrive on challenge and change, sparking ideas that disrupt stagnation. Their intellect dances with paradox and possibility. They question not to dominate, but to awaken. Yet their brilliance can conceal loneliness—the pain of being understood only for their wit, not their warmth. Beneath the debate lies a heart craving genuine connection.`,
                 'ESTJ': `The ESTJ finds security in structure and progress in order. They lead by clarity, protect by discipline. Reliability is their language of love. Yet, in their pursuit of control, they may forget the gentleness that nurtures trust. Beneath the surface of certainty, there often lives a child yearning simply to be accepted without achievement.`,
-                'ESFJ': `ESFJs create belonging wherever they go. Attuned to harmony, they nurture connection through care, tradition, and consistency. Their giving is sincere, yet exhausting when unreciprocated. Beneath their composure lies an unspoken plea—to be loved not only for their helpfulness, but for the quiet, unguarded self they so rarely reveal.`,
+                'ESFJ': `ESFJs create belonging wherever they go. Attuned to harmony, they nurture connection through care, tradition, and consistency. Their giving is sincere, yet exhausting when unrecIPARAMS_STR_VALUErocated. Beneath their composure lies an unspoken plea—to be loved not only for their helpfulness, but for the quiet, unguarded self they so rarely reveal.`,
                 'ENFJ': `ENFJs sense emotion like weather, responding with instinctive empathy. They uplift others through warmth and vision. Their gift is connection; their wound, self-neglect. In their quest to inspire, they may lose touch with their own needs. Yet when they remember to include themselves in their compassion, they become healers in motion.`,
                 'ENTJ': `ENTJs lead with purpose and precision, turning ideas into structure and vision into strategy. They see potential where others see limits. Yet their drive can isolate them—control masking vulnerability, ambition hiding tenderness. When they allow softness alongside strength, they reveal not dominance, but deep devotion to creating a world that works.`
             };
@@ -1113,15 +1152,19 @@
                 { type: 'INFJ', title: "An Inspiring Leader and Follower", color: 'a' },
                 { type: 'INTJ', title: "Life's Independent Thinkers", color: 'b' },
 
-                { type: 'ISTP', title: "Just Do It", color: 'b' },
-                { type: 'ISFP', title: "Action Speaks Louder Than Words", color: 'a' },
-                { type: 'INFP', title: "Making Life Kinder and Gentler", color: 'b' },
-                { type: 'INTP', title: "Life's Problem Solvers", color: 'a' },
+                /* --- ROW 2 AND 3 SWAPPED --- */
+                /* --- MODIFIED: Alternating colors for chess pattern --- */
+                { type: 'ESTP', title: "Making the Most of the Moment", color: 'b' },
+                { type: 'ESFP', title: "Let's Make Work Fun", color: 'a' },
+                { type: 'ENFP', title: "People Are the Product", color: 'b' },
+                { type: 'ENTP', title: "Progress Is the Product", color: 'a' },
 
-                { type: 'ESTP', title: "Making the Most of the Moment", color: 'a' },
-                { type: 'ESFP', title: "Let's Make Work Fun", color: 'b' },
-                { type: 'ENFP', title: "People Are the Product", color: 'a' },
-                { type: 'ENTP', title: "Progress Is the Product", color: 'b' },
+                { type: 'ISTP', title: "Just Do It", color: 'a' },
+                { type: 'ISFP', title: "Action Speaks Louder Than Words", color: 'b' },
+                { type: 'INFP', title: "Making Life Kinder and Gentler", color: 'a' },
+                { type: 'INTP', title: "Life's Problem Solvers", color: 'b' },
+                /* --- END MODIFIED --- */
+                /* --- END SWAP --- */
 
                 { type: 'ESTJ', title: "Life's Natural Administrators", color: 'b' },
                 { type: 'ESFJ', title: "Everyone's Trusted Friend", color: 'a' },
@@ -1143,7 +1186,7 @@
             const nextBtn = document.getElementById('nextBtn');
             const finishBtn = document.getElementById('finishBtn');
             const resultsPage = document.getElementById('resultsPage');
-            const restartBtn = document.getElementById('restartBtn');
+            const printBtn = document.getElementById('printBtn'); // --- MODIFIED: Was restartBtn
             const randomBtn = document.getElementById('randomBtn'); 
             const personalityTypeEl = document.getElementById('personalityType'); 
             const personalityWordsEl = document.getElementById('personalityWords'); 
@@ -1420,6 +1463,14 @@
                 
                 const oppositeTypeString = otherLetters.join('');
                 
+                // --- NEW: Get and set opposite profile description ---
+                const oppositeDescription = personalityDescriptions[oppositeTypeString];
+                const oppositeDescEl = document.getElementById('oppositeDesc');
+                if (oppositeDescEl) {
+                    oppositeDescEl.textContent = oppositeDescription || "Description for this type is not available.";
+                }
+                // --- END NEW ---
+                
                 const personalityWordsArray = chartLabels.map(letter => {
                     const fullWord = wordMap[letter]; 
                     const keyIndex = fullWord.toLowerCase().indexOf(letter.toLowerCase());
@@ -1572,58 +1623,14 @@
                 });
             }
             
+            /* --- REMOVED: restartQuiz() function is no longer used ---
             function restartQuiz() {
                 currentQuestionIndex = 0;
                 userAnswers.fill(null);
-                
-                resultsPage.style.display = 'none';
-                quizSection.style.display = 'none'; 
-                coverPage.style.display = 'flex'; 
-
-                if (resultsChartInstance) {
-                    resultsChartInstance.destroy();
-                    resultsChartInstance = null;
-                }
-                
-                if (personalityTypeEl) {
-                    personalityTypeEl.textContent = '';
-                }
-                if (personalityWordsEl) {
-                    personalityWordsEl.innerHTML = ''; 
-                }
-
-                document.getElementById('letter-grid').style.display = 'none';
-                document.querySelectorAll('.result-section').forEach((detail, index) => {
-                    detail.open = false;
-                });
-                document.querySelectorAll('.letter-card').forEach(detail => {
-                    detail.open = false;
-                    detail.style.borderColor = '';
-                    detail.style.backgroundColor = '';
-                });
-                
-                const otherGrid = document.getElementById('other-letter-grid');
-                const otherBtn = document.getElementById('showOtherBtn');
-                const oppositeHeaderEl = document.getElementById('oppositeTypeHeader'); 
-                
-                if (otherGrid) otherGrid.style.display = 'none';
-                if (otherBtn) otherBtn.textContent = 'Show Converse Profile'; 
-                if (oppositeHeaderEl) oppositeHeaderEl.style.display = 'none'; 
-
-                document.querySelectorAll('.other-letter-card').forEach(detail => {
-                    detail.open = false;
-                    detail.style.borderColor = '';
-                });
-
-                // --- NEW: Clear profile grid highlight ---
-                const highlightedCell = document.querySelector('.profile-cell.highlight');
-                if (highlightedCell) {
-                    highlightedCell.classList.remove('highlight');
-                }
-                // --- END NEW ---
-
-                hideProfileModal(); // NEW: Hide modal on restart
+                // ... (rest of the function) ...
+                hideProfileModal(); 
             }
+            */
 
             function generateRandomResults() {
                 if (isAdvancing) return; 
@@ -1683,7 +1690,32 @@
                 showResults();
             });
             
-            restartBtn.addEventListener('click', restartQuiz);
+            // --- MODIFIED: Changed from restartBtn to printBtn and added print logic ---
+            printBtn.addEventListener('click', () => {
+                // 1. Force open all accordions on the results page
+                document.querySelectorAll('#resultsPage details').forEach(detail => {
+                    detail.open = true;
+                });
+                
+                // 2. Force show the converse profile
+                const otherGrid = document.getElementById('other-letter-grid');
+                const otherBtn = document.getElementById('showOtherBtn');
+                const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
+                const oppositeDescEl = document.getElementById('oppositeDesc');
+    
+                if (otherGrid) otherGrid.style.display = 'grid';
+                if (oppositeHeaderEl) oppositeHeaderEl.style.display = 'block';
+                if (oppositeDescEl) oppositeDescEl.style.display = 'block';
+                if (otherBtn) otherBtn.textContent = 'Hide Converse Profile'; // Keep state consistent
+    
+                // 3. Call the print dialog after a short delay
+                // This ensures the DOM has time to update with the open sections
+                setTimeout(() => {
+                    window.print();
+                }, 250); 
+            });
+            // --- END MODIFIED ---
+
             randomBtn.addEventListener('click', generateRandomResults); 
             qOption0.addEventListener('click', () => handleOptionClick(qOption0));
             qOption1.addEventListener('click', () => handleOptionClick(qOption1));
@@ -1692,17 +1724,20 @@
             const showOtherBtn = document.getElementById('showOtherBtn');
             const otherLetterGrid = document.getElementById('other-letter-grid');
             const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
+            const oppositeDescEl = document.getElementById('oppositeDesc'); // --- NEW ---
 
-            if (showOtherBtn && otherLetterGrid && oppositeHeaderEl) { 
+            if (showOtherBtn && otherLetterGrid && oppositeHeaderEl && oppositeDescEl) { // --- MODIFIED ---
                 showOtherBtn.addEventListener('click', () => {
                     const isHidden = otherLetterGrid.style.display === 'none' || otherLetterGrid.style.display === '';
                     if (isHidden) {
                         otherLetterGrid.style.display = 'grid';
                         oppositeHeaderEl.style.display = 'block'; 
+                        oppositeDescEl.style.display = 'block'; // --- NEW ---
                         showOtherBtn.textContent = 'Hide Converse Profile'; 
                     } else {
                         otherLetterGrid.style.display = 'none';
                         oppositeHeaderEl.style.display = 'none'; 
+                        oppositeDescEl.style.display = 'none'; // --- NEW ---
                         showOtherBtn.textContent = 'Show Converse Profile'; 
                     }
                 });
@@ -1739,8 +1774,3 @@
 
 </body>
 </html>
-
-
-
-
-
