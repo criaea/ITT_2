@@ -4,6 +4,7 @@
     <title>JUNG TYPOLOGY</title>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -259,16 +260,27 @@
             letter-spacing: 1px;
             color: #2c3e50;
         }
-        
-        /* Logo style from index.html (REMOVED) */
-        /*
-        #coverTitle .itt-logo {
-            font-family: 'Comfortaa', cursive;
-            font-weight: 400; 
-            font-size: 1.0em; 
-            vertical-align: middle; 
+
+        /* --- MODIFIED: Style for the cover page description --- */
+        .cover-description {
+            font-size: 1.05rem;
+            color: #34495e;
+            max-width: 650px;
+            margin: -10px auto 10px auto; /* Reduced bottom margin */
+            line-height: 1.7;
+            text-align: center; /* Ensure it's centered */
         }
-        */
+        
+        /* --- NEW: Style for the sub-description --- */
+        .cover-description-sub {
+            font-size: 1.05rem;
+            color: #34495e;
+            max-width: 650px;
+            margin: 0 auto 30px auto; /* Top margin 0, bottom margin 30px */
+            line-height: 1.7;
+            text-align: center; /* Ensure it's centered */
+        }
+        /* --- END NEW --- */
 
         #startBtn {
             font-family: 'Poppins', sans-serif;
@@ -305,6 +317,32 @@
             margin: 0 auto;
         }
         
+        /* --- MODIFIED: D3 Chart Container Size --- */
+        #converse-chart-container {
+            max-width: 800px; /* Make it wider than the first chart (600px) */
+            height: auto;     /* Let the viewBox aspect ratio (960/500) determine the height */
+            margin-top: 0 !important; /* Ensure inline style is respected */
+        }
+        /* --- END MODIFIED --- */
+
+        /* --- NEW: D3.js Axis Styles --- */
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #9ca3af; /* gray-400 */
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            fill: #6b7280; /* gray-500 */
+            font-size: 0.875rem; /* text-sm */
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Style for the D3 grid lines */
+        .grid .tick line {
+            shape-rendering: crispEdges;
+        }
+        /* --- END NEW --- */
+
         .personality-type-display {
             font-size: 3.5rem; 
             font-weight: 700; 
@@ -342,7 +380,10 @@
             color: #34495e; 
             font-weight: 600;
             margin-bottom: 20px;
-            margin-top: 10px; 
+            /* --- MODIFIED: Increased top margin again --- */
+            margin-top: 50px; /* Was 30px */
+            /* --- NEW: Ensure space below for printing --- */
+            margin-bottom: 30px;
         }
 
         .toggle-other-container {
@@ -838,6 +879,12 @@
             .profile-grid-container {
                 display: block !important; /* Ensure these are visible */
             }
+
+            /* --- NEW: Ensure converse chart is visible for printing --- */
+            #converse-chart-container {
+                display: block !important;
+            }
+            /* --- END NEW --- */
             
             .chart-container {
                 /* Ensure chart is sized well for print */
@@ -861,6 +908,12 @@
         <div id="coverPage">
             <h1 id="coverTitle" class="cover-title">JUNG TYPOLOGY</h1>
             
+            <p class="cover-description">
+                This is a psychological instrument that describe a persons personal style, their own unique way of viewing and responding the world around them.
+            </p>
+            <p class="cover-description-sub">
+                It can be used to:
+            </p>
             <div class="features-list">
                 
                 <div class="feature-item">
@@ -880,7 +933,7 @@
                 </div>
                 
                 <div class="feature-item">
-                    <img src="light.png" alt="Better self-understanding" class="feature-icon" onerror="this.src='https://placehold.co/100x100/6a11cb/ffffff?text=Icon'; this.onerror=null;">
+                    <img src="self.png" alt="Better self-understanding" class="feature-icon" onerror="this.src='https://placehold.co/100x100/6a11cb/ffffff?text=Icon'; this.onerror=null;">
                     <div class="feature-text-content">
                         <h4 class="feature-title">Better Self-Understanding</h4>
                         <p class="feature-description">The test helps individuals get to know themselves better, which is a source of great satisfaction. It helps you understand what motivates you and discover your unique potential.</p>
@@ -888,7 +941,7 @@
                 </div>
                 
                 <div class="feature-item">
-                    <img src="career.png" alt="Career guidance" class="feature-icon" onerror="this.src='https://placehold.co/100x1all-tools-on-black:100/2575fc/ffffff?text=Icon'; this.onerror=null;">
+                    <img src="career.png" alt="Career guidance" class="feature-icon" onerror="this.src='https://placehold.co/100x100/2575fc/ffffff?text=Icon'; this.onerror=null;">
                     <div class="feature-text-content">
                         <h4 class="feature-title">Career Guidance</h4>
                         <p class="feature-description">Self-awareness is the key to good career guidance, as personal style affects motivation. The MBTI helps individuals assess which careers or job opportunities are a good fit.</p>
@@ -976,6 +1029,9 @@
                 <button id="showOtherBtn" class="other-toggle-btn">Show Converse Profile</button> 
             </div>
 
+            <div class="chart-container" id="converse-chart-container" style="display: none;">
+                <svg id="converseResultsChart" viewBox="0 0 960 500"></svg>
+            </div>
             <h3 id="oppositeTypeHeader" class="opposite-type-header" style="display: none;"></h3>
 
             <p id="oppositeDesc" class="result-section-content" style="display: none; font-style: italic;"></p>
@@ -1155,7 +1211,7 @@
                 /* --- ROW 2 AND 3 SWAPPED --- */
                 /* --- MODIFIED: Alternating colors for chess pattern --- */
                 { type: 'ESTP', title: "Making the Most of the Moment", color: 'b' },
-                { type: 'ESFP', title: "Let's Make Work Fun", color: 'a' },
+                { type: "ESFP", title: "Let's Make Work Fun", color: 'a' },
                 { type: 'ENFP', title: "People Are the Product", color: 'b' },
                 { type: 'ENTP', title: "Progress Is the Product", color: 'a' },
 
@@ -1176,8 +1232,9 @@
             let currentQuestionIndex = 0;
             let userAnswers = new Array(questions.length).fill(null);
             let resultsChartInstance = null;
+            // let converseChartInstance = null; // No longer a Chart.js instance
             let isAdvancing = false; 
-
+ 
             // --- DOM Elements ---
             const coverPage = document.getElementById('coverPage');
             const startBtn = document.getElementById('startBtn');
@@ -1351,6 +1408,7 @@
                 }
             }
 
+            // --- MODIFIED: Restored and corrected showResults function ---
             function showResults() {
                 quizSection.style.display = 'none';
                 resultsPage.style.display = 'block';
@@ -1365,7 +1423,6 @@
                 scores.E *= 2;
                 scores.I *= 2;
                 
-                // --- NEW: Define max scores for percentage calculation ---
                 const maxScores = { E: 22, I: 22, S: 23, N: 23, T: 23, F: 23, J: 23, P: 23 };
 
                 const colorMap = {
@@ -1379,70 +1436,81 @@
                     'P': { bg: 'rgba(153, 102, 51, 0.9)', border: 'rgba(153, 102, 51, 1)' }
                 };
 
+                // --- FIX: Restored getPercent function definition ---
+                const getPercent = (letter) => {
+                    const realScore = scores[letter];
+                    const maxScore = maxScores[letter];
+                    // Cap the score used for the percentage calculation at 20
+                    const scoreForPercent = Math.min(realScore, 20); 
+                    // Calculate percentage based on the capped score but the REAL max score
+                    return (scoreForPercent / maxScore) * 100;
+                };
+                // --- END FIX ---
+
                 const finalData = [];
                 const otherLetters = []; 
-                let realScore, maxScore, percentage; // --- MODIFIED ---
+                let realScore, maxScore, percentage; 
 
                 if (scores.E >= scores.I) {
                     realScore = scores.E;
-                    maxScore = maxScores.E; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'E', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.E; 
+                    percentage = getPercent('E');
+                    finalData.push({ letter: 'E', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('I'); 
                 } else {
                     realScore = scores.I;
-                    maxScore = maxScores.I; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'I', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.I; 
+                    percentage = getPercent('I');
+                    finalData.push({ letter: 'I', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('E'); 
                 }
 
                 if (scores.S >= scores.N) {
                     realScore = scores.S;
-                    maxScore = maxScores.S; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'S', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.S; 
+                    percentage = getPercent('S');
+                    finalData.push({ letter: 'S', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('N'); 
                 } else {
                     realScore = scores.N;
-                    maxScore = maxScores.N; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'N', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.N; 
+                    percentage = getPercent('N');
+                    finalData.push({ letter: 'N', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('S'); 
                 }
 
                 if (scores.T >= scores.F) {
                     realScore = scores.T;
-                    maxScore = maxScores.T; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'T', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.T; 
+                    percentage = getPercent('T');
+                    finalData.push({ letter: 'T', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('F'); 
                 } else {
                     realScore = scores.F;
-                    maxScore = maxScores.F; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'F', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.F; 
+                    percentage = getPercent('F');
+                    finalData.push({ letter: 'F', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('T'); 
                 }
 
                 if (scores.J >= scores.P) {
                     realScore = scores.J;
-                    maxScore = maxScores.J; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'J', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.J; 
+                    percentage = getPercent('J');
+                    finalData.push({ letter: 'J', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('P'); 
                 } else {
                     realScore = scores.P;
-                    maxScore = maxScores.P; // --- NEW ---
-                    percentage = (realScore / maxScore) * 100; // --- NEW ---
-                    finalData.push({ letter: 'P', score: percentage, realScore: realScore, maxScore: maxScore }); // --- MODIFIED ---
+                    maxScore = maxScores.P; 
+                    percentage = getPercent('P');
+                    finalData.push({ letter: 'P', score: percentage, realScore: realScore, maxScore: maxScore }); 
                     otherLetters.push('J'); 
                 }
                 
                 const chartLabels = finalData.map(d => d.letter);
                 const chartData = finalData.map(d => d.score); // This is now percentage
                 const chartRealScores = finalData.map(d => d.realScore); 
-                const chartMaxScores = finalData.map(d => d.maxScore); // --- NEW ---
+                const chartMaxScores = finalData.map(d => d.maxScore); 
                 const chartBackgroundColors = finalData.map(d => colorMap[d.letter].bg);
                 const chartBorderColors = finalData.map(d => colorMap[d.letter].border);
 
@@ -1535,6 +1603,7 @@
                 const description = personalityDescriptions[personalityTypeString] || "Your personality description will appear here.";
                 document.getElementById('desc-overview').textContent = description;
                 
+                // --- Create the main 4-bar chart ---
                 const ctx = document.getElementById('resultsChart').getContext('2d');
 
                 if (resultsChartInstance) {
@@ -1550,7 +1619,7 @@
                                 label: 'Score',
                                 data: chartData, 
                                 realScores: chartRealScores, 
-                                maxScores: chartMaxScores, // --- NEW ---
+                                maxScores: chartMaxScores, 
                                 backgroundColor: chartBackgroundColors,
                                 borderColor: chartBorderColors,
                                 borderWidth: 1,
@@ -1568,7 +1637,6 @@
                             },
                             tooltip: {
                                 callbacks: {
-                                    // --- MODIFIED: Tooltip to show % and raw score ---
                                     label: function(context) {
                                         const label = context.label || '';
                                         const realScore = context.dataset.realScores[context.dataIndex];
@@ -1580,7 +1648,6 @@
                                         }
                                         return `${percentage.toFixed(1)}%`;
                                     }
-                                    // --- END MODIFIED ---
                                 }
                             }
                         },
@@ -1601,17 +1668,21 @@
                             },
                             y: { 
                                 beginAtZero: true,
-                                max: 100, // --- MODIFIED: Set max to 100% ---
+                                max: 100, 
                                 grid: {
-                                    color: '#e0e6ed', 
+                                    color: function(context) {
+                                        if (context.tick.value === 100) return '#2c3e50';
+                                        if (context.tick.value === 0) return '#ccc';
+                                        return 'transparent';
+                                    },
                                     borderColor: '#ccc'
                                 },
                                 ticks: {
-                                    // --- NEW: Add '%' suffix to Y-axis labels ---
                                     callback: function(value) {
-                                        return value + '%';
+                                        // if (value === 90) return '●'; // Dot removed
+                                        return ''; // Hide all labels
                                     },
-                                    // --- END NEW ---
+                                    stepSize: 10,
                                     font: {
                                         family: 'Poppins'
                                     },
@@ -1621,16 +1692,127 @@
                         }
                     }
                 });
+                // --- END 4-BAR CHART LOGIC ---
+
+                // --- NEW: Call D3 chart creation function ---
+                createD3ConverseChart(scores, getPercent);
+                // --- END NEW ---
+
             }
+            // --- END OF SHOWRESULTS FUNCTION ---
             
-            /* --- REMOVED: restartQuiz() function is no longer used ---
-            function restartQuiz() {
-                currentQuestionIndex = 0;
-                userAnswers.fill(null);
-                // ... (rest of the function) ...
-                hideProfileModal(); 
+            // --- NEW: D3.js CHART FUNCTION (Replaces Chart.js version) ---
+            function createD3ConverseChart(scores, getPercent) {
+                
+                // 1. Data & Colors
+                // Map rgba colors to simple hex for D3
+                const d3ColorMap = {
+                    'E': '#44b3e1', // rgba(68, 179, 225, 1)
+                    'I': '#eae400', // rgba(234, 228, 0, 1)
+                    'S': '#ff9900', // rgba(255, 153, 0, 1)
+                    'N': '#782170', // rgba(120, 33, 112, 1)
+                    'T': '#215c98', // rgba(33, 92, 152, 1)
+                    'F': '#4ea72e', // rgba(78, 167, 46, 1)
+                    'J': '#eb1515', // rgba(235, 21, 21, 1)
+                    'P': '#996633'  // rgba(153, 102, 51, 1)
+                };
+
+                const data = [
+                    { group: 'E / I', valueA: getPercent('E'), valueB: getPercent('I'), keyA: 'E', keyB: 'I' },
+                    { group: 'S / N', valueA: getPercent('S'), valueB: getPercent('N'), keyA: 'S', keyB: 'N' },
+                    { group: 'T / F', valueA: getPercent('T'), valueB: getPercent('F'), keyA: 'T', keyB: 'F' },
+                    { group: 'J / P', valueA: getPercent('J'), valueB: getPercent('P'), keyA: 'J', keyB: 'P' }
+                ];
+                
+                const groupKeys = ['valueA', 'valueB'];
+
+                // 2. Chart Setup
+                const svg = d3.select("#converseResultsChart");
+                svg.html(""); // Clear previous chart
+                const margin = { top: 20, right: 20, bottom: 50, left: 60 };
+                
+                const viewBox = svg.attr("viewBox").split(" ");
+                const svgWidth = +viewBox[2];
+                const svgHeight = +viewBox[3];
+
+                const width = svgWidth - margin.left - margin.right;
+                const height = svgHeight - margin.top - margin.bottom;
+
+                const g = svg.append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                // 3. Scales
+                const x0 = d3.scaleBand()
+                    .domain(data.map(d => d.group))
+                    .rangeRound([0, width])
+                    .padding(0.2); // Space between pairs
+
+                const x1 = d3.scaleBand()
+                    .domain(groupKeys)
+                    .rangeRound([0, x0.bandwidth()])
+                    .padding(0); // NO space within a pair
+
+                const yScale = d3.scaleLinear()
+                    .domain([0, 100]) // Domain is 0 to 100 percent
+                    .nice()
+                    .rangeRound([height, 0]);
+
+                // --- NEW: Add Grid Lines (like the first chart) ---
+                g.append("g")
+                    .attr("class", "grid")
+                    .call(d3.axisLeft(yScale)
+                        .tickSize(-width) // Extend lines across the chart
+                        .tickFormat(() => "") // No labels
+                        .tickValues([0, 100]) // Only at 0 and 100
+                    )
+                    .call(g => g.select(".domain").remove()) // Remove the axis line itself
+                    .call(g => g.selectAll(".tick line")
+                        .attr("stroke", d => (d === 100 ? '#2c3e50' : '#ccc')) // Match Chart.js colors
+                        .attr("stroke-opacity", 1));
+
+                // 4. Axes
+                
+                // X-Axis
+                g.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(x0))
+                    .call(g => g.select(".domain").remove()) // --- NEW: Remove X-axis domain line ---
+                    .call(g => g.selectAll(".tick text") // Style X-axis text to match first chart
+                        .attr("font-family", "Poppins")
+                        .attr("font-size", "14px")
+                        .attr("font-weight", "600")
+                        .attr("fill", "#2c3e50"));
+                // --- DELETED X-Axis Label ("Dichotomies") ---
+
+                // Y-Axis
+                g.append("g")
+                    .attr("class", "axis")
+                    .call(d3.axisLeft(yScale).tickFormat(() => "")) // Hide tick labels
+                    .call(g => g.select(".domain").remove()); // Remove the axis domain line
+                // --- DELETED Y-Axis Label ("Score (%)") ---
+
+                // 5. Draw the Bars
+                const barGroups = g.append("g")
+                    .selectAll("g")
+                    .data(data)
+                    .join("g")
+                    .attr("transform", d => `translate(${x0(d.group)},0)`);
+
+                barGroups.selectAll("rect")
+                    .data(d => [
+                        { key: 'valueA', value: d.valueA, letter: d.keyA }, 
+                        { key: 'valueB', value: d.valueB, letter: d.keyB }
+                    ])
+                    .join("rect")
+                        .attr("x", d => x1(d.key)) 
+                        .attr("width", x1.bandwidth())
+                        .attr("y", d => yScale(d.value))
+                        .attr("height", d => height - yScale(d.value))
+                        .attr("fill", d => d3ColorMap[d.letter]);
             }
-            */
+            // --- END D3.js CHART FUNCTION ---
+
 
             function generateRandomResults() {
                 if (isAdvancing) return; 
@@ -1656,7 +1838,7 @@
             // --- Event Listeners ---
             startBtn.addEventListener('click', () => { 
                 if (isAdvancing) return; 
-                isAdvancing = true;     
+                isAdvancing = true;    
                 coverPage.style.display = 'none'; 
                 quizSection.style.display = 'block'; 
                 document.body.style.overflow = 'auto'; 
@@ -1702,12 +1884,18 @@
                 const otherBtn = document.getElementById('showOtherBtn');
                 const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
                 const oppositeDescEl = document.getElementById('oppositeDesc');
+                const converseChartContainer = document.getElementById('converse-chart-container'); // --- NEW ---
     
                 if (otherGrid) otherGrid.style.display = 'grid';
                 if (oppositeHeaderEl) oppositeHeaderEl.style.display = 'block';
                 if (oppositeDescEl) oppositeDescEl.style.display = 'block';
+                if (converseChartContainer) converseChartContainer.style.display = 'block'; // --- NEW ---
                 if (otherBtn) otherBtn.textContent = 'Hide Converse Profile'; // Keep state consistent
     
+                if (resultsChartInstance) {
+                    resultsChartInstance.resize();
+                }
+                // No need to resize D3 SVG
                 // 3. Call the print dialog after a short delay
                 // This ensures the DOM has time to update with the open sections
                 setTimeout(() => {
@@ -1725,19 +1913,25 @@
             const otherLetterGrid = document.getElementById('other-letter-grid');
             const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
             const oppositeDescEl = document.getElementById('oppositeDesc'); // --- NEW ---
+            const converseChartContainer = document.getElementById('converse-chart-container'); // --- NEW ---
 
-            if (showOtherBtn && otherLetterGrid && oppositeHeaderEl && oppositeDescEl) { // --- MODIFIED ---
+            if (showOtherBtn && otherLetterGrid && oppositeHeaderEl && oppositeDescEl && converseChartContainer) { // --- MODIFIED ---
                 showOtherBtn.addEventListener('click', () => {
                     const isHidden = otherLetterGrid.style.display === 'none' || otherLetterGrid.style.display === '';
                     if (isHidden) {
                         otherLetterGrid.style.display = 'grid';
                         oppositeHeaderEl.style.display = 'block'; 
                         oppositeDescEl.style.display = 'block'; // --- NEW ---
+                        converseChartContainer.style.display = 'block'; // --- NEW ---
                         showOtherBtn.textContent = 'Hide Converse Profile'; 
+
+                        // --- NEW: D3 chart is drawn on show, no resize needed
+                        
                     } else {
                         otherLetterGrid.style.display = 'none';
                         oppositeHeaderEl.style.display = 'none'; 
                         oppositeDescEl.style.display = 'none'; // --- NEW ---
+                        converseChartContainer.style.display = 'none'; // --- NEW ---
                         showOtherBtn.textContent = 'Show Converse Profile'; 
                     }
                 });
