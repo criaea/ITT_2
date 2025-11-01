@@ -802,11 +802,17 @@
                 font-size: 1rem;
             }
 
-            /* --- NEW: Mobile Profile Grid --- */
-            /* --- MODIFIED: Make container scroll horizontally on mobile --- */
+            /* --- MODIFIED: Mobile Profile Grid --- */
             .profile-grid-container {
+                overflow-x: auto; /* Enable horizontal scrolling */
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
                 page-break-inside: avoid;
             }
+            .profile-grid {
+                /* Force the grid to be wide, preventing wrapping */
+                min-width: 600px; 
+            }
+            /* --- END MODIFIED --- */
         }
         
         /* --- Print Styles --- */
@@ -1015,16 +1021,16 @@
                     <p class="letter-card-desc" id="letter-desc-3"></p>
                 </details>
             </div>
-
-            <div class="results-details">
-                </div>
-
+            
             <details class="result-section" id="personal-discover-section">
                 <summary class="result-section-title">Personal Discover</summary>
                 <div class="result-section-content">
                     <p class="placeholder">[Your personal discovery text will go here...]</p>
                 </div>
             </details>
+
+            <div class="results-details">
+            </div>
             <div class="toggle-other-container">
                 <button id="showOtherBtn" class="other-toggle-btn">Show Converse Profile</button> 
             </div>
@@ -1729,7 +1735,9 @@
                 // 2. Chart Setup
                 const svg = d3.select("#converseResultsChart");
                 svg.html(""); // Clear previous chart
-                const margin = { top: 20, right: 20, bottom: 50, left: 60 };
+                
+                // --- MODIFIED: Make margins smaller for a larger chart area ---
+                const margin = { top: 20, right: 20, bottom: 30, left: 40 };
                 
                 const viewBox = svg.attr("viewBox").split(" ");
                 const svgWidth = +viewBox[2];
@@ -1809,7 +1817,8 @@
                         .attr("width", x1.bandwidth())
                         .attr("y", d => yScale(d.value))
                         .attr("height", d => height - yScale(d.value))
-                        .attr("fill", d => d3ColorMap[d.letter]);
+                        .attr("fill", d => d3ColorMap[d.letter])
+                        .attr("rx", 5); // --- ADDED for rounded corners ---
             }
             // --- END D3.js CHART FUNCTION ---
 
