@@ -256,7 +256,7 @@
             font-family: 'Cinzel', serif;
             font-size: 2.5rem;
             font-weight: 400;
-            margin-bottom: 30px; 
+            margin-bottom: 10px; /* MODIFIED: Was 30px */
             letter-spacing: 1px;
             color: #2c3e50;
         }
@@ -266,7 +266,7 @@
             font-size: 1.05rem;
             color: #34495e;
             max-width: 650px;
-            margin: -10px auto 10px auto; /* Reduced bottom margin */
+            margin: 0 auto 10px auto; /* MODIFIED: Was -10px auto 10px auto */
             line-height: 1.7;
             text-align: center; /* Ensure it's centered */
         }
@@ -279,6 +279,21 @@
             margin: 0 auto 30px auto; /* Top margin 0, bottom margin 30px */
             line-height: 1.7;
             text-align: center; /* Ensure it's centered */
+        }
+        /* --- END NEW --- */
+
+        /* --- NEW: Style for the copyright subtitle --- */
+        .cover-copyright {
+            font-size: 0.8rem;
+            color: #555;
+            text-align: center;
+            margin-top: 0; /* MODIFIED: Was -20px */
+            margin-bottom: 30px;
+        }
+        
+        .cover-copyright b {
+            font-weight: 600;
+            color: #333;
         }
         /* --- END NEW --- */
 
@@ -913,6 +928,7 @@
         
         <div id="coverPage">
             <h1 id="coverTitle" class="cover-title">JUNG TYPOLOGY</h1>
+            <p class="cover-copyright">exclusive to <b>ourfields.ie</b> programmes</p>
             
             <p class="cover-description">
                 This is a instrument that describes a person's personal style, their own unique way of viewing, responding and relating to the world around them. 
@@ -1178,33 +1194,33 @@
             };
 
             const letterDescriptions = {
-                'E': `The extrovert seeks life in the outer world, drawing energy through engagement and relationships. Yet meaning is not found in activity alone; it emerges when outward action serves a higher purpose, transforming social connection into authentic participation in life.`,
-                'I': `The introvert turns inward, seeking understanding through reflection and solitude. True fulfillment arises not from isolation, but from using inner insight to guide purposeful engagement with the world, allowing self-knowledge to become a tool for meaningful contribution.`,
-                'S': `The sensate perceives life through the immediate, tangible world, valuing what can be observed and experienced. Meaning is discovered when attention to reality deepens awareness, transforming simple perception into conscious appreciation and purposeful interaction with life’s concrete elements.`,
-                'N': `The intuitive perceives possibilities beyond the present, sensing patterns and potential outcomes. Yet insight alone is insufficient. Meaning emerges when intuition is applied to purposeful action, translating foresight into responsible choices that contribute to something greater than oneself.`,
-                'T': `The thinking type relies on reason and logic to navigate life, seeking clarity and coherence. Yet intellect becomes meaningful only when aligned with conscience, guiding decisions toward responsibility, contribution, and the affirmation of values that transcend self-interest.`,
-                'F': `The feeling type experiences life through empathy, values, and emotional resonance. Meaning is realized when compassion transforms into deliberate action, allowing emotion to guide purposeful engagement, and ensuring that care for others coexists with responsibility to self and life.`,
-                'J': `The judging orientation seeks structure, order, and decisive action. Yet control is not purpose. True meaning arises when disciplined decisions serve a higher calling, allowing judgment to become an instrument for responsible living rather than an escape from uncertainty.`,
-                'P': `The perceiving type values openness, flexibility, and responsiveness to life’s unfolding. Meaning is not found in freedom alone but in conscious engagement—choosing how to respond, embracing opportunity responsibly, and allowing curiosity to become directed action in service of life’s purpose.`
+                'E': `A potential disconnection from the true self, seeking external validation to fill an inner emptiness. A coping mechanism based on attachment needs.`,
+                'I': `A possible adaptation of high sensitivity. A protective withdrawal to shield an authentic self that felt overwhelmed or unsafe in the external world.`,
+                'S': `A focus on the body's present-moment reality. Can be a path to healing (reconnecting) or a trauma-based disconnection from deeper, painful feelings.`,
+                'N': `The "gut feeling" of the authentic self. This inner wisdom is often suppressed by trauma. Healing involves reclaiming and trusting this intuitive voice.`,
+                'T': `The rational mind, often split from emotion as a brilliant defense against trauma. Wholeness requires reintegrating this intellect with the heart's feelings.`,
+                'F': `The core language of the authentic self. These emotions are often repressed due to childhood wounds, leading to disease. Authenticity is reclaiming all feelings.`,
+                'J': `A drive for control and order, often born from a chaotic or unsafe childhood. This rigidity is a survival strategy to create perceived safety.`,
+                'P': `A potential "go with the flow" trauma response to avoid conflict, or a healthy openness. Can manifest as difficulty with boundaries or commitment.`
             };
 
             const personalityDescriptions = {
-                'ISTJ': `Order brings safety. The ISTJ moves through life with steady hands and quiet conviction, upholding what is proven and true. Responsibility is their silent creed. Yet, beneath their reliability, there often lies an unspoken yearning—to be valued not only for their dependability, but for the tenderness they rarely allow the world to see.`,
-                'ISFJ': `The ISFJ gives with quiet devotion, creating sanctuary in a world that seldom pauses. Their strength hides in humility; their love, in service. They tend to others’ needs instinctively, often forgetting their own. Behind their care lies a soul that longs to be cared for with the same gentleness they so effortlessly extend.`,
-                'INFJ': `INFJs perceive life through symbols and meanings others miss. Their intuition weaves threads of empathy into vision. They sense human pain as though it were their own, often sacrificing themselves in the process. Beneath their serene composure lies a deep ache—to reconcile their inner truth with a world that too often fears its depth.`,
-                'INTJ': `INTJs see life as a system to be understood, a puzzle to be elegantly resolved. Their insight cuts through illusion to essence. Purpose fuels them, solitude restores them. Yet, behind their precision lies an unspoken tenderness—the wish that the world might value understanding not as control, but as love expressed through clarity.`,
-                'ISTP': `The ISTP moves fluidly between logic and action. They learn by doing, finding truth in direct experience. Detached calm steadies them amid chaos. Yet the same self-reliance that grants mastery can conceal a hidden solitude—a quiet uncertainty about belonging in a world that prizes words more than the language of doing.`,
-                'ISFP': `ISFPs live through feeling and sensation, attuned to beauty, authenticity, and the sacredness of the moment. They seek harmony, not attention. Their gentleness often masks profound courage—the courage to live truthfully, even when unseen. Beneath their calm artistry rests a silent question: can the world honor softness as strength?`,
-                'INFP': `INFPs live guided by inner values, drawn to what could be rather than what is. They see beauty in imperfection, hope in despair. Yet their idealism can isolate them—when the outer world cannot match their inner vision. Still, within them burns the timeless faith that authenticity itself can heal what is broken.`,
-                'INTP': `The INTP seeks truth beyond appearance, ideas beyond convention. Their mind is a restless explorer, weaving patterns of thought where others see chaos. Detached yet deeply curious, they love clarity more than comfort. And beneath that intellectual distance, there lives a quiet longing—to feel at home in a world that rarely feels logical.`,
-                'ESTP': `ESTPs meet life head-on—fast, fearless, alive. The present moment is their arena, risk their language. They thrive on movement, challenge, and immediacy. Yet their confidence can mask a deeper vulnerability: the fear of stillness, where action gives way to self-reflection. Beneath the thrill lies a human heart longing simply to rest.`,
-                'ESFP': `ESFPs radiate vitality, sensing life through color, laughter, and touch. They live for connection, sharing energy like sunlight. Their spontaneity is medicine for the weary. Yet when the lights dim, they may feel the quiet ache of invisibility—the longing to be cherished not for their brightness, but for their unguarded truth.`,
-                'ENFP': `ENFPs are guided by vision and possibility, moved by causes that ignite their hearts. They love deeply, dream vividly, and rebel against conformity. Yet their passion can scatter, their fire dimmed by overwhelm. Beneath their enthusiasm lies a quiet yearning—to find grounding without losing the wonder that makes them who they are.`,
-                'ENTP': `ENTPs thrive on challenge and change, sparking ideas that disrupt stagnation. Their intellect dances with paradox and possibility. They question not to dominate, but to awaken. Yet their brilliance can conceal loneliness—the pain of being understood only for their wit, not their warmth. Beneath the debate lies a heart craving genuine connection.`,
-                'ESTJ': `The ESTJ finds security in structure and progress in order. They lead by clarity, protect by discipline. Reliability is their language of love. Yet, in their pursuit of control, they may forget the gentleness that nurtures trust. Beneath the surface of certainty, there often lives a child yearning simply to be accepted without achievement.`,
-                'ESFJ': `ESFJs create belonging wherever they go. Attuned to harmony, they nurture connection through care, tradition, and consistency. Their giving is sincere, yet exhausting when unrecIPARAMS_STR_VALUErocated. Beneath their composure lies an unspoken plea—to be loved not only for their helpfulness, but for the quiet, unguarded self they so rarely reveal.`,
-                'ENFJ': `ENFJs sense emotion like weather, responding with instinctive empathy. They uplift others through warmth and vision. Their gift is connection; their wound, self-neglect. In their quest to inspire, they may lose touch with their own needs. Yet when they remember to include themselves in their compassion, they become healers in motion.`,
-                'ENTJ': `ENTJs lead with purpose and precision, turning ideas into structure and vision into strategy. They see potential where others see limits. Yet their drive can isolate them—control masking vulnerability, ambition hiding tenderness. When they allow softness alongside strength, they reveal not dominance, but deep devotion to creating a world that works.`
+                'ISTJ': `This deep sense of duty could be an adaptation to feel needed and safe. The wound is a fear of chaos, managed by rigid control. Authenticity comes from learning their worth isn't just in their dependability but in their being.`,
+                'ISFJ': `A person who likely learned their "value" is in caretaking. This self-sacrificing nature can be an adaptation to suppress their own needs, leading to burnout. Healing means learning to serve themself with the same devotion.`,
+                'INFJ': `A highly sensitive soul, prone to absorbing others' emotions as a survival tactic. Their profound intuition may be a hyper-vigilance born from needing to "read the room" to be safe. Authenticity is learning to protect their own energy.`,
+                'INTJ': `This strategic mind may be a defense against a world that felt illogical or emotionally unsafe. By retreating into logic, they found control. Healing involves daring to trust and integrate the "illogical" world of their own feelings.`,
+                'ISTP': `A deep-seated need for autonomy, perhaps from feeling controlled or enmeshed. The cool, detached logic can be a shield for a sensitive inner world. True freedom comes from connecting their logical independence with emotional interdependence.`,
+                'ISFP': `An authentic, sensitive self that may have learned to be "seen and not heard." Their values are quiet but intense. A wound may be a fear of conflict, leading them to "go with the flow" until a core value is violated.`,
+                'INFP': `The "idealist" who may be deeply wounded by the gap between "what should be" and "what is." This sensitivity can be overwhelming. Authenticity is not in fixing the world, but in accepting their own feelings, including anger and grief.`,
+                'INTP': `A person who likely found safety in the world of ideas, escaping a world that was emotionally confusing or painful. Their "ivory tower" is a defense. Healing means bringing their brilliant mind "down" into their body and heart.`,
+                'ESTP': `This "addiction" to the present moment and high-stimulus activity could be an escape from a painful inner world or past. Stillness feels dangerous. Healing involves learning to be present not just with the outside world, but with their inside one.`,
+                'ESFP': `The "performer" who may have learned that their worth comes from being happy and entertaining. This can be a mask for their own pain or sadness. Authenticity means allowing themself to be "off-stage," sad, or still, and know they are still worthy.`,
+                'ENFP': `This boundless enthusiasm can be a defense against looking inward. Their fear of "being-pinned-down" may be a trauma response to feeling trapped. Healing means finding the courage to commit and go deep, rather than wide, and to sit with their own discomfort.`,
+                'ENTP': `The "devil's advocate" who may use intellectual argument to create distance from their own emotions. This need to "be right" or "win" can be a defense. Authenticity involves realizing that vulnerability is not a logical weakness, but a human strength.`,
+                'ESTJ': `This powerful need for external order and control may stem from an inner fear of helplessness. Their identity is tied to their effectiveness. True strength would be to embrace vulnerability and accept that "not-knowing" is not a failure.`,
+                'ESFJ': `A person who lives for "the-we," often at the expense of "the-me." Their identity is built on social approval and being needed. This is a profound trauma adaptation. Healing is a revolutionary act of prioritizing their own needs first.`,
+                'ENFJ': `This charismatic focus on others' potential can be a way to avoid their own wounds. They "fix" others to avoid fixing themselves. Their greatest challenge is to turn that powerful, compassionate gaze inward and parent their own inner child.`,
+                'ENTJ': `A powerful will, perhaps forged in an environment where they had to be "strong" to survive. Emotion is seen as a liability to the "mission." Wholeness comes from realizing that their feelings are not obstacles, but essential data for true, authentic leadership.`
             };
             
             // --- NEW: Data for the profile grid ---
