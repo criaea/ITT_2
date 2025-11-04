@@ -1815,6 +1815,17 @@
                     .call(d3.axisLeft(yScale).tickFormat(() => "")) // Hide tick labels
                     .call(g => g.select(".domain").remove()); // Remove the axis domain line
                 // --- DELETED Y-Axis Label ("Score (%)") ---
+                
+                // --- USER REQUEST: Add 50% line ---
+                g.append("line")
+                    .attr("x1", 0)
+                    .attr("x2", width) // Span the full width of the chart area
+                    .attr("y1", yScale(50)) // Position at the 50% mark
+                    .attr("y2", yScale(50)) // Position at the 50% mark
+                    .attr("stroke", "#34495e") // A neutral dark color
+                    .attr("stroke-width", 1.5)
+                    .attr("stroke-dasharray", "4 4"); // Make it dashed
+                // --- END USER REQUEST ---
 
                 // 5. Draw the Bars
                 const barGroups = g.append("g")
