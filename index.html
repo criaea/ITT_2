@@ -1818,13 +1818,13 @@
                 
                 // --- USER REQUEST: Add 50% line ---
                 g.append("line")
-                    .attr("x1", 0)
-                    .attr("x2", width) // Span the full width of the chart area
+                    .attr("x1", x0(data[0].group) - 10) // CHANGED: Extended start
+                    .attr("x2", x0(data[data.length - 1].group) + x0.bandwidth() + 10) // CHANGED: Extended end
                     .attr("y1", yScale(50)) // Position at the 50% mark
                     .attr("y2", yScale(50)) // Position at the 50% mark
-                    .attr("stroke", "#34495e") // A neutral dark color
-                    .attr("stroke-width", 1.5)
-                    .attr("stroke-dasharray", "4 4"); // Make it dashed
+                    .attr("stroke", "#000") 
+                    .attr("stroke-width", 2.5) 
+                    .attr("stroke-dasharray", "6 4"); // CHANGED: Make it a broken/dashed line
                 // --- END USER REQUEST ---
 
                 // 5. Draw the Bars
@@ -2004,3 +2004,7 @@
 
 </body>
 </html>
+
+
+
+
