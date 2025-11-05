@@ -383,21 +383,14 @@
              font-weight: 700; /* Ensure it's bold */
         }
         
-        /* Subscript styling for J/P words */
-        .personality-words-display .word-suffix {
-            font-size: 0.6em; /* Made even smaller */
-            font-weight: 400;
-            color: #555;
+        /* --- NEW: Style for the (J) suffix --- */
+        .suffix {
+            font-size: 0.5em; /* Make it 50% of the parent font size */
+            font-weight: 400; /* Lighter weight */
+            color: #555; /* Slightly muted color */
+            margin-left: 1px; /* Tiny bit of space */
         }
-
-        /* Subscript styling for 4-letter code */
-        .personality-type-display .suffix,
-        #oppositeTypeHeader .suffix {
-            font-size: 0.3em; /* Made smaller */
-            font-weight: 600;
-            color: #333;
-        }
-
+        /* --- END NEW --- */
 
         .restart-button-container {
             display: flex;
@@ -412,15 +405,22 @@
             font-weight: 600;
             margin-bottom: 20px;
             /* --- MODIFIED: Increased top margin again --- */
-            margin-top: 40px; /* Was 50px */
+            margin-top: 50px; /* Was 30px */
             /* --- NEW: Ensure space below for printing --- */
             margin-bottom: 30px;
+        }
+        
+        /* --- NEW: Apply suffix styling to this header too --- */
+        #oppositeTypeHeader .suffix {
+             font-size: 0.5em; /* Make it 50% */
+             font-weight: 400;
+             color: #555;
         }
 
         .toggle-other-container {
             display: flex;
             justify-content: center;
-            margin-top: 0; /* Was 25px */
+            margin-top: 25px;
             margin-bottom: 25px;
         }
 
@@ -509,15 +509,15 @@
             padding: 0 20px 20px 20px; 
         }
 
-        /* --- Result Details Section Styles (Empty) --- */
+        /* --- Result Details Section Styles (Container) --- */
         .results-details {
             margin-top: 40px;
-            padding: 30px; /* Was padding-top: 30px */
-            /* border-top: 5px solid #000; --- This line has been removed --- */
-            background-color: #f8f9fa; /* NEW */
-            border-radius: 10px; /* NEW */
-            border: 1px solid #e0e6ed; /* NEW */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* NEW */
+            padding: 30px;
+            /* border-top: 1px solid #d1d5db; */ /* Line removed */
+            background-color: #f8f9fa; /* Light gray background */
+            border-radius: 10px;
+            border: 1px solid #e0e6ed;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
 
         .result-section {
@@ -594,6 +594,13 @@
             padding-top: 30px;
             border-top: 1px solid #e0e6ed;
         }
+        
+        /* --- MODIFIED: Adjust profile grid container inside results-details --- */
+        .results-details .profile-grid-container {
+             margin-top: 10px; /* Reduced top margin */
+             padding-top: 0; /* No top padding */
+             border-top: none; /* No top border */
+        }
 
         .profile-grid-title {
             text-align: center;
@@ -610,6 +617,7 @@
             border-radius: 8px;
             /* overflow: hidden; */ /* --- FIX: Removed to prevent highlight clipping --- */
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            background-color: #fff; /* Ensure white background for cells */
         }
 
         .profile-cell {
@@ -836,6 +844,11 @@
                 padding: 12px 30px;
                 font-size: 1rem;
             }
+            
+            /* --- MODIFIED: Adjust section padding for mobile --- */
+            .results-details {
+                padding: 20px;
+            }
 
             /* --- MODIFIED: Mobile Profile Grid --- */
             .profile-grid-container {
@@ -877,6 +890,15 @@
                 border: none !important;
                 overflow: visible !important;
             }
+            
+            /* --- NEW: Simplify results-details for print --- */
+            .results-details {
+                background-color: #fff !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin-top: 30px !important;
+            }
 
             #resultsPage {
                 display: block !important;
@@ -892,7 +914,8 @@
             .profile-grid-container, 
             .result-section-static, 
             .chart-container,
-            .profile-grid {
+            .profile-grid,
+            .results-details { /* --- NEW --- */
                 page-break-inside: avoid;
             }
 
@@ -1065,44 +1088,44 @@
                 </div>
             </details>
 
+            <!-- --- MODIFIED: This is now the styled container --- -->
             <div class="results-details">
-            <!-- This closing div below is REMOVED -->
-            <!-- </div> --> 
-            <div class="toggle-other-container">
-                <button id="showOtherBtn" class="other-toggle-btn">Show Converse Profile</button> 
-            </div>
+                <div class="toggle-other-container">
+                    <button id="showOtherBtn" class="other-toggle-btn">Show Converse Profile</button> 
+                </div>
 
-            <div class="chart-container" id="converse-chart-container" style="display: none;">
-                <svg id="converseResultsChart" viewBox="0 0 960 500"></svg>
-            </div>
-            <h3 id="oppositeTypeHeader" class="opposite-type-header" style="display: none;"></h3>
+                <div class="chart-container" id="converse-chart-container" style="display: none;">
+                    <svg id="converseResultsChart" viewBox="0 0 960 500"></svg>
+                </div>
+                <h3 id="oppositeTypeHeader" class="opposite-type-header" style="display: none;"></h3>
 
-            <p id="oppositeDesc" class="result-section-content" style="display: none; font-style: italic;"></p>
-            <div class="letter-definitions-grid other-letter-grid" id="other-letter-grid">
-                <details class="letter-card other-letter-card" id="other-letter-card-0">
-                    <summary class="letter-card-title" id="other-letter-title-0"></summary>
-                    <p class="letter-card-desc" id="other-letter-desc-0"></p>
-                </details>
-                <details class="letter-card other-letter-card" id="other-letter-card-1">
-                    <summary class="letter-card-title" id="other-letter-title-1"></summary>
-                    <p class="letter-card-desc" id="other-letter-desc-1"></p>
-                </details>
-                <details class="letter-card other-letter-card" id="other-letter-card-2">
-                    <summary class="letter-card-title" id="other-letter-title-2"></summary>
-                    <p class="letter-card-desc" id="other-letter-desc-2"></p>
-                </details>
-                <details class="letter-card other-letter-card" id="other-letter-card-3">
-                    <summary class="letter-card-title" id="other-letter-title-3"></summary>
-                    <p class="letter-card-desc" id="other-letter-desc-3"></p>
-                </details>
-            </div>
+                <p id="oppositeDesc" class="result-section-content" style="display: none; font-style: italic;"></p>
+                <div class="letter-definitions-grid other-letter-grid" id="other-letter-grid">
+                    <details class="letter-card other-letter-card" id="other-letter-card-0">
+                        <summary class="letter-card-title" id="other-letter-title-0"></summary>
+                        <p class="letter-card-desc" id="other-letter-desc-0"></p>
+                    </details>
+                    <details class="letter-card other-letter-card" id="other-letter-card-1">
+                        <summary class="letter-card-title" id="other-letter-title-1"></summary>
+                        <p class="letter-card-desc" id="other-letter-desc-1"></p>
+                    </details>
+                    <details class="letter-card other-letter-card" id="other-letter-card-2">
+                        <summary class="letter-card-title" id="other-letter-title-2"></summary>
+                        <p class="letter-card-desc" id="other-letter-desc-2"></p>
+                    </details>
+                    <details class="letter-card other-letter-card" id="other-letter-card-3">
+                        <summary class="letter-card-title" id="other-letter-title-3"></summary>
+                        <p class="letter-card-desc" id="other-letter-desc-3"></p>
+                    </details>
+                </div>
 
-            <div class="profile-grid-container">
-                <h3 class="profile-grid-title">Discover Jung's 16 Profiles</h3>
-                <div id="profileGrid" class="profile-grid">
-                    </div>
+                <div class="profile-grid-container">
+                    <h3 class="profile-grid-title">Discover Jung's 16 Profiles</h3>
+                    <div id="profileGrid" class="profile-grid">
+                        </div>
+                </div>
             </div>
-            </div> <!-- This closing div is ADDED to wrap .results-details -->
+            
             <div class="restart-button-container">
                  <button id="printBtn">Download / Print Results</button>
             </div>
@@ -1211,8 +1234,8 @@
                 'N': 'iNtuitive',
                 'T': 'Thinking',
                 'F': 'Feeling',
-                'J': 'Considered',
-                'P': 'Impromptu'
+                'J': 'Considered', // CHANGED
+                'P': 'iMpromptu'   // CHANGED
             };
 
             const letterDescriptions = {
@@ -1222,54 +1245,55 @@
                 'N': `The "gut feeling" of the authentic self. This inner wisdom is often suppressed by trauma. Healing involves reclaiming and trusting this intuitive voice.`,
                 'T': `The rational mind, often split from emotion as a brilliant defense against trauma. Wholeness requires reintegrating this intellect with the heart's feelings.`,
                 'F': `The core language of the authentic self. These emotions are often repressed due to childhood wounds, leading to disease. Authenticity is reclaiming all feelings.`,
-                'J': `A drive for control and order, often born from a chaotic or unsafe childhood. This rigidity is a survival strategy to create perceived safety.`,
-                'P': `A potential "go with the flow" trauma response to avoid conflict, or a healthy openness. Can manifest as difficulty with boundaries or commitment.`
+                'J': `A drive for control and order, often born from a chaotic or unsafe childhood. This rigidity is a survival strategy to create perceived safety.`, // Definition remains
+                'P': `A potential "go with the flow" trauma response to avoid conflict, or a healthy openness. Can manifest as difficulty with boundaries or commitment.` // Definition remains
             };
 
             const personalityDescriptions = {
-                'ISTJ': `This deep sense of duty could be an adaptation to feel needed and safe. The wound is a fear of chaos, managed by rigid control. Authenticity comes from learning their worth isn't just in their dependability but in their being.`,
-                'ISFJ': `A person who likely learned their "value" is in caretaking. This self-sacrificing nature can be an adaptation to suppress their own needs, leading to burnout. Healing means learning to serve themself with the same devotion.`,
-                'INFJ': `A highly sensitive soul, prone to absorbing others' emotions as a survival tactic. Their profound intuition may be a hyper-vigilance born from needing to "read the room" to be safe. Authenticity is learning to protect their own energy.`,
-                'INTJ': `This strategic mind may be a defense against a world that felt illogical or emotionally unsafe. By retreating into logic, they found control. Healing involves daring to trust and integrate the "illogical" world of their own feelings.`,
-                'ISTP': `A deep-seated need for autonomy, perhaps from feeling controlled or enmeshed. The cool, detached logic can be a shield for a sensitive inner world. True freedom comes from connecting their logical independence with emotional interdependence.`,
-                'ISFP': `An authentic, sensitive self that may have learned to be "seen and not heard." Their values are quiet but intense. A wound may be a fear of conflict, leading them to "go with the flow" until a core value is violated.`,
-                'INFP': `The "idealist" who may be deeply wounded by the gap between "what should be" and "what is." This sensitivity can be overwhelming. Authenticity is not in fixing the world, but in accepting their own feelings, including anger and grief.`,
-                'INTP': `A person who likely found safety in the world of ideas, escaping a world that was emotionally confusing or painful. Their "ivory tower" is a defense. Healing means bringing their brilliant mind "down" into their body and heart.`,
-                'ESTP': `This "addiction" to the present moment and high-stimulus activity could be an escape from a painful inner world or past. Stillness feels dangerous. Healing involves learning to be present not just with the outside world, but with their inside one.`,
-                'ESFP': `The "performer" who may have learned that their worth comes from being happy and entertaining. This can be a mask for their own pain or sadness. Authenticity means allowing themself to be "off-stage," sad, or still, and know they are still worthy.`,
-                'ENFP': `This boundless enthusiasm can be a defense against looking inward. Their fear of "being-pinned-down" may be a trauma response to feeling trapped. Healing means finding the courage to commit and go deep, rather than wide, and to sit with their own discomfort.`,
-                'ENTP': `The "devil's advocate" who may use intellectual argument to create distance from their own emotions. This need to "be right" or "win" can be a defense. Authenticity involves realizing that vulnerability is not a logical weakness, but a human strength.`,
-                'ESTJ': `This powerful need for external order and control may stem from an inner fear of helplessness. Their identity is tied to their effectiveness. True strength would be to embrace vulnerability and accept that "not-knowing" is not a failure.`,
-                'ESFJ': `A person who lives for "the-we," often at the expense of "the-me." Their identity is built on social approval and being needed. This is a profound trauma adaptation. Healing is a revolutionary act of prioritizing their own needs first.`,
-                'ENFJ': `This charismatic focus on others' potential can be a way to avoid their own wounds. They "fix" others to avoid fixing themselves. Their greatest challenge is to turn that powerful, compassionate gaze inward and parent their own inner child.`,
-                'ENTJ': `A powerful will, perhaps forged in an environment where they had to be "strong" to survive. Emotion is seen as a liability to the "mission." Wholeness comes from realizing that their feelings are not obstacles, but essential data for true, authentic leadership.`
+                // Descriptions remain the same, but are mapped to C(J) and M(P)
+                'ISTC(J)': `This deep sense of duty could be an adaptation to feel needed and safe. The wound is a fear of chaos, managed by rigid control. Authenticity comes from learning their worth isn't just in their dependability but in their being.`,
+                'ISFC(J)': `A person who likely learned their "value" is in caretaking. This self-sacrificing nature can be an adaptation to suppress their own needs, leading to burnout. Healing means learning to serve themself with the same devotion.`,
+                'INFC(J)': `A highly sensitive soul, prone to absorbing others' emotions as a survival tactic. Their profound intuition may be a hyper-vigilance born from needing to "read the room" to be safe. Authenticity is learning to protect their own energy.`,
+                'INTC(J)': `This strategic mind may be a defense against a world that felt illogical or emotionally unsafe. By retreating into logic, they found control. Healing involves daring to trust and integrate the "illogical" world of their own feelings.`,
+                'ISTM(P)': `A deep-seated need for autonomy, perhaps from feeling controlled or enmeshed. The cool, detached logic can be a shield for a sensitive inner world. True freedom comes from connecting their logical independence with emotional interdependence.`,
+                'ISFM(P)': `An authentic, sensitive self that may have learned to be "seen and not heard." Their values are quiet but intense. A wound may be a fear of conflict, leading them to "go with the flow" until a core value is violated.`,
+                'INFM(P)': `The "idealist" who may be deeply wounded by the gap between "what should be" and "what is." This sensitivity can be overwhelming. Authenticity is not in fixing the world, but in accepting their own feelings, including anger and grief.`,
+                'INTM(P)': `A person who likely found safety in the world of ideas, escaping a world that was emotionally confusing or painful. Their "ivory tower" is a defense. Healing means bringing their brilliant mind "down" into their body and heart.`,
+                'ESTM(P)': `This "addiction" to the present moment and high-stimulus activity could be an escape from a painful inner world or past. Stillness feels dangerous. Healing involves learning to be present not just with the outside world, but with their inside one.`,
+                'ESFM(P)': `The "performer" who may have learned that their worth comes from being happy and entertaining. This can be a mask for their own pain or sadness. Authenticity means allowing themself to be "off-stage," sad, or still, and know they are still worthy.`,
+                'ENFM(P)': `This boundless enthusiasm can be a defense against looking inward. Their fear of "being-pinned-down" may be a trauma response to feeling trapped. Healing means finding the courage to commit and go deep, rather than wide, and to sit with their own discomfort.`,
+                'ENTM(P)': `The "devil's advocate" who may use intellectual argument to create distance from their own emotions. This need to "be right" or "win" can be a defense. Authenticity involves realizing that vulnerability is not a logical weakness, but a human strength.`,
+                'ESTC(J)': `This powerful need for external order and control may stem from an inner fear of helplessness. Their identity is tied to their effectiveness. True strength would be to embrace vulnerability and accept that "not-knowing" is not a failure.`,
+                'ESFC(J)': `A person who lives for "the-we," often at the expense of "the-me." Their identity is built on social approval and being needed. This is a profound trauma adaptation. Healing is a revolutionary act of prioritizing their own needs first.`,
+                'ENFC(J)': `This charismatic focus on others' potential can be a way to avoid their own wounds. They "fix" others to avoid fixing themselves. Their greatest challenge is to turn that powerful, compassionate gaze inward and parent their own inner child.`,
+                'ENTC(J)': `A powerful will, perhaps forged in an environment where they had to be "strong" to survive. Emotion is seen as a liability to the "mission." Wholeness comes from realizing that their feelings are not obstacles, but essential data for true, authentic leadership.`
             };
             
             // --- NEW: Data for the profile grid ---
             const profileGridData = [
-                { type: 'ISTJ', title: "Life's Natural Organizers", color: 'a' },
-                { type: 'ISFJ', title: "Committed to Getting the Job Done", color: 'b' },
-                { type: 'INFJ', title: "An Inspiring Leader and Follower", color: 'a' },
-                { type: 'INTJ', title: "Life's Independent Thinkers", color: 'b' },
+                { type: 'ISTC(J)', title: "Life's Natural Organizers", color: 'a' },
+                { type: 'ISFC(J)', title: "Committed to Getting the Job Done", color: 'b' },
+                { type: 'INFC(J)', title: "An Inspiring Leader and Follower", color: 'a' },
+                { type: 'INTC(J)', title: "Life's Independent Thinkers", color: 'b' },
 
                 /* --- ROW 2 AND 3 SWAPPED --- */
                 /* --- MODIFIED: Alternating colors for chess pattern --- */
-                { type: 'ESTP', title: "Making the Most of the Moment", color: 'b' },
-                { type: "ESFP", title: "Let's Make Work Fun", color: 'a' },
-                { type: 'ENFP', title: "People Are the Product", color: 'b' },
-                { type: 'ENTP', title: "Progress Is the Product", color: 'a' },
+                { type: 'ESTM(P)', title: "Making the Most of the Moment", color: 'b' },
+                { type: 'ESFM(P)', title: "Let's Make Work Fun", color: 'a' },
+                { type: 'ENFM(P)', title: "People Are the Product", color: 'b' },
+                { type: 'ENTM(P)', title: "Progress Is the Product", color: 'a' },
 
-                { type: 'ISTP', title: "Just Do It", color: 'a' },
-                { type: 'ISFP', title: "Action Speaks Louder Than Words", color: 'b' },
-                { type: 'INFP', title: "Making Life Kinder and Gentler", color: 'a' },
-                { type: 'INTP', title: "Life's Problem Solvers", color: 'b' },
+                { type: 'ISTM(P)', title: "Just Do It", color: 'a' },
+                { type: 'ISFM(P)', title: "Action Speaks Louder Than Words", color: 'b' },
+                { type: 'INFM(P)', title: "Making Life Kinder and Gentler", color: 'a' },
+                { type: 'INTM(P)', title: "Life's Problem Solvers", color: 'b' },
                 /* --- END MODIFIED --- */
                 /* --- END SWAP --- */
 
-                { type: 'ESTJ', title: "Life's Natural Administrators", color: 'b' },
-                { type: 'ESFJ', title: "Everyone's Trusted Friend", color: 'a' },
-                { type: 'ENFJ', title: "Smooth-Talking Persuaders", color: 'b' },
-                { type: 'ENTJ', title: "Life's Natural Leaders", color: 'a' },
+                { type: 'ESTC(J)', title: "Life's Natural Administrators", color: 'b' },
+                { type: 'ESFC(J)', title: "Everyone's Trusted Friend", color: 'a' },
+                { type: 'ENFC(J)', title: "Smooth-Talking Persuaders", color: 'b' },
+                { type: 'ENTC(J)', title: "Life's Natural Leaders", color: 'a' },
             ];
 
             // --- App State ---
@@ -1319,29 +1343,34 @@
                 profileGridData.forEach(profile => {
                     const cell = document.createElement('div');
                     cell.className = 'profile-cell ' + (profile.color === 'a' ? 'cell-color-a' : 'cell-color-b');
-                    cell.dataset.type = profile.type;
+                    cell.dataset.type = profile.type; // This will be "ISTC(J)" etc.
                     
                     cell.innerHTML = `
-                        <div class="profile-cell-type">${profile.type}</div>
+                        <div class="profile-cell-type">${profile.type.replace('C(J)', '<strong>C</strong>').replace('M(P)', '<strong>M</strong>')}</div>
                         <div class="profile-cell-title">${profile.title}</div>
                     `;
                     
+                    // Add click listener to show modal
+                    cell.addEventListener('click', () => {
+                        // Find description using the modified key
+                        const description = personalityDescriptions[profile.type]; 
+                        
+                        if (description) {
+                            showProfileModal(profile.type, profile.title, description);
+                        } else {
+                            console.error('Could not find description for type:', profile.type);
+                        }
+                    });
+
                     profileGrid.appendChild(cell);
                 });
             }
 
             // --- NEW: Functions to show/hide the profile modal ---
-            function showProfileModal(type) {
-                const profileData = profileGridData.find(p => p.type === type);
-                const description = personalityDescriptions[type];
-
-                if (!profileData || !description) {
-                    console.error('Could not find data for type:', type);
-                    return;
-                }
-
-                modalTitle.textContent = type;
-                modalSubtitle.textContent = profileData.title;
+            // --- MODIFIED: showProfileModal to accept all data ---
+            function showProfileModal(type, title, description) {
+                modalTitle.innerHTML = type.replace('C(J)', 'C<span class="suffix">(J)</span>').replace('M(P)', 'M<span class="suffix">(P)</span>');
+                modalSubtitle.textContent = title;
                 modalDescription.textContent = description;
                 
                 profileModal.style.display = 'flex';
@@ -1451,6 +1480,20 @@
                     finishBtn.style.display = 'none';
                 }
             }
+            
+            // --- Helper function to format the letter for display ---
+            function formatLetter(letter) {
+                if (letter === 'J') return 'C(J)';
+                if (letter === 'P') return 'M(P)';
+                return letter;
+            }
+
+            // --- Helper function to format the type string ---
+            function formatTypeString(type) {
+                return type
+                    .replace('J', 'C<span class="suffix">(J)</span>')
+                    .replace('P', 'M<span class="suffix">(P)</span>');
+            }
 
             // --- MODIFIED: Restored and corrected showResults function ---
             function showResults() {
@@ -1551,21 +1594,19 @@
                     otherLetters.push('J'); 
                 }
                 
-                const chartLabels = finalData.map(d => d.letter);
+                // --- MODIFIED: Use formatted letters for chart labels ---
+                const chartLabels = finalData.map(d => formatLetter(d.letter)); // e.g., ["E", "S", "T", "C(J)"]
+                
                 const chartData = finalData.map(d => d.score); // This is now percentage
                 const chartRealScores = finalData.map(d => d.realScore); 
                 const chartMaxScores = finalData.map(d => d.maxScore); 
                 const chartBackgroundColors = finalData.map(d => colorMap[d.letter].bg);
                 const chartBorderColors = finalData.map(d => colorMap[d.letter].border);
 
-                const personalityTypeString = chartLabels.join('');
+                // --- MODIFIED: Create the type string (e.g., ESTC(J)) ---
+                const personalityTypeString = chartLabels.join(''); // "ESTC(J)"
+                const rawTypeString = finalData.map(d => d.letter).join(''); // "ESTJ"
                 
-                // --- MODIFICATION: Create display string for personality type ---
-                let displayTypeString = personalityTypeString;
-                displayTypeString = displayTypeString.replace(/J/g, 'C<span class="suffix">(J)</span>');
-                displayTypeString = displayTypeString.replace(/P/g, 'M<span class="suffix">(P)</span>');
-                // --- END MODIFICATION ---
-
                 // --- NEW: Highlight the result in the profile grid ---
                 // First, clear any existing highlights
                 document.querySelectorAll('.profile-cell.highlight').forEach(cell => {
@@ -1579,56 +1620,59 @@
                 }
                 // --- END NEW ---
                 
-                const oppositeTypeString = otherLetters.join('');
-
-                // --- MODIFICATION: Create display string for opposite type ---
-                let displayOppositeTypeString = oppositeTypeString;
-                displayOppositeTypeString = displayOppositeTypeString.replace(/J/g, 'C<span class="suffix">(J)</span>');
-                displayOppositeTypeString = displayOppositeTypeString.replace(/P/g, 'M<span class="suffix">(P)</span>');
-                // --- END MODIFICATION ---
+                // --- MODIFIED: Create opposite type string ---
+                const oppositeTypeStringFormatted = otherLetters.map(formatLetter).join(''); // "INFM(P)"
+                const oppositeTypeStringRaw = otherLetters.join(''); // "INFP"
                 
-                // --- MODIFICATION: Build personality words array with new J/P logic ---
-                const personalityWordsArray = chartLabels.map(letter => {
+                // --- NEW: Get and set opposite profile description ---
+                const oppositeDescription = personalityDescriptions[oppositeTypeStringFormatted];
+                const oppositeDescEl = document.getElementById('oppositeDesc');
+                if (oppositeDescEl) {
+                    oppositeDescEl.textContent = oppositeDescription || "Description for this type is not available.";
+                }
+                // --- END NEW ---
+                
+                const personalityWordsArray = finalData.map(d => {
+                    const letter = d.letter; // 'E', 'I', 'S', 'N', 'T', 'F', 'J', 'P'
+                    const fullWord = wordMap[letter]; // 'Extroverted', 'Considered', 'iMpromptu'
+                    
                     if (letter === 'J') {
-                        return '<strong>C</strong>onsidered<span class="word-suffix">(judging)</span>';
+                        return `<strong>C</strong>onsidered<span class="suffix">(judging)</span>`;
                     }
                     if (letter === 'P') {
-                        return 'i<strong>M</strong>promptu<span class="word-suffix">(perceiving)</span>';
+                        return `i<strong>M</strong>promptu<span class="suffix">(perceiving)</span>`;
                     }
-                    // Original logic for E, I, S, N, T, F
-                    const fullWord = wordMap[letter]; 
+                    
                     const keyIndex = fullWord.toLowerCase().indexOf(letter.toLowerCase());
                     if (keyIndex === -1) { return fullWord; }
+                    
                     const before = fullWord.substring(0, keyIndex); 
                     const keyChar = fullWord.substring(keyIndex, keyIndex + 1); 
                     const after = fullWord.substring(keyIndex + 1); 
                     return `${before}<strong>${keyChar}</strong>${after}`;
                 });
-                // --- END MODIFICATION ---
                 const personalityWordsHTML = personalityWordsArray.join(' - ');
 
-                // --- MODIFICATION: Use innerHTML for personality type display ---
                 if (personalityTypeEl) {
-                    personalityTypeEl.innerHTML = displayTypeString;
+                    // --- MODIFIED: Use formatTypeString helper ---
+                    personalityTypeEl.innerHTML = formatTypeString(rawTypeString);
                 }
-                // --- END MODIFICATION ---
-                
                 if (personalityWordsEl) {
                     personalityWordsEl.innerHTML = personalityWordsHTML; 
                 }
 
-                // --- MODIFICATION: Use innerHTML for opposite type display ---
+                const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
                 if (oppositeHeaderEl) {
-                    oppositeHeaderEl.innerHTML = `Your converse profile: ${displayOppositeTypeString}`; 
+                    // --- MODIFIED: Use formatTypeString helper ---
+                    oppositeHeaderEl.innerHTML = `Your converse profile: ${formatTypeString(oppositeTypeStringRaw)}`; 
                 }
-                // --- END MODIFICATION ---
 
                 const letterGrid = document.getElementById('letter-grid');
-                if (chartLabels.length === 4) {
+                if (finalData.length === 4) {
                     letterGrid.style.display = 'grid'; 
                     for (let i = 0; i < 4; i++) {
-                        const letter = chartLabels[i];
-                        const fullWord = wordMap[letter];
+                        const letter = finalData[i].letter; // 'E', 'S', 'T', 'J'
+                        const fullWord = wordMap[letter]; // 'Extroverted', 'Sensate', 'Thinking', 'Considered'
                         const description = letterDescriptions[letter];
                         const color = colorMap[letter].border; 
                         const bgColor = color.replace(', 1)', ', 0.1)');
@@ -1638,7 +1682,14 @@
                         cardElement.style.borderColor = color;
                         cardElement.style.backgroundColor = bgColor; 
 
-                        document.getElementById(`letter-title-${i}`).textContent = fullWord;
+                        // --- MODIFIED: Add suffix for J/P ---
+                        let titleHTML = fullWord;
+                        if (letter === 'J') {
+                            titleHTML += `<span class="suffix">(judging)</span>`;
+                        } else if (letter === 'P') {
+                            titleHTML += `<span class="suffix">(perceiving)</span>`;
+                        }
+                        document.getElementById(`letter-title-${i}`).innerHTML = titleHTML;
                         document.getElementById(`letter-desc-${i}`).textContent = description;
                     }
                 } else {
@@ -1648,19 +1699,28 @@
                 const otherLetterGrid = document.getElementById('other-letter-grid');
                 if (otherLetters.length === 4) {
                     for (let i = 0; i < 4; i++) {
-                        const letter = otherLetters[i];
-                        const fullWord = wordMap[letter];
+                        const letter = otherLetters[i]; // 'I', 'N', 'F', 'P'
+                        const fullWord = wordMap[letter]; // 'Introverted', 'iNtuitive', 'Feeling', 'iMpromptu'
                         const description = letterDescriptions[letter];
                         const color = colorMap[letter].border;
 
                         const cardElement = document.getElementById(`other-letter-card-${i}`);
                         
                         cardElement.style.borderColor = color;
-                        document.getElementById(`other-letter-title-${i}`).textContent = fullWord;
+                        
+                        // --- MODIFIED: Add suffix for J/P ---
+                        let titleHTML = fullWord;
+                        if (letter === 'J') {
+                            titleHTML += `<span class="suffix">(judging)</span>`;
+                        } else if (letter === 'P') {
+                            titleHTML += `<span class="suffix">(perceiving)</span>`;
+                        }
+                        document.getElementById(`other-letter-title-${i}`).innerHTML = titleHTML;
                         document.getElementById(`other-letter-desc-${i}`).textContent = description;
                     }
                 }
 
+                // --- MODIFIED: Use formatted string for description key ---
                 const description = personalityDescriptions[personalityTypeString] || "Your personality description will appear here.";
                 document.getElementById('desc-overview').textContent = description;
                 
@@ -1671,18 +1731,10 @@
                     resultsChartInstance.destroy();
                 }
 
-                // --- NEW: Create display labels for the chart axis ---
-                const displayChartLabels = chartLabels.map(l => {
-                    if (l === 'J') return 'C(J)';
-                    if (l === 'P') return 'M(P)';
-                    return l;
-                });
-                // --- END NEW ---
-
                 resultsChartInstance = new Chart(ctx, {
                     type: 'bar', 
                     data: {
-                        labels: displayChartLabels, // --- MODIFIED: Use new display labels ---
+                        labels: chartLabels, // This now contains "C(J)" and "M(P)"
                         datasets: [
                             {
                                 label: 'Score',
@@ -1729,7 +1781,7 @@
                                 ticks: {
                                     font: {
                                         family: 'Poppins',
-                                        size: 14,
+                                        size: 12, // --- MODIFIED: Reduced size ---
                                         weight: '600'
                                     },
                                     color: '#2c3e50'
@@ -1790,7 +1842,7 @@
                     { group: 'E / I', valueA: getPercent('E'), valueB: getPercent('I'), keyA: 'E', keyB: 'I' },
                     { group: 'S / N', valueA: getPercent('S'), valueB: getPercent('N'), keyA: 'S', keyB: 'N' },
                     { group: 'T / F', valueA: getPercent('T'), valueB: getPercent('F'), keyA: 'T', keyB: 'F' },
-                    { group: 'J / P', valueA: getPercent('J'), valueB: getPercent('P'), keyA: 'J', keyB: 'P' }
+                    { group: 'C(J) / M(P)', valueA: getPercent('J'), valueB: getPercent('P'), keyA: 'J', keyB: 'P' } // MODIFIED
                 ];
                 
                 const groupKeys = ['valueA', 'valueB'];
@@ -1840,6 +1892,20 @@
                     .call(g => g.selectAll(".tick line")
                         .attr("stroke", d => (d === 100 ? '#2c3e50' : '#ccc')) // Match Chart.js colors
                         .attr("stroke-opacity", 1));
+                        
+                // --- NEW: Add 50% dashed line ---
+                // --- MODIFIED: Calculate start and end points to be closer to columns ---
+                const lineStartX = x0(data[0].group) - 10; // MODIFIED: extend left
+                const lineEndX = x0(data[data.length - 1].group) + x0.bandwidth() + 10; // MODIFIED: extend right
+                
+                g.append("line")
+                    .attr("x1", lineStartX) // Start at the first bar group
+                    .attr("y1", yScale(50))
+                    .attr("x2", lineEndX) // End at the last bar group
+                    .attr("y2", yScale(50))
+                    .attr("stroke", "#333") // Dark bold color
+                    .attr("stroke-width", 2) // Bold
+                    .attr("stroke-dasharray", "6,4"); // Broken line (6 pixels on, 4 off)
 
                 // 4. Axes
                 
@@ -2012,14 +2078,15 @@
             // --- NEW: Grid and Modal Event Listeners ---
             populateProfileGrid(); // Call the function to build the grid
 
-            if (profileGrid) {
-                profileGrid.addEventListener('click', (e) => {
-                    const cell = e.target.closest('.profile-cell');
-                    if (cell && cell.dataset.type) {
-                        showProfileModal(cell.dataset.type);
-                    }
-                });
-            }
+            // --- MODIFIED: Grid click listener is now inside populateProfileGrid ---
+            // if (profileGrid) {
+            //     profileGrid.addEventListener('click', (e) => {
+            //         const cell = e.target.closest('.profile-cell');
+            //         if (cell && cell.dataset.type) {
+            //             showProfileModal(cell.dataset.type);
+            //         }
+            //     });
+            // }
 
             if (modalCloseBtn) {
                 modalCloseBtn.addEventListener('click', hideProfileModal);
