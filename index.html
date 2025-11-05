@@ -382,6 +382,21 @@
              font-size: 1.1em; /* Make it slightly larger */
              font-weight: 700; /* Ensure it's bold */
         }
+        
+        /* Subscript styling for J/P words */
+        .personality-words-display .word-suffix {
+            font-size: 0.6em; /* Made even smaller */
+            font-weight: 400;
+            color: #555;
+        }
+
+        /* Subscript styling for 4-letter code */
+        .personality-type-display .suffix {
+            font-size: 0.3em; /* Made smaller */
+            font-weight: 600;
+            color: #333;
+        }
+
 
         .restart-button-container {
             display: flex;
@@ -396,7 +411,7 @@
             font-weight: 600;
             margin-bottom: 20px;
             /* --- MODIFIED: Increased top margin again --- */
-            margin-top: 50px; /* Was 30px */
+            margin-top: 40px; /* Was 50px */
             /* --- NEW: Ensure space below for printing --- */
             margin-bottom: 30px;
         }
@@ -404,7 +419,7 @@
         .toggle-other-container {
             display: flex;
             justify-content: center;
-            margin-top: 25px;
+            margin-top: 0; /* Was 25px */
             margin-bottom: 25px;
         }
 
@@ -496,8 +511,12 @@
         /* --- Result Details Section Styles (Empty) --- */
         .results-details {
             margin-top: 40px;
-            padding-top: 30px;
-            border-top: 5px solid #000; 
+            padding: 30px; /* Was padding-top: 30px */
+            /* border-top: 5px solid #000; --- This line has been removed --- */
+            background-color: #f8f9fa; /* NEW */
+            border-radius: 10px; /* NEW */
+            border: 1px solid #e0e6ed; /* NEW */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* NEW */
         }
 
         .result-section {
@@ -1046,7 +1065,8 @@
             </details>
 
             <div class="results-details">
-            </div>
+            <!-- This closing div below is REMOVED -->
+            <!-- </div> --> 
             <div class="toggle-other-container">
                 <button id="showOtherBtn" class="other-toggle-btn">Show Converse Profile</button> 
             </div>
@@ -1081,6 +1101,7 @@
                 <div id="profileGrid" class="profile-grid">
                     </div>
             </div>
+            </div> <!-- This closing div is ADDED to wrap .results-details -->
             <div class="restart-button-container">
                  <button id="printBtn">Download / Print Results</button>
             </div>
@@ -1189,8 +1210,8 @@
                 'N': 'iNtuitive',
                 'T': 'Thinking',
                 'F': 'Feeling',
-                'J': 'Judging',
-                'P': 'Perceiving'
+                'J': 'Considered',
+                'P': 'Impromptu'
             };
 
             const letterDescriptions = {
@@ -1538,6 +1559,12 @@
 
                 const personalityTypeString = chartLabels.join('');
                 
+                // --- MODIFICATION: Create display string for personality type ---
+                let displayTypeString = personalityTypeString;
+                displayTypeString = displayTypeString.replace(/J/g, 'C<span class="suffix">(J)</span>');
+                displayTypeString = displayTypeString.replace(/P/g, 'M<span class="suffix">(P)</span>');
+                // --- END MODIFICATION ---
+
                 // --- NEW: Highlight the result in the profile grid ---
                 // First, clear any existing highlights
                 document.querySelectorAll('.profile-cell.highlight').forEach(cell => {
@@ -1552,16 +1579,22 @@
                 // --- END NEW ---
                 
                 const oppositeTypeString = otherLetters.join('');
+
+                // --- MODIFICATION: Create display string for opposite type ---
+                let displayOppositeTypeString = oppositeTypeString;
+                displayOppositeTypeString = displayOppositeTypeString.replace(/J/g, 'C<span class="suffix">(J)</span>');
+                displayOppositeTypeString = displayOppositeTypeString.replace(/P/g, 'M<span class="suffix">(P)</span>');
+                // --- END MODIFICATION ---
                 
-                // --- NEW: Get and set opposite profile description ---
-                const oppositeDescription = personalityDescriptions[oppositeTypeString];
-                const oppositeDescEl = document.getElementById('oppositeDesc');
-                if (oppositeDescEl) {
-                    oppositeDescEl.textContent = oppositeDescription || "Description for this type is not available.";
-                }
-                // --- END NEW ---
-                
+                // --- MODIFICATION: Build personality words array with new J/P logic ---
                 const personalityWordsArray = chartLabels.map(letter => {
+                    if (letter === 'J') {
+                        return '<strong>C</strong>onsidered<span class="word-suffix">(judging)</span>';
+                    }
+                    if (letter === 'P') {
+                        return 'i<strong>M</strong>promptu<span class="word-suffix">(perceiving)</span>';
+                    }
+                    // Original logic for E, I, S, N, T, F
                     const fullWord = wordMap[letter]; 
                     const keyIndex = fullWord.toLowerCase().indexOf(letter.toLowerCase());
                     if (keyIndex === -1) { return fullWord; }
@@ -1570,19 +1603,24 @@
                     const after = fullWord.substring(keyIndex + 1); 
                     return `${before}<strong>${keyChar}</strong>${after}`;
                 });
+                // --- END MODIFICATION ---
                 const personalityWordsHTML = personalityWordsArray.join(' - ');
 
+                // --- MODIFICATION: Use innerHTML for personality type display ---
                 if (personalityTypeEl) {
-                    personalityTypeEl.textContent = personalityTypeString;
+                    personalityTypeEl.innerHTML = displayTypeString;
                 }
+                // --- END MODIFICATION ---
+                
                 if (personalityWordsEl) {
                     personalityWordsEl.innerHTML = personalityWordsHTML; 
                 }
 
-                const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
+                // --- MODIFICATION: Use innerHTML for opposite type display ---
                 if (oppositeHeaderEl) {
-                    oppositeHeaderEl.textContent = `Your converse profile: ${oppositeTypeString}`; 
+                    oppositeHeaderEl.innerHTML = `Your converse profile: ${displayOppositeTypeString}`; 
                 }
+                // --- END MODIFICATION ---
 
                 const letterGrid = document.getElementById('letter-grid');
                 if (chartLabels.length === 4) {
@@ -1632,10 +1670,18 @@
                     resultsChartInstance.destroy();
                 }
 
+                // --- NEW: Create display labels for the chart axis ---
+                const displayChartLabels = chartLabels.map(l => {
+                    if (l === 'J') return 'C(J)';
+                    if (l === 'P') return 'M(P)';
+                    return l;
+                });
+                // --- END NEW ---
+
                 resultsChartInstance = new Chart(ctx, {
                     type: 'bar', 
                     data: {
-                        labels: chartLabels, 
+                        labels: displayChartLabels, // --- MODIFIED: Use new display labels ---
                         datasets: [
                             {
                                 label: 'Score',
@@ -1815,17 +1861,6 @@
                     .call(d3.axisLeft(yScale).tickFormat(() => "")) // Hide tick labels
                     .call(g => g.select(".domain").remove()); // Remove the axis domain line
                 // --- DELETED Y-Axis Label ("Score (%)") ---
-                
-                // --- USER REQUEST: Add 50% line ---
-                g.append("line")
-                    .attr("x1", x0(data[0].group) - 10) // CHANGED: Extended start
-                    .attr("x2", x0(data[data.length - 1].group) + x0.bandwidth() + 10) // CHANGED: Extended end
-                    .attr("y1", yScale(50)) // Position at the 50% mark
-                    .attr("y2", yScale(50)) // Position at the 50% mark
-                    .attr("stroke", "#000") 
-                    .attr("stroke-width", 2.5) 
-                    .attr("stroke-dasharray", "6 4"); // CHANGED: Make it a broken/dashed line
-                // --- END USER REQUEST ---
 
                 // 5. Draw the Bars
                 const barGroups = g.append("g")
@@ -2004,7 +2039,3 @@
 
 </body>
 </html>
-
-
-
-
