@@ -297,6 +297,17 @@
         }
         /* --- END NEW --- */
 
+        /* --- NEW: Style for the bottom-right copyright --- */
+        .ourfields-copyright-bottom {
+            font-size: 0.8rem;  /* Same size as .cover-copyright */
+            color: #555;      /* Same color as .cover-copyright */
+            width: 100%;      /* Take full width of the flex container */
+            max-width: 650px; /* Match the max-width of description text to align */
+            text-align: right;  /* Align text to the right */
+            margin-top: 30px;   /* Space from the button */
+        }
+        /* --- END NEW --- */
+
         #startBtn {
             font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
@@ -873,7 +884,8 @@
             .modal-overlay,
             .container::before,
             .other-toggle-btn,
-            #printBtn {
+            #printBtn,
+            .ourfields-copyright-bottom { /* --- NEW: Hide bottom copyright on print --- */
                 display: none !important;
             }
 
@@ -1015,6 +1027,7 @@
 
             </div>
             <button id="startBtn">Begin the Evaluation</button>
+            <p class="ourfields-copyright-bottom">ourfields.ie ©</p>
         </div>
 
         <div id="quizSection" style="display: none;"> 
