@@ -308,6 +308,23 @@
         }
         /* --- END NEW --- */
 
+        /* --- NEW: Footer for quiz and results pages --- */
+        .page-footer {
+            font-size: 0.8rem;  /* Same size as .ourfields-copyright-bottom */
+            color: #555;      /* Same color as .ourfields-copyright-bottom */
+            text-align: center; /* Centered */
+            width: 100%;
+            padding-top: 20px; /* Space from content above */
+            margin-top: 30px;
+            border-top: 1px solid #e0e6ed; /* Subtle separator line */
+        }
+
+        .page-footer b {
+            font-weight: 600;
+            color: #333;
+        }
+        /* --- END NEW --- */
+
         #startBtn {
             font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
@@ -885,7 +902,8 @@
             .container::before,
             .other-toggle-btn,
             #printBtn,
-            .ourfields-copyright-bottom { /* --- NEW: Hide bottom copyright on print --- */
+            .ourfields-copyright-bottom, /* --- NEW: Hide bottom copyright on print --- */
+            .page-footer { /* --- NEW: Hide new footer on print --- */
                 display: none !important;
             }
 
@@ -982,7 +1000,9 @@
     <div class="container">
         
         <div id="coverPage">
-            <h1 id="coverTitle" class="cover-title">JUNG TYPOLOGY</h1>
+            <!-- === MODIFICATION HERE === -->
+            <h1 id="coverTitle" class="cover-title">The J16T (Jung 16 Temperaments)</h1>
+            <!-- === END MODIFICATION === -->
             <p class="cover-copyright">exclusive to <b>ourfields.ie</b> programmes</p>
             
             <p class="cover-description">
@@ -1058,6 +1078,12 @@
                 <button id="nextBtn" style="display: none;">Next</button>
                 <button id="finishBtn" style="display: none;">Finish</button>
             </div>
+            
+            <!-- === NEW FOOTER HERE === -->
+            <footer class="page-footer">
+                <b>ourfields.ie</b> J16T (Jung 16 Temperaments)
+            </footer>
+            <!-- === END NEW FOOTER === -->
         </div>
         
         <div id="resultsPage" style="display: none;">
@@ -1142,6 +1168,12 @@
             <div class="restart-button-container">
                  <button id="printBtn">Download / Print Results</button>
             </div>
+            
+            <!-- === NEW FOOTER HERE === -->
+            <footer class="page-footer">
+                <b>ourfields.ie</b> J16T (Jung 16 Temperaments)
+            </footer>
+            <!-- === END NEW FOOTER === -->
         </div>
     </div>
 
@@ -1199,23 +1231,9 @@
                 { type: "J/P", text: "Do you decide?", options: ["based on analysis", "on a considered hunch"] },
                 { type: "T/F", text: "Which is most satisfying for you?", options: ["thorough discussion", "reaching agreement"] },
                 { type: "S/N", text: "After a meal do you?", options: ["tidy up immediately", "leave it until later"] },
-                { type: "J/P", text: "Does your behaviour be?", options: ["hurried", "laid back"] },
-                { type: "S/N", text: "Do you hear what is said as?", options: ["all the story", "most of the story"] },
-                { type: "E/I", text: "Do you?", options: ["share your feelings easily", "act reserved"] },
-                { type: "T/F", text: "Are you?", options: ["an uncompromising person", "a collaborative person"] },
-                { type: "J/P", text: "Do you find it?", options: ["is stressful to change", "easy to reschedule meetings"] },
-                { type: "T/F", text: "Are you?", options: ["tough minded", "fair minded"] },
-                { type: "S/N", text: "When evaluating a situation do you", options: ["see only what is in front of you", "can you imagine more possibilities"] },
-                { type: "J/P", text: "Is your approach?", options: ["ensure everything is arranged", "just let things happen"] },
-                { type: "S/N", text: "Do you only trust?", options: ["past experiences", "all possibilities are worth checking"] },
-                { type: "E/I", text: "Do you?", options: ["know a little about everything", "know much about a few things"] },
-                { type: "T/F", text: "Are you convinced, more often, by?", options: ["hard evidence", "possible outside the box solutions"] },
-                { type: "J/P", text: "Is your approach to life?", options: ["structure", "flexible"] },
-                { type: "T/F", text: "Which is the greatest asset?", options: ["strength of will", "strength of fair compassion"] },
-                { type: "S/N", text: "Do you always feel?", options: ["down to earth", "day dream a little"] },
-                { type: "J/P", text: "How do you cope with unexpected events?", options: ["get a good handle on things", "get very stressed"] },
-                { type: "S/N", text: "Do you act in?", options: ["Routine way", "whimsical way"] },
+                /* === MODIFICATION HERE === */
                 { type: "E/I", text: "Are you?", options: ["a good conversationalist", "a good listener"] },
+                /* === END MODIFICATION === */
                 { type: "T/F", text: "Are you?", options: ["tough skinned", "sensitive"] },
                 { type: "J/P", text: "Do you tend to?", options: ["rely on old ways of doing", "be on the look out for new ways"] },
                 { type: "T/F", text: "Do you prefer to?", options: ["operate the production machine", "manage the team of people"] },
