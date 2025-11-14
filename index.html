@@ -1189,6 +1189,7 @@
     document.addEventListener('DOMContentLoaded', () => {
 
             // --- Questions Data ---
+            /* === MODIFICATION START: Replaced entire questions array with the correct 80 questions === */
             const questions = [
                 { type: "S/N", text: "Are you", options: ["observant of your surroundings", "introspective and thinking"] },
                 { type: "E/I", text: "Waiting for the train, do you?", options: ["chat to others", "stay silent"] },
@@ -1231,19 +1232,33 @@
                 { type: "J/P", text: "Do you decide?", options: ["based on analysis", "on a considered hunch"] },
                 { type: "T/F", text: "Which is most satisfying for you?", options: ["thorough discussion", "reaching agreement"] },
                 { type: "S/N", text: "After a meal do you?", options: ["tidy up immediately", "leave it until later"] },
-                /* === MODIFICATION HERE === */
+                { type: "J/P", text: "Does your behaviour be?", options: ["hurried", "laid back"] },
+                { type: "S/N", text: "Do you hear what is said as?", options: ["all the story", "most of the story"] },
+                { type: "E/I", text: "Do you?", options: ["share your feelings easily", "act reserved"] },
+                { type: "T/F", text: "Are you?", options: ["an uncompromising person", "a collaborative person"] },
+                { type: "J/P", text: "Do you find it?", options: ["is stressful to change", "easy to reschedule meetings"] },
+                { type: "T/F", text: "Are you?", options: ["tough minded", "fair minded"] },
+                { type: "S/N", text: "When evaluating a situation do you", options: ["see only what is in front of you", "can you imagine more possibilities"] },
+                { type: "J/P", text: "Is your approach?", options: ["ensure everything is arranged", "just let things happen"] },
+                { type: "S/N", text: "Do you only trust?", options: ["past experiences", "all possibilities are worth checking"] },
+                { type: "E/I", text: "Do you?", options: ["know a little about everything", "know much about a few things"] },
+                { type: "T/F", text: "Are you convinced, more often, by?", options: ["hard evidence", "possible outside the box solutions"] },
+                { type: "J/P", text: "Is your approach to life?", options: ["structure", "flexible"] },
+                { type: "T/F", text: "Which is the greatest asset?", options: ["strength of will", "strength of fair compassion"] },
+                { type: "S/N", text: "Do you always feel?", options: ["down to earth", "day dream a little"] },
+                { type: "J/P", text: "How do you cope with unexpected events?", options: ["get a good handle on things", "get very stressed"] },
+                { type: "S/N", text: "Do you act in?", options: ["Routine way", "whimsical way"] },
                 { type: "E/I", text: "Are you?", options: ["a good conversationalist", "a good listener"] },
-                /* === END MODIFICATION === */
                 { type: "T/F", text: "Are you?", options: ["tough skinned", "sensitive"] },
                 { type: "J/P", text: "Do you tend to?", options: ["rely on old ways of doing", "be on the look out for new ways"] },
                 { type: "T/F", text: "Do you prefer to?", options: ["operate the production machine", "manage the team of people"] },
-                { type: "S/N", text: "Are you more?", options: ["practical", "ingenious"] }, 
+                { type: "S/N", text: "Are you more?", options: ["practical", "ingenious"] },
                 { type: "J/P", text: "Are you?", options: ["more punctual", "leisurely /nonchalant"] },
                 { type: "S/N", text: "Do you approach work in?", options: ["an organised and principaled way", "in an innovative and flexible way"] },
                 { type: "E/I", text: "Are you?", options: ["social and outgoing", "reserved and quite"] },
                 { type: "T/F", text: "Do you most trust?", options: ["your experience", "your hunches"] },
                 { type: "J/P", text: "Do you", options: ["are always on the go", "relax, easy going"] },
-                { type: "T/F", text: "Which is the greatest error?", options: ["being too passionate", "being too objective"] },
+                { type: "T/F", text: "Which is the greatest error?", options: ["being too passionate", "being too objective"] }, // Corrected T/Failure
                 { type: "S/N", text: "Do you tend to be more?", options: ["More deliberate", "more spontaneous"] },
                 { type: "J/P", text: "In evaluating others what influences you most?", options: ["laws", "circumstances"] },
                 { type: "S/N", text: "Which do you prefer in stories/film?", options: ["action", "fantasy"] },
@@ -1257,6 +1272,7 @@
                 { type: "T/F", text: "For you which is more important?", options: ["follow the rules", "everyone take full responsibility"] },
                 { type: "J/P", text: "Do you use?", options: ["written work schedules", "rely on my memory"] }
             ];
+            /* === MODIFICATION END === */
 
             const wordMap = {
                 'E': 'Extroverted',
@@ -1847,14 +1863,16 @@
                 // --- END 4-BAR CHART LOGIC ---
 
                 // --- NEW: Call D3 chart creation function ---
-                createD3ConverseChart(scores, getPercent);
-                // --- END NEW ---
+                <!-- === MODIFICATION START: Pass scores and maxScores, not the getPercent function === -->
+                createD3ConverseChart(scores, maxScores);
+                <!-- === MODIFICATION END === -->
 
             }
             // --- END OF SHOWRESULTS FUNCTION ---
             
+            <!-- === MODIFICATION START: The D3 chart function now accepts scores/maxScores and has new internal logic === -->
             // --- NEW: D3.js CHART FUNCTION (Replaces Chart.js version) ---
-            function createD3ConverseChart(scores, getPercent) {
+            function createD3ConverseChart(scores, maxScores) {
                 
                 // 1. Data & Colors
                 // Map rgba colors to simple hex for D3
@@ -1869,11 +1887,37 @@
                     'P': '#996633'  // rgba(153, 102, 51, 1)
                 };
 
+                // --- NEW: Custom percentage logic for D3 chart to prevent 0% bars ---
+                const getD3Percent = (letter, oppositeLetter) => {
+                    const realScore = scores[letter];
+                    const maxScore = maxScores[letter];
+                    const oppositeRealScore = scores[oppositeLetter];
+
+                    // Check if this is the WINNER and it's an extreme score (e.g., 22 or 23)
+                    if (realScore > 20) {
+                        // This is the winner, cap it at 20
+                        return (20 / maxScore) * 100;
+                    }
+
+                    // Check if this is the LOSER and the OPPOSITE is an extreme score
+                    if (oppositeRealScore > 20) {
+                        // The opposite's score is capped at 20.
+                        // This score should be the remainder.
+                        const remainder = maxScore - 20;
+                        return (remainder / maxScore) * 100;
+                    }
+
+                    // This is a "normal" score (not an extreme 0 or 23)
+                    // Just return its raw, uncapped percentage.
+                    return (realScore / maxScore) * 100;
+                };
+                // --- END NEW LOGIC ---
+
                 const data = [
-                    { group: 'E / I', valueA: getPercent('E'), valueB: getPercent('I'), keyA: 'E', keyB: 'I' },
-                    { group: 'S / N', valueA: getPercent('S'), valueB: getPercent('N'), keyA: 'S', keyB: 'N' },
-                    { group: 'T / F', valueA: getPercent('T'), valueB: getPercent('F'), keyA: 'T', keyB: 'F' },
-                    { group: 'C(J) / M(P)', valueA: getPercent('J'), valueB: getPercent('P'), keyA: 'J', keyB: 'P' } // MODIFIED
+                    { group: 'E / I', valueA: getD3Percent('E', 'I'), valueB: getD3Percent('I', 'E'), keyA: 'E', keyB: 'I' },
+                    { group: 'S / N', valueA: getD3Percent('S', 'N'), valueB: getD3Percent('N', 'S'), keyA: 'S', keyB: 'N' },
+                    { group: 'T / F', valueA: getD3Percent('T', 'F'), valueB: getD3Percent('F', 'T'), keyA: 'T', keyB: 'F' },
+                    { group: 'C(J) / M(P)', valueA: getD3Percent('J', 'P'), valueB: getD3Percent('P', 'J'), keyA: 'J', keyB: 'P' }
                 ];
                 
                 const groupKeys = ['valueA', 'valueB'];
@@ -1980,7 +2024,7 @@
                         .attr("fill", d => d3ColorMap[d.letter])
                         .attr("rx", 5); // --- ADDED for rounded corners ---
             }
-            // --- END D3.js CHART FUNCTION ---
+            <!-- === MODIFICATION END === -->
 
 
             function generateRandomResults() {
