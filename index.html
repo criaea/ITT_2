@@ -1000,8 +1000,8 @@
     <div class="container">
         
         <div id="coverPage">
-            <!-- === MODIFICATION HERE === -->
-            <h1 id="coverTitle" class="cover-title">The J16T (Jung 16 Temperaments)</h1>
+            <!-- === MODIFICATION HERE: Updated Title === -->
+            <h1 id="coverTitle" class="cover-title">The <b>J16T</b> Questionnaire<br>(Jung 16 Temperaments)</h1>
             <!-- === END MODIFICATION === -->
             <p class="cover-copyright">exclusive to <b>ourfields.ie</b> programmes</p>
             
@@ -1157,13 +1157,17 @@
                         <p class="letter-card-desc" id="other-letter-desc-3"></p>
                     </details>
                 </div>
+            </div>
 
+            <!-- === MODIFICATION: New separate bubble for the grid === -->
+            <div class="results-details">
                 <div class="profile-grid-container">
                     <h3 class="profile-grid-title">Discover Jung's 16 Profiles</h3>
                     <div id="profileGrid" class="profile-grid">
                         </div>
                 </div>
             </div>
+            <!-- === END MODIFICATION === -->
             
             <div class="restart-button-container">
                  <button id="printBtn">Download / Print Results</button>
@@ -1392,10 +1396,12 @@
                     cell.className = 'profile-cell ' + (profile.color === 'a' ? 'cell-color-a' : 'cell-color-b');
                     cell.dataset.type = profile.type; // This will be "ISTC(J)" etc.
                     
+                    /* === MODIFICATION START: Updated to show small (J) and (P) in grid === */
                     cell.innerHTML = `
-                        <div class="profile-cell-type">${profile.type.replace('C(J)', '<strong>C</strong>').replace('M(P)', '<strong>M</strong>')}</div>
+                        <div class="profile-cell-type">${profile.type.replace('C(J)', 'C<span class="suffix">(J)</span>').replace('M(P)', 'M<span class="suffix">(P)</span>')}</div>
                         <div class="profile-cell-title">${profile.title}</div>
                     `;
+                    /* === MODIFICATION END === */
                     
                     // Add click listener to show modal
                     cell.addEventListener('click', () => {
@@ -1560,8 +1566,10 @@
                 const maxScores = { E: 22, I: 22, S: 23, N: 23, T: 23, F: 23, J: 23, P: 23 };
 
                 const colorMap = {
-                    'E': { bg: 'rgba(68, 179, 225, 0.9)', border: 'rgba(68, 179, 225, 1)' },
-                    'I': { bg: 'rgba(234, 228, 0, 0.9)', border: 'rgba(234, 228, 0, 1)' },
+                    /* === MODIFICATION HERE: Swapped E (Yellow) and I (Blue) === */
+                    'E': { bg: 'rgba(234, 228, 0, 0.9)', border: 'rgba(234, 228, 0, 1)' }, // Was Blue, now Yellow
+                    'I': { bg: 'rgba(68, 179, 225, 0.9)', border: 'rgba(68, 179, 225, 1)' }, // Was Yellow, now Blue
+                    /* === END MODIFICATION === */
                     'S': { bg: 'rgba(255, 153, 0, 0.9)', border: 'rgba(255, 153, 0, 1)' },
                     'N': { bg: 'rgba(120, 33, 112, 0.9)', border: 'rgba(120, 33, 112, 1)' },
                     'T': { bg: 'rgba(33, 92, 152, 0.9)', border: 'rgba(33, 92, 152, 1)' },
@@ -1828,7 +1836,9 @@
                                 ticks: {
                                     font: {
                                         family: 'Poppins',
-                                        size: 12, // --- MODIFIED: Reduced size ---
+                                        /* === MODIFICATION HERE: Increased font size to ~half of main display === */
+                                        size: 28, // Was 12, increased to be approx 1.75rem
+                                        /* === END MODIFICATION === */
                                         weight: '600'
                                     },
                                     color: '#2c3e50'
@@ -1877,8 +1887,10 @@
                 // 1. Data & Colors
                 // Map rgba colors to simple hex for D3
                 const d3ColorMap = {
-                    'E': '#44b3e1', // rgba(68, 179, 225, 1)
-                    'I': '#eae400', // rgba(234, 228, 0, 1)
+                    /* === MODIFICATION HERE: Swapped E (Yellow) and I (Blue) === */
+                    'E': '#eae400', // Was #44b3e1 (Blue), now Yellow
+                    'I': '#44b3e1', // Was #eae400 (Yellow), now Blue
+                    /* === END MODIFICATION === */
                     'S': '#ff9900', // rgba(255, 153, 0, 1)
                     'N': '#782170', // rgba(120, 33, 112, 1)
                     'T': '#215c98', // rgba(33, 92, 152, 1)
