@@ -799,7 +799,25 @@
             color: #34495e;
             font-style: italic;
         }
-        /* --- END NEW: Modal Styles --- */
+        
+        /* --- NEW: Style for chart interactive elements --- */
+        .chart-interactive-bubble {
+            cursor: pointer;
+            transition: r 0.2s ease, stroke-width 0.2s ease;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+        }
+        .chart-interactive-bubble:hover {
+            r: 8; /* Grow slightly on hover */
+            stroke-width: 3;
+        }
+        .chart-bar-rect {
+            cursor: pointer; /* Make the whole bar clickable too */
+            transition: opacity 0.2s;
+        }
+        .chart-bar-rect:hover {
+            opacity: 0.85;
+        }
+        /* --- END NEW --- */
 
         
         /* --- Mobile Optimizations --- */
@@ -1091,7 +1109,9 @@
             <div id="print-page-1">
                 <h1>Your Results</h1>
                 <div class="chart-container">
-                    <canvas id="resultsChart"></canvas>
+                    <!-- === MODIFICATION: Replaced Canvas with SVG for D3 === -->
+                    <svg id="mainResultsChart" viewBox="0 0 600 400"></svg>
+                    <!-- === END MODIFICATION === -->
                 </div>
                 
                 <div id="personalityType" class="personality-type-display"></div> 
@@ -1347,11 +1367,48 @@
                 { type: 'ENTC(J)', title: "Life's Natural Leaders", color: 'a' },
             ];
 
+            /* === NEW: Descriptions for the Chart Bubbles === */
+            const chartDescriptions = {
+                'E': {
+                    question: "Where do I get my energy from? How do I relate to the outer world?",
+                    answer: "I mainly direct my energy towards the outer world of people and things. I tend to act first and reflect later. Interaction stimulates me, and I often feel energized after being active and social."
+                },
+                'I': {
+                    question: "Where do I get my energy from? How do I relate to the outer world?",
+                    answer: "I mainly direct my energy towards the inner world of experiences and ideas. I tend to reflect first and act later. I value privacy and often need time alone to recharge after social interaction."
+                },
+                'S': {
+                    question: "How do I take in Information? Find out about things?",
+                    answer: "I focus on what is real and actual. I value practical application and trust information that I can confirm with my five senses. I pay attention to details and the present moment."
+                },
+                'N': {
+                    question: "How do I take in Information? Find out about things?",
+                    answer: "I focus on patterns and meanings. I value imagination and inspiration, trusting my intuition and hunches. I am often more interested in future possibilities and the 'big picture' than specific details."
+                },
+                'T': {
+                    question: "How do I make decisions?",
+                    answer: "I prefer to make decisions based on logic and objective analysis. I search for the truth and principles that apply in a given situation. I strive to be impartial and value consistency."
+                },
+                'F': {
+                    question: "How do I make decisions?",
+                    answer: "I prefer to make decisions based on values and subjective evaluation. I am concerned with harmony and how the decision will affect the people involved. I strive to be compassionate and empathetic."
+                },
+                'J': {
+                    question: "How do I organise my outer world?",
+                    answer: "I prefer a planned and organized approach to life. I like to have things settled and decided. I enjoy making lists, schedules, and bringing closure to tasks."
+                },
+                'P': {
+                    question: "How do I organise my outer world?",
+                    answer: "I prefer a flexible and spontaneous approach to life. I like to keep my options open and adapt to new information as it arises. I feel comfortable going with the flow."
+                }
+            };
+            /* === END NEW === */
+
             // --- App State ---
             let currentQuestionIndex = 0;
             let userAnswers = new Array(questions.length).fill(null);
-            let resultsChartInstance = null;
-            // let converseChartInstance = null; // No longer a Chart.js instance
+            // let resultsChartInstance = null; // --- REMOVED Chart.js instance variable ---
+            // let converseChartInstance = null; 
             let isAdvancing = false; 
  
             // --- DOM Elements ---
@@ -1779,108 +1836,148 @@
                 const description = personalityDescriptions[personalityTypeString] || "Your personality description will appear here.";
                 document.getElementById('desc-overview').textContent = description;
                 
-                // --- Create the main 4-bar chart ---
-                const ctx = document.getElementById('resultsChart').getContext('2d');
-
-                if (resultsChartInstance) {
-                    resultsChartInstance.destroy();
-                }
-
-                resultsChartInstance = new Chart(ctx, {
-                    type: 'bar', 
-                    data: {
-                        labels: chartLabels, // This now contains "C(J)" and "M(P)"
-                        datasets: [
-                            {
-                                label: 'Score',
-                                data: chartData, 
-                                realScores: chartRealScores, 
-                                maxScores: chartMaxScores, 
-                                backgroundColor: chartBackgroundColors,
-                                borderColor: chartBorderColors,
-                                borderWidth: 1,
-                                borderRadius: 5,
-                                borderSkipped: false,
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false 
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const label = context.label || '';
-                                        const realScore = context.dataset.realScores[context.dataIndex];
-                                        const maxScore = context.dataset.maxScores[context.dataIndex];
-                                        const percentage = context.dataset.data[context.dataIndex];
-                                        
-                                        if (label) {
-                                            return `${label}: ${percentage.toFixed(1)}% (${realScore}/${maxScore})`;
-                                        }
-                                        return `${percentage.toFixed(1)}%`;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { 
-                                grid: {
-                                    display: false, 
-                                    borderColor: '#ccc'
-                                },
-                                ticks: {
-                                    font: {
-                                        family: 'Poppins',
-                                        /* === MODIFICATION HERE: Increased font size to ~half of main display === */
-                                        size: 28, // Was 12, increased to be approx 1.75rem
-                                        /* === END MODIFICATION === */
-                                        weight: '600'
-                                    },
-                                    color: '#2c3e50'
-                                }
-                            },
-                            y: { 
-                                beginAtZero: true,
-                                max: 100, 
-                                grid: {
-                                    color: function(context) {
-                                        if (context.tick.value === 100) return '#2c3e50';
-                                        if (context.tick.value === 0) return '#ccc';
-                                        return 'transparent';
-                                    },
-                                    borderColor: '#ccc'
-                                },
-                                ticks: {
-                                    callback: function(value) {
-                                        // if (value === 90) return '●'; // Dot removed
-                                        return ''; // Hide all labels
-                                    },
-                                    stepSize: 10,
-                                    font: {
-                                        family: 'Poppins'
-                                    },
-                                    color: '#333'
-                                }
-                            }
-                        }
-                    }
-                });
-                // --- END 4-BAR CHART LOGIC ---
+                // --- MODIFIED: Replaced Chart.js logic with D3 Main Chart logic ---
+                createD3MainChart(finalData);
+                // --- END MODIFICATION ---
 
                 // --- NEW: Call D3 chart creation function ---
-                <!-- === MODIFICATION START: Pass scores and maxScores, not the getPercent function === -->
                 createD3ConverseChart(scores, maxScores);
-                <!-- === MODIFICATION END === -->
+                // --- END NEW ---
 
             }
             // --- END OF SHOWRESULTS FUNCTION ---
             
-            <!-- === MODIFICATION START: The D3 chart function now accepts scores/maxScores and has new internal logic === -->
+            // --- NEW: D3 Main Chart Function (Replaces Chart.js) ---
+            function createD3MainChart(data) {
+                // data is array of { letter, score, realScore, maxScore }
+                
+                const d3ColorMap = {
+                    'E': '#eae400', 
+                    'I': '#44b3e1',
+                    'S': '#ff9900',
+                    'N': '#782170',
+                    'T': '#215c98',
+                    'F': '#4ea72e',
+                    'J': '#eb1515',
+                    'P': '#996633'
+                };
+
+                const svg = d3.select("#mainResultsChart");
+                svg.html(""); // Clear previous chart
+
+                // Increased top margin to fit bubbles comfortably
+                const margin = { top: 40, right: 20, bottom: 50, left: 40 }; 
+                const viewBox = svg.attr("viewBox").split(" ");
+                const width = +viewBox[2] - margin.left - margin.right;
+                const height = +viewBox[3] - margin.top - margin.bottom;
+
+                const g = svg.append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                // X Scale
+                const x = d3.scaleBand()
+                    .domain(data.map(d => d.letter))
+                    .range([0, width])
+                    .padding(0.4);
+
+                // Y Scale
+                const y = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range([height, 0]);
+
+                /* === MODIFICATION: Restored Grid lines for 0 and 100 ONLY === */
+                // Grid lines
+                 g.append("g")
+                    .attr("class", "grid")
+                    .call(d3.axisLeft(y)
+                        .tickSize(-width) // Extend lines across the chart
+                        .tickFormat("") // No labels
+                        .tickValues([0, 100]) // Only at 0 and 100
+                    )
+                    .call(g => g.select(".domain").remove()) // Remove the axis line itself
+                    .call(g => g.selectAll(".tick line")
+                        .attr("stroke", "#ccc") 
+                        .attr("stroke-opacity", 1));
+                /* === END MODIFICATION === */
+
+                // X Axis with custom labels
+                /* === MODIFICATION: Added .tickSize(0) to remove vertical ticks === */
+                const xAxis = d3.axisBottom(x)
+                    .tickSize(0) // Removes the little vertical lines
+                    .tickPadding(10) // Adds a bit of space between bar and text
+                    .tickFormat(d => {
+                        if (d === 'J') return 'C(J)';
+                        if (d === 'P') return 'M(P)';
+                        return d;
+                    });
+                /* === END MODIFICATION === */
+
+                g.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(xAxis)
+                    .call(g => g.select(".domain").remove())
+                    .selectAll("text") // Style the labels
+                    .attr("font-family", "Poppins")
+                    .style("font-size", "28px") 
+                    .attr("font-weight", "600")
+                    .attr("fill", "#2c3e50");
+
+                // Bars Group
+                const bars = g.selectAll(".bar-group")
+                    .data(data)
+                    .join("g")
+                    .attr("class", "bar-group")
+                    .attr("transform", d => `translate(${x(d.letter)}, 0)`);
+
+                // Draw Bars
+                bars.append("rect")
+                    .attr("class", "chart-bar-rect")
+                    .attr("x", 0)
+                    .attr("y", d => y(d.score))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => height - y(d.score))
+                    .attr("fill", d => d3ColorMap[d.letter])
+                    .attr("rx", 5)
+                    .on("click", (event, d) => {
+                         const info = chartDescriptions[d.letter];
+                         let title = d.letter;
+                         if(d.letter === 'J') title = 'C<span class="suffix">(J)</span>';
+                         if(d.letter === 'P') title = 'M<span class="suffix">(P)</span>';
+                         showProfileModal(title, info.question, info.answer);
+                    });
+
+                /* === MODIFICATION: Explicit attributes to fix rendering issues === */
+                const bubbleGroups = bars.append("g")
+                    .attr("class", "chart-bubble-group")
+                    .attr("transform", d => `translate(${x.bandwidth() / 2}, ${y(d.score) - 25})`)
+                    .on("click", (event, d) => {
+                         const info = chartDescriptions[d.letter];
+                         let title = d.letter;
+                         if(d.letter === 'J') title = 'C<span class="suffix">(J)</span>';
+                         if(d.letter === 'P') title = 'M<span class="suffix">(P)</span>';
+                         showProfileModal(title, info.question, info.answer);
+                    });
+
+                bubbleGroups.append("circle")
+                    .attr("r", 15) 
+                    .attr("fill", "#fff") // Explicitly set white fill to prevent black dot
+                    .attr("stroke", d => d3ColorMap[d.letter])
+                    .attr("stroke-width", 2);
+
+                bubbleGroups.append("text")
+                    .text("?")
+                    .attr("text-anchor", "middle") // Center horizontally
+                    .attr("dominant-baseline", "central") // Center vertically
+                    .attr("fill", "#555") // Explicit text color
+                    .style("font-family", "Poppins, sans-serif")
+                    .style("font-size", "18px")
+                    .style("font-weight", "700")
+                    .style("pointer-events", "none");
+                /* === END MODIFICATION === */
+            }
+            // --- END NEW FUNCTION ---
+
             // --- NEW: D3.js CHART FUNCTION (Replaces Chart.js version) ---
             function createD3ConverseChart(scores, maxScores) {
                 
@@ -1967,6 +2064,7 @@
                     .nice()
                     .rangeRound([height, 0]);
 
+                /* === MODIFICATION: Restored Grid Lines for 0 and 100 ONLY === */
                 // --- NEW: Add Grid Lines (like the first chart) ---
                 g.append("g")
                     .attr("class", "grid")
@@ -1977,8 +2075,9 @@
                     )
                     .call(g => g.select(".domain").remove()) // Remove the axis line itself
                     .call(g => g.selectAll(".tick line")
-                        .attr("stroke", d => (d === 100 ? '#2c3e50' : '#ccc')) // Match Chart.js colors
+                        .attr("stroke", d => (d === 100 ? '#2c3e50' : '#ccc')) // Darker top line, lighter bottom
                         .attr("stroke-opacity", 1));
+                /* === END MODIFICATION === */
                         
                 // --- NEW: Add 50% dashed line ---
                 // --- MODIFIED: Calculate start and end points to be closer to columns ---
@@ -2000,11 +2099,16 @@
                 g.append("g")
                     .attr("class", "axis")
                     .attr("transform", `translate(0,${height})`)
-                    .call(d3.axisBottom(x0))
+                    /* === MODIFICATION: Added .tickSize(0) to remove vertical ticks === */
+                    .call(d3.axisBottom(x0)
+                        .tickSize(0)
+                        .tickPadding(10)
+                    )
+                    /* === END MODIFICATION === */
                     .call(g => g.select(".domain").remove()) // --- NEW: Remove X-axis domain line ---
                     .call(g => g.selectAll(".tick text") // Style X-axis text to match first chart
                         .attr("font-family", "Poppins")
-                        .attr("font-size", "14px")
+                        .style("font-size", "28px") 
                         .attr("font-weight", "600")
                         .attr("fill", "#2c3e50"));
                 // --- DELETED X-Axis Label ("Dichotomies") ---
@@ -2023,22 +2127,68 @@
                     .join("g")
                     .attr("transform", d => `translate(${x0(d.group)},0)`);
 
-                barGroups.selectAll("rect")
+                // --- MODIFIED: Bind data to a group first to handle both rect and circle ---
+                const bars = barGroups.selectAll(".bar-group")
                     .data(d => [
                         { key: 'valueA', value: d.valueA, letter: d.keyA }, 
                         { key: 'valueB', value: d.valueB, letter: d.keyB }
                     ])
-                    .join("rect")
-                        .attr("x", d => x1(d.key)) 
-                        .attr("width", x1.bandwidth())
-                        .attr("y", d => yScale(d.value))
-                        .attr("height", d => height - yScale(d.value))
-                        .attr("fill", d => d3ColorMap[d.letter])
-                        .attr("rx", 5); // --- ADDED for rounded corners ---
+                    .join("g")
+                    .attr("class", "bar-group");
+
+                // Draw Rectangles
+                bars.append("rect")
+                    .attr("class", "chart-bar-rect") // Added class for hover effect
+                    .attr("x", d => x1(d.key)) 
+                    .attr("width", x1.bandwidth())
+                    .attr("y", d => yScale(d.value))
+                    .attr("height", d => height - yScale(d.value))
+                    .attr("fill", d => d3ColorMap[d.letter])
+                    .attr("rx", 5)
+                    // --- NEW: Click event for Bar ---
+                    .on("click", (event, d) => {
+                        const info = chartDescriptions[d.letter];
+                        let title = d.letter;
+                        // Format title specifically for C(J) and M(P)
+                        if(d.letter === 'J') title = 'C<span class="suffix">(J)</span>';
+                        if(d.letter === 'P') title = 'M<span class="suffix">(P)</span>';
+                        
+                        showProfileModal(title, info.question, info.answer);
+                    });
+
+                /* === MODIFICATION: Explicit attributes to fix rendering issues === */
+                const bubbleGroups = bars.append("g")
+                    .attr("class", "chart-bubble-group")
+                    .attr("transform", d => `translate(${x1(d.key) + x1.bandwidth() / 2}, ${yScale(d.value) - 25})`)
+                    .on("click", (event, d) => {
+                        const info = chartDescriptions[d.letter];
+                        let title = d.letter;
+                         // Format title specifically for C(J) and M(P)
+                        if(d.letter === 'J') title = 'C<span class="suffix">(J)</span>';
+                        if(d.letter === 'P') title = 'M<span class="suffix">(P)</span>';
+
+                        showProfileModal(title, info.question, info.answer);
+                    });
+
+                bubbleGroups.append("circle")
+                    .attr("r", 15) 
+                    .attr("fill", "#fff") // Explicitly set white fill
+                    .attr("stroke", d => d3ColorMap[d.letter]) 
+                    .attr("stroke-width", 2);
+
+                bubbleGroups.append("text")
+                    .text("?")
+                    .attr("text-anchor", "middle") // Center horizontally
+                    .attr("dominant-baseline", "central") // Center vertically
+                    .attr("fill", "#555") // Explicit text color
+                    .style("font-family", "Poppins, sans-serif")
+                    .style("font-size", "18px")
+                    .style("font-weight", "700")
+                    .style("pointer-events", "none");
+                /* === END MODIFICATION === */
             }
-            <!-- === MODIFICATION END === -->
 
-
+            /* === MODIFICATION: RESTORED generateRandomResults FUNCTION === */
             function generateRandomResults() {
                 if (isAdvancing) return; 
                 
@@ -2109,20 +2259,17 @@
                 const otherBtn = document.getElementById('showOtherBtn');
                 const oppositeHeaderEl = document.getElementById('oppositeTypeHeader');
                 const oppositeDescEl = document.getElementById('oppositeDesc');
-                const converseChartContainer = document.getElementById('converse-chart-container'); // --- NEW ---
+                const converseChartContainer = document.getElementById('converse-chart-container'); 
     
                 if (otherGrid) otherGrid.style.display = 'grid';
                 if (oppositeHeaderEl) oppositeHeaderEl.style.display = 'block';
                 if (oppositeDescEl) oppositeDescEl.style.display = 'block';
-                if (converseChartContainer) converseChartContainer.style.display = 'block'; // --- NEW ---
-                if (otherBtn) otherBtn.textContent = 'Hide Converse Profile'; // Keep state consistent
+                if (converseChartContainer) converseChartContainer.style.display = 'block'; 
+                if (otherBtn) otherBtn.textContent = 'Hide Converse Profile'; 
     
-                if (resultsChartInstance) {
-                    resultsChartInstance.resize();
-                }
-                // No need to resize D3 SVG
+                // --- REMOVED: resultsChartInstance.resize(); (No longer needed for D3) ---
+
                 // 3. Call the print dialog after a short delay
-                // This ensures the DOM has time to update with the open sections
                 setTimeout(() => {
                     window.print();
                 }, 250); 
