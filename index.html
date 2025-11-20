@@ -1110,6 +1110,16 @@
                 display: none !important;
             }
         }
+
+        /* === NEW: Fix for Language Dropdown Height === */
+        /* This restricts the dropdown height and adds a scrollbar */
+        .goog-te-menu-frame {
+            max-height: 80vh !important; /* Max height is 80% of the screen */
+            overflow-y: auto !important; /* Add scrollbar if needed */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+            border-radius: 12px !important;
+        }
+        /* === END NEW === */
         /* === END NEW === */
 
         
