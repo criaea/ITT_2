@@ -1056,8 +1056,18 @@
         /* === MODIFICATION: Robust Fix for Language Dropdown Height === */
         /* Target the specific Google Translate iframe class */
         .goog-te-menu-frame {
-            max-height: 85vh !important; /* Increased to 85% of screen height */
-            overflow-y: auto !important; /* Force vertical scrollbar */
+            /* Force fixed positioning relative to the viewport */
+            position: fixed !important;
+            top: 70px !important; /* Start just below the translate button */
+            right: 20px !important;
+            
+            /* Max height is screen height minus top spacing and a bottom margin */
+            max-height: calc(100vh - 90px) !important;
+            
+            /* Force vertical scrollbar to always accept scrolling */
+            overflow-y: scroll !important;
+            
+            /* Styling */
             box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
             border-radius: 12px !important;
             z-index: 10000002 !important; /* Ultra high z-index */
