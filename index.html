@@ -452,6 +452,7 @@
             margin-bottom: 25px;
         }
 
+        /* --- MODIFIED: Restored neon glow style to the button --- */
         .other-toggle-btn {
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
@@ -459,18 +460,144 @@
             padding: 12px 30px;
             border-radius: 50px;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            border: 2px solid #a881ef;
+            border: 2px solid #a881ef; /* Restored solid border */
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
+            /* Restored Glow Shadow */
             box-shadow: 0 0 10px #a881ef, 0 0 20px #a881ef, inset 0 0 5px rgba(255, 255, 255, 0.2);
             text-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
         }
         
         .other-toggle-btn:hover {
             transform: translateY(-2px) scale(1.03);
+            /* Restored Hover Glow */
             box-shadow: 0 0 15px #a881ef, 0 0 30px #a881ef, inset 0 0 5px rgba(255, 255, 255, 0.3);
         }
+        /* === END MODIFICATION === */
+
+        /* --- MODIFIED: New Styles for the dedicated Settings Page --- */
+        #settingsPage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            min-height: 60vh;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .settings-card {
+            background: #fff;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #e0e6ed;
+            position: relative;
+            overflow: hidden;
+            text-align: left; /* Align content inside card to left */
+        }
+        
+        /* Decorative top bar */
+        .settings-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+        }
+
+        .settings-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .settings-subtitle {
+            color: #666;
+            margin-bottom: 35px;
+            font-size: 1.05rem;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .custom-select-wrapper label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 0.95rem;
+            margin-left: 5px;
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid #e0e6ed;
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            /* Custom SVG Arrow */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 18px;
+        }
+
+        .custom-select:hover {
+            border-color: #bdc3c7;
+            background-color: #fff;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: #2575fc;
+            box-shadow: 0 0 0 4px rgba(37, 117, 252, 0.1);
+            background-color: #fff;
+        }
+        
+        .settings-info-box {
+            background-color: #f0f4f9;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 10px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            border-left: 4px solid #2575fc;
+        }
+        
+        .settings-btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        #launchQuizBtn {
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+        }
+        /* === END MODIFICATION === */
 
         /* --- Letter Definition Grid Styles --- */
         .letter-definitions-grid {
@@ -817,7 +944,115 @@
         .chart-bar-rect:hover {
             opacity: 0.85;
         }
-        /* --- END NEW --- */
+        
+        /* --- MODIFIED: New Styles for Info Bubbles --- */
+        .chart-bubble-group {
+            cursor: pointer;
+        }
+        .chart-bubble-group circle {
+            transition: all 0.2s ease;
+            fill: #fff;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.15)); /* Button-like shadow */
+        }
+        .chart-bubble-group text {
+            font-family: 'Poppins', sans-serif;
+            /* === MODIFICATION: Increased font size to 18px === */
+            font-size: 18px; 
+            /* === END MODIFICATION === */
+            font-weight: 700;
+            fill: #555; /* Dark grey text */
+            pointer-events: none; /* Let clicks pass through text to the group */
+            text-anchor: middle;
+            dominant-baseline: central;
+            transition: fill 0.2s ease;
+        }
+        .chart-bubble-group:hover circle {
+            transform: scale(1.1); /* Slight pulse on hover */
+            stroke-width: 3;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); /* Deeper shadow on hover */
+        }
+        .chart-bubble-group:hover text {
+            fill: #000; /* Darker text on hover */
+        }
+        /* --- END MODIFIED --- */
+
+        /* === NEW: Google Translate Widget Styles === */
+        #google_translate_element {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000; /* Ensure it stays on top of everything */
+        }
+        
+        /* Hide the large Google Translate top bar that pushes content down */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        } 
+        body {
+            top: 0px !important; 
+        }
+
+        /* Customizing the button look to match your UI */
+        .goog-te-gadget-simple {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid #e0e6ed !important;
+            padding: 8px 15px !important;
+            border-radius: 50px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 0.9rem !important;
+            color: #333 !important;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+            display: flex !important;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        .goog-te-gadget-simple:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 6px 15px rgba(0,0,0,0.1) !important;
+             border-color: #2575fc !important;
+        }
+
+        .goog-te-gadget-icon {
+            display: none !important; /* Hide default Google Icon */
+        }
+        
+        .goog-te-menu-value {
+            margin: 0 !important;
+        }
+        
+        .goog-te-menu-value span {
+            color: #2c3e50 !important;
+            font-weight: 600 !important;
+            border-left: none !important;
+        }
+        
+        /* Hide the arrow text if redundant or ugly */
+        .goog-te-menu-value span:nth-child(3),
+        .goog-te-menu-value span:nth-child(5) {
+             display: none !important;
+        }
+
+        /* Mobile positioning */
+        @media (max-width: 768px) {
+            #google_translate_element {
+                top: 10px;
+                right: 10px;
+            }
+            .goog-te-gadget-simple {
+                padding: 5px 10px !important;
+                font-size: 0.8rem !important;
+            }
+        }
+        
+        /* Hide translate button on print */
+        @media print {
+            #google_translate_element {
+                display: none !important;
+            }
+        }
+        /* === END NEW === */
 
         
         /* --- Mobile Optimizations --- */
@@ -912,6 +1147,7 @@
         /* --- Print Styles --- */
         @media print {
             #coverPage, 
+            #settingsPage, /* --- NEW: Hide settings page on print --- */
             #quizSection, 
             .dev-navigation, 
             .toggle-other-container, 
@@ -920,8 +1156,10 @@
             .container::before,
             .other-toggle-btn,
             #printBtn,
-            .ourfields-copyright-bottom, /* --- NEW: Hide bottom copyright on print --- */
-            .page-footer { /* --- NEW: Hide new footer on print --- */
+            .ourfields-copyright-bottom, 
+            .page-footer,
+            .selection-area 
+            { 
                 display: none !important;
             }
 
@@ -1015,6 +1253,10 @@
 </head>
 <body>
     
+    <!-- === NEW: Google Translate Container === -->
+    <div id="google_translate_element"></div>
+    <!-- === END NEW === -->
+    
     <div class="container">
         
         <div id="coverPage">
@@ -1064,9 +1306,48 @@
                 </div>
 
             </div>
+
+            <!-- === MODIFICATION: Removed Selection Controls from Cover Page === -->
+            <!-- Controls moved to #settingsPage -->
+            <!-- === END MODIFICATION === -->
+
             <button id="startBtn">Begin the Evaluation</button>
             <p class="ourfields-copyright-bottom">ourfields.ie ©</p>
         </div>
+
+        <!-- === NEW: Dedicated Settings Page === -->
+        <div id="settingsPage" style="display: none;">
+            <div class="settings-card">
+                <h2 class="settings-title">Customize Your Report</h2>
+                <p class="settings-subtitle">Select your preferred perspective and depth.</p>
+                
+                <div class="custom-select-wrapper">
+                    <label for="perspectiveSelect">Psychological Style</label>
+                    <select id="perspectiveSelect" class="custom-select">
+                        <option value="jung">Carl Jung (Original Theories)</option>
+                        <option value="mate">Gabor Maté (Trauma & Authenticity)</option>
+                        <option value="fromm">Erich Fromm (Social Character)</option>
+                    </select>
+                </div>
+
+                <div class="custom-select-wrapper">
+                    <label for="detailSelect">Detail Level</label>
+                    <select id="detailSelect" class="custom-select">
+                        <option value="30">Concise (30 Words)</option>
+                        <option value="60">Standard (60 Words)</option>
+                        <option value="100">In-Depth (100 Words)</option>
+                    </select>
+                </div>
+                
+                <!-- Removed info note -->
+
+                <div class="settings-btn-container">
+                    <button id="launchQuizBtn">Start Questionnaire</button>
+                </div>
+            </div>
+            <p class="ourfields-copyright-bottom" style="margin-top: 40px; text-align: center;">ourfields.ie ©</p>
+        </div>
+        <!-- === END NEW === -->
 
         <div id="quizSection" style="display: none;"> 
             <h1>JUNG TYPOLOGY</h1>
@@ -1209,6 +1490,20 @@
             <p id="modalDescription" class="modal-profile-description"></p>
         </div>
     </div>
+    
+    <!-- === NEW: Google Translate Initialization Script === -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- === END NEW === -->
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -1309,36 +1604,287 @@
                 'P': 'iMpromptu'   // CHANGED
             };
 
-            const letterDescriptions = {
-                'E': `A potential disconnection from the true self, seeking external validation to fill an inner emptiness. A coping mechanism based on attachment needs.`,
-                'I': `A possible adaptation of high sensitivity. A protective withdrawal to shield an authentic self that felt overwhelmed or unsafe in the external world.`,
-                'S': `A focus on the body's present-moment reality. Can be a path to healing (reconnecting) or a trauma-based disconnection from deeper, painful feelings.`,
-                'N': `The "gut feeling" of the authentic self. This inner wisdom is often suppressed by trauma. Healing involves reclaiming and trusting this intuitive voice.`,
-                'T': `The rational mind, often split from emotion as a brilliant defense against trauma. Wholeness requires reintegrating this intellect with the heart's feelings.`,
-                'F': `The core language of the authentic self. These emotions are often repressed due to childhood wounds, leading to disease. Authenticity is reclaiming all feelings.`,
-                'J': `A drive for control and order, often born from a chaotic or unsafe childhood. This rigidity is a survival strategy to create perceived safety.`, // Definition remains
-                'P': `A potential "go with the flow" trauma response to avoid conflict, or a healthy openness. Can manifest as difficulty with boundaries or commitment.` // Definition remains
+            /* === MODIFICATION START: Replaced static letterDescriptions with Dynamic Data Object === */
+            // Data extracted from the provided PDF
+            const definitionsData = {
+                jung: {
+                    30: {
+                        'I': "Psychic energy flows inward. Motivation and understanding are drawn from the internal, subjective world. The inner reality is the primary guide; the external object is secondary.",
+                        'E': "Psychic energy flows outward. Motivation and reality are drawn from the external, objective world of people, events, and things. They adapt easily to the environment.",
+                        'S': "The irrational function that perceives physical stimuli. It establishes what is real and present through the senses, focusing on concrete facts and the tangible 'here and now.'",
+                        'N': "The irrational function that perceives possibilities, meanings, and relationships via the unconscious. It sees the 'big picture' and what could be rather than what is.",
+                        'T': "The rational function that analyzes information logically and impersonally. It seeks to understand the world by building a structure of conceptual 'truth' and objective laws.",
+                        'F': "The rational function that assesses the value of things. It makes decisions based on subjective, personal values (e.g., acceptance/rejection, pleasant/unpleasant) rather than logic.",
+                        'J': "The process of making conclusions using the rational functions (Thinking/Feeling). It is the active will to organize, evaluate, plan, and decide upon the perceived information.",
+                        'P': "The process of gathering information using the irrational functions (Sensation/Intuition). It is the act of experiencing the world and remaining open without immediate evaluation."
+                    },
+                    60: {
+                        'I': "A fundamental attitude where the libido (psychic energy) naturally flows inward toward the subject. The inner world of concepts, ideas, and archetypes is more vivid and real than the outer object. They view the external world through a subjective filter, often retreating from it to preserve their energy and clarity.",
+                        'E': "A fundamental attitude where the libido flows outward toward the object. The external world—people, things, events—acts as a magnet for their energy. They are objectively oriented, meaning their thoughts and actions are determined by external conditions rather than subjective views. They are comfortable in the world and adapt readily to change.",
+                        'S': "The psychological function of reality. It conveys the physical presence of the world to the mind. Whether introverted (subjective impression) or extroverted (objective fact), Sensation focuses on the tangible, the concrete, and the actual. It is the function that tells us that something exists, grounding us in the present moment.",
+                        'N': "The function of unconscious perception. It transmits perceptions via the unconscious, often as a 'hunch' or a vision. It looks beyond the immediate facts to see the possibilities, the future potential, and the hidden connections. It is the function of the 'seed' and the 'pattern' rather than the 'fruit' and the 'detail.'",
+                        'T': "The function of intellectual cognition. It forms logical conclusions by linking ideas together. It seeks to understand the nature of the world through concepts, definitions, and laws. It judges 'true' or 'false' based on an impersonal standard, detached from the emotional value of the object or the person involved.",
+                        'F': "The function of subjective valuation. It is a rational process that organizes the world based on acceptance or rejection (like/dislike). It judges 'good' or 'bad' based on personal or universal values. It is not merely 'emotion,' which is a reaction; Feeling is a conscious, discriminating function of judgment.",
+                        'J': "In Jungian terms, this refers to the Rational Functions (Thinking and Feeling). It is the mental act of bringing order to chaos. Whether through logic (Thinking) or value (Feeling), the Judging attitude seeks to settle things, to come to a conclusion, and to organize one's life and environment according to a set standard.",
+                        'P': "In Jungian terms, this refers to the Irrational Functions (Sensation and Intuition). 'Irrational' here means 'not based on reason,' but based on the sheer flow of events. The Perceiving attitude seeks to take in information, to remain open to new inputs, and to experience life as it happens without closing it off."
+                    },
+                    100: {
+                        'I': "For Jung, Introversion is a movement of negative relation to the object. The subject (the self) is the prime motivating factor, while the object (the external world) is secondary or even draining. The introvert interposes a subjective view between themselves and the world. Their energy defends against external claims. They are not necessarily shy, but their reality is derived from their internal reaction to impressions rather than the impressions themselves. They tend to be reflective, seeking depth over breadth, and often feel that the outer world is 'too much,' requiring a retreat to the inner citadel to recharge.",
+                        'E': "Extroversion is a positive relation to the object. The subject yields to the fascinating influence of the external world. Their psychic life is played out outside themselves, among people and things. They are oriented by objective data and established moral/social laws. Their inner life is often subordinate to external necessities. They risk losing themselves in the object, becoming identical with their role or environment. However, they possess a vital capacity to adapt to life's circumstances and to maintain a healthy, active connection with the collective reality. They find solitude draining and life-giving energy in interaction.",
+                        'S': "Sensation is the function that bridges the gap between the physical world and the psyche. It is the perception of reality through the five senses. In the Extroverted attitude, it perceives the object exactly as it is—the redness of the rose, the hardness of the stone. It is the supreme realism. In the Introverted attitude, it perceives the subjective impression the object makes. Sensation anchors the psyche in the here and now, preventing it from floating away into fantasy or abstract theory. It is the function of the 'Real.'",
+                        'N': "Intuition is perception via the unconscious. It is a kind of instinctive comprehension that arrives at the total picture without knowing how it got there. It peers around corners. While Sensation sees the tree, Intuition sees the forest and the ecosystem's future. It is the mother of creativity and prophecy. In the Extroverted attitude, it seeks possibilities in the objective world. In the Introverted attitude, it seeks possibilities in the subjective world. It often conflicts with Sensation, as one cannot focus on 'what is' and 'what could be' simultaneously.",
+                        'T': "Thinking is the function of intellectual judgment. It brings the contents of ideation into conceptual connection with one another. It seeks to satisfy the laws of logic. Extroverted Thinking builds its structure on objective facts and generally accepted ideas. Introverted Thinking builds its structure on subjective, internal premises. It cares less about facts and more about the clarity and depth of the idea itself. Both forms seek to establish an order of 'truth,' stripping away the personal and the emotional to arrive at a valid, consistent conclusion.",
+                        'F': "Feeling is the function of value judgment. It is completely rational, just as Thinking is, but its logic is the logic of the heart. It assesses the worth of things. Extroverted Feeling aligns its values with objective, collective standards (manners, social harmony). Introverted Feeling aligns its values with deep, subjective, primordial images (individual conscience). Feeling gives life its flavor and direction; without it, we would know what everything is, but not what anything matters.",
+                        'J': "The Judging attitude utilizes the Rational functions (Thinking and Feeling) to manage life. It is characterized by a desire for closure. The Judging mind wants to categorize, decide, and move on. It prefers a planned, orderly existence where ambiguity is minimized. In the outer world, this manifests as punctuality, decisiveness, and a respect for rules or schedules. However, if over-relied upon, it can lead to rigidity—a refusal to adapt to new information because the mind has already 'decided.'",
+                        'P': "The Perceiving attitude utilizes the Irrational functions (Sensation and Intuition) to navigate life. It is characterized by a desire for openness. The Perceiving mind wants to gather more data, see more possibilities, and experience the moment fully before—or instead of—coming to a conclusion. It prefers a flexible, spontaneous existence where the unexpected is welcomed. In the outer world, this manifests as adaptability, curiosity, and a 'wait and see' approach. If over-relied upon, it can lead to aimlessness."
+                    }
+                },
+                mate: {
+                    30: {
+                        'I': "Adaptation of high sensitivity. Protective withdrawal to shield an authentic self that felt overwhelmed in an unsafe world. The 'No' to the world to preserve the 'Yes' to self.",
+                        'E': "Disconnection from self, seeking external validation to fill an inner emptiness. Coping mechanism based on attachment needs—looking outward to be soothed because looking inward is painful.",
+                        'S': "Focus on the body's present reality. Can be a path to healing (reconnecting to the body) or a trauma-based disconnection from deeper, painful emotions by focusing on the surface.",
+                        'N': "The 'gut feeling' of the authentic self. Often suppressed by trauma because the child was taught their reality was wrong. Healing involves reclaiming and trusting this inner voice.",
+                        'T': "The rational mind split from emotion. A brilliant defense against trauma—'If I figure it out, it won't hurt.' Wholeness requires reintegrating this intellect with the heart's feelings.",
+                        'F': "The core language of the authentic self. Emotions are often repressed due to childhood wounds ('don't cry'). Authenticity is reclaiming these feelings as vital signals, not symptoms.",
+                        'J': "A drive for control and order born from a chaotic childhood. A survival strategy: 'If I control the environment, I am safe.' Rigidity is a scar, not a preference.",
+                        'P': "A potential 'go with the flow' response to avoid conflict (fawning), or a healthy openness. Can be a lack of boundaries developed because saying 'No' was dangerous."
+                    },
+                    60: {
+                        'I': "Often a manifestation of the 'highly sensitive person.' In a misattuned environment, the child learns the outer world is overwhelming. Withdrawal becomes a necessary survival strategy to protect the fragile authentic self. It isn't just a preference; it's a biological boundary set against a world that demands too much. The introvert retreats to where they can control the input.",
+                        'E': "Can be viewed as a flight from the internal void. If the inner world holds pain or abandonment, the child turns outward for soothing and distraction. 'Busyness' and constant connection become anesthetics. It is a strategy to secure attachment by being what the world wants them to be—visible, active, and engaging—at the cost of their own quiet truth.",
+                        'S': "Trauma disconnects us from our bodies (dissociation). Sensation can be the 'flight' into physical activity or shallow pleasures to avoid deep pain. However, healthy Sensation is the antidote to trauma: 'Somatic Experiencing.' It is the courageous act of feeling the body's sensations without judgment, which is often the first step in releasing stored trauma and returning to the present.",
+                        'N': "Children know the truth. But when that truth is denied by adults ('Daddy isn't drunk,' 'You're just imagining it'), the child suppresses their intuition to maintain the attachment. They learn to doubt their gut. Healing involves unlearning this gaslighting. It is the restoration of self-trust—believing that the inner voice of warning or wisdom is valid and real.",
+                        'T': "The 'intellectual defense.' When feelings are too dangerous to feel, the mind splits off to become a watcher. The child becomes a 'little professor,' analyzing the family dynamics to survive. While this saves them in childhood, in adulthood it creates a life of 'doing' and 'knowing' without 'being' or 'feeling.' Healing is bringing the mind down into the heart.",
+                        'F': "In many families, only 'nice' feelings are allowed. Anger, grief, and fear are rejected. The child learns to repress these essential survival signals to be loved. This repression stresses the body. Maté teaches that 'negative' feelings are not bad; they are the immune system of the soul. Health requires feeling everything to be authentic.",
+                        'J': "Rigidity is almost always a response to anxiety. The 'Judging' need for closure and plans is a way to manage the terror of the unknown. If a child couldn't predict their parents' behavior, they vowed to control their own lives perfectly. This control mimics safety. Healing is learning that we can survive uncertainty and that flexibility is resilience.",
+                        'P': "While it can imply openness, in a trauma context, 'Perceiving' can be the 'Fawn' response—adapting endlessly to others to avoid conflict. The 'go with the flow' person may actually be terrified of asserting a preference that might upset the attachment figure. True health is openness that includes the capacity to say 'No' and set a boundary."
+                    },
+                    100: {
+                        'I': "From a developmental perspective, introversion may be the result of a temperament that is highly reactive to stimulation encountering an environment that cannot soothe it. The child learns that the only safety is in 'shutting down' the intake. This 'tuning out' preserves the self from disintegration. The introvert's rich inner world is a sanctuary built by the self, for the self. The danger is isolation; the gift is a preserved connection to the authentic self that hasn't been colonized by society. Healing means learning that they can bring this authentic self out without being destroyed by the world.",
+                        'E': "Extroversion can be a coping mechanism for 'abandonment depression.' The child learns that being alone means being unsafe or unloved. They develop a radar for external approval and stimulation. Their identity becomes 're-active'—defined by the reaction of others. They may feel they don't exist unless they are interacting. This creates a 'false self' that performs for attachment. Healing for the extrovert is often the most difficult task of all: learning to be alone, in silence, without distraction, and realizing that they are worthy of love even when they are not 'performing.'",
+                        'S': "The body keeps the score. Trauma is stored in the nervous system and the flesh. The Sensation function can work two ways: as an addiction to sensory intensity to override the numbness, or as a dissociation. Maté's work emphasizes 'compassionate inquiry' into the body. Reclaiming Sensation means daring to feel the 'felt sense' of our emotions—the tightness in the throat, the heaviness in the chest. It is the move from 'I think I am sad' to 'I feel the grief in my belly.' This is the gateway to processing trauma.",
+                        'N': "Intuition is the voice of the organism striving for survival and wholeness. In abusive or neglectful homes, this voice is the enemy of the status quo. The child sacrifices their perception of reality to survive in the family's reality. This is the 'betrayal of the self.' Reclaiming intuition is not just about being 'psychic'; it is about ending the internal civil war. It is the profound relief of saying, 'I knew it was wrong, and I was right.' It is the foundation of setting boundaries and protecting the self from future harm.",
+                        'T': "The hyper-rational mind is often a scar from a childhood where there was no one to hold the child's emotions. The child had to become their own parent, using logic to organize a terrifying world. This leads to a disconnect where the person can explain their trauma perfectly but cannot feel it. They live in the 'upstairs' of their brain. Maté argues that you cannot think your way out of a feeling problem. Healing requires the intellect to surrender its dictatorship and become a servant to the emotional reality of the human being.",
+                        'F': "Emotions are not psychological errors; they are biological necessities. They govern our immune system and our relationships. 'Feeling' types may have been shamed for being 'too sensitive' or 'drama queens.' Consequently, they may carry deep shame about their core nature. Conversely, they may have learned to take care of everyone else's feelings (codependency) while suppressing their own. Authenticity is the 'wisdom of trauma'—understanding that our grief, anger, and fear are pointing us toward what needs to be healed. We must feel to heal.",
+                        'J': "The compulsion to organize and plan is often a fight against the memory of helplessness. The 'Judging' personality says, 'I will never be taken by surprise again.' They mistake control for security. This creates high stress as the body is constantly mobilized for a threat that isn't there. Healing is 'surrender'—not giving up, but giving over. It is the realization that life is inherently uncontrollable, and that our safety lies in our capacity to handle the wave, not in our ability to stop the ocean from moving.",
+                        'P': "The inability to finish tasks or the tendency to drift can be a symptom of ADD/ADHD, which Maté links to early childhood stress and attunement deficits. The 'zoning out' was a defense mechanism against emotional pain. The 'Perceiving' type's flexibility might be a lack of a solid self-structure. They flow like water because they were never allowed to be a rock. Healing involves building the 'container' of the self—developing the executive function and the self-worth to stick to a plan that serves them, rather than drifting in the currents of others' expectations."
+                    }
+                },
+                fromm: {
+                    30: {
+                        'I': "Potential 'Hoarding' orientation. Withdrawing to preserve what one has. The fortress of the self. Can be productive focus, or a neurotic escape from 'relatedness' and social responsibility.",
+                        'E': "Potential 'Marketing' orientation. Identity is defined by the market: 'I am as you desire me.' The 'automaton conformist' who flees the burden of freedom by merging with the crowd.",
+                        'S': "Focus on the material world. Can be 'Productive' realism, or 'non-productive' consumerism—acquiring things and pleasures to mask the emptiness of the soul and the anxiety of separateness.",
+                        'N': "'Productive' reason and 'biophilia' (love of life/growth). The ability to envision a humanistic future. Or, a non-productive flight into fantasy to avoid the hard work of living.",
+                        'T': "'Productive' reason used to penetrate the surface and understand truth. Or, detached intellectualism ('rationalization') used to justify inhuman systems and avoid the vulnerability of love.",
+                        'F': "'Productive' love—care, responsibility, respect, and knowledge. Or, 'receptive' dependence—seeking to be loved (symbiosis) rather than to love actively. Sentimentality without action.",
+                        'J': "The 'Authoritarian' character or 'Hoarding' trait. A need to control and classify. Order creates a defense against the 'chaos' of freedom. Loving the dead structure (necrophilia) over living process.",
+                        'P': "Potential 'Marketing' orientation. Rootless flexibility. Adapting to the market's changing demands. 'I have no fixed qualities.' A lack of a solid core or conviction in the face of pressure."
+                    },
+                    60: {
+                        'I': "Fromm might view the introvert through the 'Hoarding Orientation'—finding security by withdrawing and fortifying the self. They experience the outside world as a threat to their autonomy. However, in a productive sense, it represents the capacity for solitude, which is the condition for the ability to love. The risk is narcissism; the strength is independence from the 'marketing' crowd.",
+                        'E': "The 'Marketing Orientation.' In a capitalist society, the extrovert risks becoming a commodity. They experience themselves as a thing to be employed and successful. Their self-esteem depends on 'how well they sell.' They flee the 'anxiety of separateness' by conforming to the herd. The productive extrovert, however, uses their connection to foster genuine 'brotherly love' and community.",
+                        'S': "Can be the 'Having Mode' of existence. 'I am what I have' (experiences, things, sensations). This is consumerism applied to the soul. The goal is to devour the world. The 'Being Mode' of sensation, however, is the productive aliveness of the senses—truly seeing and tasting the world without needing to own it or consume it.",
+                        'N': "Intuition is the capacity for 'Objective Reason'—seeing the potential within the seed. It aligns with 'Biophilia'—the love of life and growth. The productive intuitive sees what a person can become. The danger is 'idolatry'—worshipping an abstraction or an ideal (the State, the Cause) at the expense of living, breathing human beings.",
+                        'T': "Fromm distinguishes between 'Intelligence' (manipulating things for use) and 'Reason' (understanding the essence of things). The 'Hoarding' thinker gathers facts but creates nothing. The 'Productive' thinker uses reason to liberate man from illusion. Thinking becomes dangerous when it is 'necrophilous'—creating cold, dead systems that destroy life (e.g., nuclear strategy) efficiently.",
+                        'F': "True feeling is 'Productive Love.' It is not a passive emotion that 'happens' to you; it is an art, an active power. It implies Care, Responsibility, Respect, and Knowledge. The 'Receptive' type confuses being loved with loving. The 'Exploitative' type uses feeling to manipulate. Productive feeling is the overcoming of narcissism to see the other as they are.",
+                        'J': "The 'Authoritarian Character' seeks to escape freedom by submitting to a higher power (rules) and dominating those below. The 'Judging' need for order can be a love of the 'Dead' (static, controllable) over the 'Living' (unpredictable, flowing). It is the bureaucracy of the soul. Productive Judging is 'Rational Authority'—competence that helps others grow, not control that stifles.",
+                        'P': "The 'Marketing' character must be free of all rigid traits so they can be whatever the market demands. 'Perceiving' can be this hollowness—an open door with no house behind it. However, in the 'Being Mode,' Perceiving is the highest state: a specialized attentiveness to the world, alive and responsive, renewing oneself in every moment without baggage."
+                    },
+                    100: {
+                        'I': "The Introvert risks the Hoarding Orientation. They tend to resolve the 'problem of human existence' (separateness) by withdrawing. They build a wall around themselves and their 'property.' 'Mine' is the key word. However, Fromm notes that the capacity to be alone is the condition for the capacity to love. If the introvert can move from 'Hoarding' to 'Productivity,' their withdrawal becomes a deep well of creativity and conscience. They become the ones who can resist the mass hypnosis of society because they do not require its constant validation to exist.",
+                        'E': "The Extrovert is susceptible to the Marketing Orientation. In modern society, we are all salespeople, and our product is ourselves. The Extrovert naturally excels here, but at a terrible cost: the loss of the self. They become 'The Automaton.' They are terrified of silence because in silence, the 'nothingness' of their identity is revealed. The path to health is to stop 'relating' as a transaction and start 'relating' as a human being—sharing from the center of their existence, not the surface of their personality.",
+                        'S': "Fromm critiques the 'Consumer Man'—the eternal suckling who wants to drink in the whole world. This is Sensation as Consumption. It is a passive, 'Receptive' state where one fills the inner void with external stimuli. It is the 'Having Mode' disguised as enjoyment. The Sensation of Being is radically different. It is the non-greedy joy of the moment. It is looking at a flower without wanting to pick it. It is a relationship of aliveness with the world, not a relationship of digestion.",
+                        'N': "Intuition is the faculty of Biophilia (Love of Life) when it envisions the growth of the living. It is the basis of 'Humanistic Conscience'—the voice that calls us to our own potential. However, Intuition can be Necrophilous if it falls in love with 'The Plan,' 'The System,' or 'The Ideal' more than the people. When an intuitive becomes an ideologue, they will sacrifice living humans for the 'future utopia.' Productive Intuition is always rooted in the reality of human needs, not the abstraction of dogma.",
+                        'T': "Fromm distinguishes Rationalization from Reason. Rationalization is the use of logic to justify our irrational passions. This is the 'Intellect' serving the 'Animal.' Reason, however, is the 'Productive' use of the mind to grasp the truth. It requires the courage to say 'No' to power and illusion. The 'Hoarding' thinker keeps their ideas like rare coins. The 'Productive' thinker's ideas are seeds—they are alive, they change the thinker, and they lead to action. Thought without action is, for Fromm, a form of sterility.",
+                        'F': "Fromm wrote 'The Art of Loving.' He argued that Love (Feeling) is the only sane answer to the problem of human existence. But most 'Feeling' is actually Symbiosis (I need you to survive) or Egoism à deux. Productive Feeling is Care, Responsibility, Respect, and Knowledge. It is not a 'falling into' (passive) but a 'standing in' (active). It requires independence. You can only truly feel for another if you can stand on your own two feet.",
+                        'J': "The Authoritarian Character is the dark side of Judging. It is the person who admires strength and hates weakness. They want a world of strict Order because they cannot handle the responsibility of Freedom. They project their own chaos onto others and then try to 'control' it. This is Necrophilia—the love of that which is not alive. The 'Productive' Judge uses structure as a trellis for life to grow on, not a cage to keep life in. They have Rational Authority based on competence and love.",
+                        'P': "The Marketing Character thrives on 'Perceiving' because they must be eternally flexible. They have no 'principles' or 'core' that might make them obsolete in the market. They are 'open' to everything because they stand for nothing. This is the Alienated state. However, in the Mode of Being, Perceiving is the state of Awakeness. It is the ability to break through the 'clichés' and 'chatter' of society to see the world freshly in every moment. It is the creativity of the child combined with the wisdom of the adult."
+                    }
+                }
             };
 
-            const personalityDescriptions = {
-                // Descriptions remain the same, but are mapped to C(J) and M(P)
-                'ISTC(J)': `This deep sense of duty could be an adaptation to feel needed and safe. The wound is a fear of chaos, managed by rigid control. Authenticity comes from learning their worth isn't just in their dependability but in their being.`,
-                'ISFC(J)': `A person who likely learned their "value" is in caretaking. This self-sacrificing nature can be an adaptation to suppress their own needs, leading to burnout. Healing means learning to serve themself with the same devotion.`,
-                'INFC(J)': `A highly sensitive soul, prone to absorbing others' emotions as a survival tactic. Their profound intuition may be a hyper-vigilance born from needing to "read the room" to be safe. Authenticity is learning to protect their own energy.`,
-                'INTC(J)': `This strategic mind may be a defense against a world that felt illogical or emotionally unsafe. By retreating into logic, they found control. Healing involves daring to trust and integrate the "illogical" world of their own feelings.`,
-                'ISTM(P)': `A deep-seated need for autonomy, perhaps from feeling controlled or enmeshed. The cool, detached logic can be a shield for a sensitive inner world. True freedom comes from connecting their logical independence with emotional interdependence.`,
-                'ISFM(P)': `An authentic, sensitive self that may have learned to be "seen and not heard." Their values are quiet but intense. A wound may be a fear of conflict, leading them to "go with the flow" until a core value is violated.`,
-                'INFM(P)': `The "idealist" who may be deeply wounded by the gap between "what should be" and "what is." This sensitivity can be overwhelming. Authenticity is not in fixing the world, but in accepting their own feelings, including anger and grief.`,
-                'INTM(P)': `A person who likely found safety in the world of ideas, escaping a world that was emotionally confusing or painful. Their "ivory tower" is a defense. Healing means bringing their brilliant mind "down" into their body and heart.`,
-                'ESTM(P)': `This "addiction" to the present moment and high-stimulus activity could be an escape from a painful inner world or past. Stillness feels dangerous. Healing involves learning to be present not just with the outside world, but with their inside one.`,
-                'ESFM(P)': `The "performer" who may have learned that their worth comes from being happy and entertaining. This can be a mask for their own pain or sadness. Authenticity means allowing themself to be "off-stage," sad, or still, and know they are still worthy.`,
-                'ENFM(P)': `This boundless enthusiasm can be a defense against looking inward. Their fear of "being-pinned-down" may be a trauma response to feeling trapped. Healing means finding the courage to commit and go deep, rather than wide, and to sit with their own discomfort.`,
-                'ENTM(P)': `The "devil's advocate" who may use intellectual argument to create distance from their own emotions. This need to "be right" or "win" can be a defense. Authenticity involves realizing that vulnerability is not a logical weakness, but a human strength.`,
-                'ESTC(J)': `This powerful need for external order and control may stem from an inner fear of helplessness. Their identity is tied to their effectiveness. True strength would be to embrace vulnerability and accept that "not-knowing" is not a failure.`,
-                'ESFC(J)': `A person who lives for "the-we," often at the expense of "the-me." Their identity is built on social approval and being needed. This is a profound trauma adaptation. Healing is a revolutionary act of prioritizing their own needs first.`,
-                'ENFC(J)': `This charismatic focus on others' potential can be a way to avoid their own wounds. They "fix" others to avoid fixing themselves. Their greatest challenge is to turn that powerful, compassionate gaze inward and parent their own inner child.`,
-                'ENTC(J)': `A powerful will, perhaps forged in an environment where they had to be "strong" to survive. Emotion is seen as a liability to the "mission." Wholeness comes from realizing that their feelings are not obstacles, but essential data for true, authentic leadership.`
+            // Placeholder variable that will hold the active descriptions
+            let letterDescriptions = definitionsData.jung[30]; // Default
+            /* === MODIFICATION END === */
+            
+            /* === MODIFICATION START: Added Dynamic Personality Data Object === */
+            const typeData = {
+                jung: {
+                    30: {
+                        'ISTC(J)': "Introverted Sensation. Guided by subjective sensory impressions and a storehouse of past experience. They are reliable, systematic, and grounded in facts, referencing the known to navigate the present.",
+                        'ISFC(J)': "Introverted Sensation with Feeling. Grounded in internal sensory data, they use this stability to care for others. They are dutiful, protective, and value harmony, serving through reliable action.",
+                        'INFC(J)': "Introverted Intuition. Driven by a powerful inner vision of future possibilities. They perceive deep patterns and meanings, often possessing a mystical or prophetic sense of 'knowing' without external proof.",
+                        'INTC(J)': "Introverted Intuition with Thinking. Channels inner vision into logical systems. They are strategic planners driven to implement complex, long-range goals and transform their abstract insights into concrete reality.",
+                        'ISTM(P)': "Introverted Thinking. Analyzes the world through a detached, internal logic. They are practical troubleshooters, observing facts and applying precise reasoning to understand how things work in the immediate moment.",
+                        'ISFM(P)': "Introverted Feeling. Guided by deep, unspoken personal values. They express their intense inner emotional world through action and aesthetics, seeking to live authentically in the present moment.",
+                        'INFM(P)': "Introverted Feeling with Intuition. Champions of inner values and ideals. They seek authenticity and harmony, viewing the world through a lens of possibility and what 'should be' for humanity.",
+                        'INTM(P)': "Introverted Thinking with Intuition. Architects of ideas who build complex internal logical frameworks. They are theoretical and curious, seeking to understand the underlying principles of abstract systems.",
+                        'ESTM(P)': "Extroverted Sensation. Masters of the immediate, objective moment. They are energetic, realistic, and pragmatic, responding to sensory data instantly to solve problems and engage with the physical world.",
+                        'ESFM(P)': "Extroverted Sensation with Feeling. Energetic and warm, they engage the present moment with people. They seek to create enjoyment and harmony, experiencing life through their senses and relationships.",
+                        'ENFM(P)': "Extroverted Intuition. Energized by external possibilities and connections. They are enthusiastic and creative, constantly seeking new patterns, potential, and inspiration in the world around them.",
+                        'ENTM(P)': "Extroverted Intuition with Thinking. Innovative and argumentative, they explore possibilities through logical analysis. They enjoy debating ideas, challenging the status quo, and envisioning new systems and theoretical potentials.",
+                        'ESTC(J)': "Extroverted Thinking. Organizes the external world using objective logic. They are decisive and efficient, structuring people and systems to achieve clear, measurable goals and maintain established order.",
+                        'ESFC(J)': "Extroverted Feeling. Structures the world through relational values. They seek to maintain social harmony, adhering to shared norms and actively caring for the practical needs of their community.",
+                        'ENFC(J)': "Extroverted Feeling with Intuition. Charismatic leaders who seek harmony and growth. They intuitively understand the potential in others and guide groups toward a shared future vision and emotional unity.",
+                        'ENTC(J)': "Extroverted Thinking with Intuition. Visionary leaders who structure the world to achieve long-term goals. They command resources logically and efficiently to turn their strategic plans into objective reality."
+                    },
+                    60: {
+                        'ISTC(J)': "The Introverted Sensation type. Their reality is built on a foundation of subjective, internal sensory impressions. They compare current data against a vast storehouse of past experiences to ensure stability. Deeply reliable, systematic, and thorough, they trust what is known, proven, and factual, often acting as the guardians of tradition and order.",
+                        'ISFC(J)': "The Introverted Sensation type with strong Feeling. While grounded in the same internal sensory data as the ISTJ, their primary drive is to use this stability to care for others. They are warm, dutiful, and protective, seeking to maintain harmony in their immediate environment. They express their deep loyalty through practical service to others' needs.",
+                        'INFC(J)': "The Introverted Intuition type. They are guided by a powerful, complex inner vision of how things will unfold. They seek to understand deep patterns and meanings, often feeling a strong, unexplainable sense of 'knowing.' They are less concerned with the concrete details of the present and more focused on the abstract significance of the future.",
+                        'INTC(J)': "The Introverted Intuition type with strong Thinking. Their inner vision is channeled through a rigid, logical framework. They are not just dreamers but strategic architects, driven to implement complex, long-range plans. They seek to change systems or bring their abstract insights into reality through decisive, efficient action and intellectual independence.",
+                        'ISTM(P)': "The Introverted Thinking type. Their world is understood through a precise, internal logical framework. They are analytical, detached, and masters of troubleshooting. They observe the objective facts of the world and apply their subjective logic to understand how things function, often displaying a mastery of tools, mechanics, or systems in the immediate moment.",
+                        'ISFM(P)': "The Introverted Feeling type. Guided by a deep, personal, and often unspoken set of inner values. Their core self is not for public display. They express their rich inner world through action, aesthetics, and a gentle, moment-by-moment engagement. They seek to live in perfect alignment with their conscience and sensory appreciation of life.",
+                        'INFM(P)': "The Introverted Feeling type with strong Intuition. Their powerful inner values are applied not just to the present, but to an ideal, imagined world. They are champions of possibility, seeking harmony and authenticity for all. They are often driven by a quest for meaning, interpreting reality through a lens of personal ethics and future potential.",
+                        'INTM(P)': "The Introverted Thinking type with strong Intuition. Their inner logical framework is built to understand abstract systems and possibilities. They are architects of ideas, driven by a need for logical consistency and a deep curiosity. They are less interested in practical application and more fascinated by the theoretical underpinnings of the universe.",
+                        'ESTM(P)': "The Extroverted Sensation type. Their reality is the immediate, objective, sensory world. They are masters of the present moment, energetic, adaptable, and resourceful. They do not speculate; they respond to what is with a hands-on, pragmatic approach, seeking the strongest possible sensory experience and the most efficient solution to immediate problems.",
+                        'ESFM(P)': "The Extroverted Sensation type with strong Feeling. They are also masters of the present, but their engagement is warmer and more personal. They use their sensory awareness to create joyful, harmonious experiences for themselves and others. They are realistic and spontaneous, adapting easily to new people and environments with a zest for life.",
+                        'ENFM(P)': "The Extroverted Intuition type. They are energized by the world of external possibilities, seeing connections and potential everywhere. Enthusiastic, charismatic, and creative, they jump from idea to idea, seeking to inspire change and explore. They are driven by the new and the novel, often initiating projects with great passion but preferring not to handle the details.",
+                        'ENTM(P)': "The Extroverted Intuition type with strong Thinking. Their drive to explore possibilities is channeled through logical debate and analysis. They are innovative, argumentative, and quick-witted, energized by mentally sparring with concepts and transforming systems. They seek to understand how the world could work, often challenging traditions and boundaries to test their theories.",
+                        'ESTC(J)': "The Extroverted Thinking type. Their primary drive is to structure the external world according to logical, objective principles. They are decisive, organized, and efficient, building systems and directing others to achieve clear, measurable goals. They rely on standardized methods and facts to impose order on chaos and ensure tasks are completed.",
+                        'ESFC(J)': "The Extroverted Feeling type. Their world is structured by objective relational values. They seek to create and maintain harmony in their environment, understanding and adhering to social norms. They are often the 'hosts' of the world, directly caring for the needs of others and ensuring that group values and traditions are respected.",
+                        'ENFC(J)': "The Extroverted Feeling type with strong Intuition. They also seek external harmony, but with a future-oriented focus. They are charismatic leaders, driven to understand and guide others toward their potential. They act as catalysts for growth, intuitively reading the emotional needs of a group and inspiring them toward a shared vision.",
+                        'ENTC(J)': "The Extroverted Thinking type with strong Intuition. Their drive to structure the world is not just about what is, but what could be. They are visionary, long-range planners, and 'field marshals' who logically command resources to achieve a future goal. They are decisive, intellectual, and focused on efficiency and progress."
+                    },
+                    100: {
+                        'ISTC(J)': "The Introverted Sensation type is the archetype of the reliable guardian. Their consciousness is focused on the subjective intensity of sensory impressions, which they store and organize meticulously. Every new event is instantly compared against this vast internal library of past experiences, making them excellent at spotting discrepancies and maintaining continuity. They are not swayed by passing fads; they trust what has been proven to work. Their logic is applied to defend this inner reality, resulting in a character that is systematic, dutiful, and deeply grounded. They bring order to the world by upholding traditions and honoring their commitments.",
+                        'ISFC(J)': "The Introverted Sensation type with Feeling combines the subjective sensory grounding of the ISTJ with a profound focus on human values. They perceive the world through detailed internal impressions, but their judgment is driven by a need for harmony and care. They are the quiet protectors, often working behind the scenes to ensure the practical needs of others are met. Their loyalty is immense, often identifying closely with a group or family. While they may appear reserved, their inner world is warm and sympathetic. They maintain the social fabric by remembering the details that make people feel valued and safe.",
+                        'INFC(J)': "The Introverted Intuition type lives in a world of inner images and archetypes. They are less concerned with the surface reality of things and more with the hidden processes and meanings behind them. Their intuition functions like an inner eye, perceiving the 'seeds' of the future before they sprout. This gives them a prophetic or mystical quality. They are often driven by a deep conviction or vision that they feel compelled to express or fulfill. Their challenge is to translate these complex, often wordless insights into a form that the outer world can understand and accept.",
+                        'INTC(J)': "The Introverted Intuition type with Thinking is the strategic mastermind. Like the INFJ, they are driven by an inner vision of possibility, but they process this vision through a rigorous, objective logic. They are not content to simply 'see' the future; they must build it. They view the world as a chessboard of systems to be optimized and reorganized. Independent and often skeptical of authority, they trust their own insight above all else. They are ruthless in their pursuit of efficiency and truth, willing to tear down established structures if they impede the realization of their long-range plans.",
+                        'ISTM(P)': "The Introverted Thinking type is the detached analyst of the concrete world. They use their thinking function to construct a complex, internal model of how things work. They are typically quiet observers, gathering factual data until they understand the underlying logic of a system. Unlike the abstract scientist, the ISTP applies this logic to immediate, tangible reality—tools, machines, or crises. They are adaptable and economical in their actions, moving with a cool, rational precision. They value autonomy above all, resisting external rules that clash with their own internal logical principles. They are the masters of the 'art of the possible.'",
+                        'ISFM(P)': "The Introverted Feeling type is the archetype of the silent artist. Their life is guided by a differentiated and intensive inner feeling process. These values are rarely articulated in words, which can seem inadequate, but are expressed through their actions, demeanor, and aesthetic choices. They seek a profound harmony between their inner truth and their outer life. They can appear cool or aloof on the surface, but inside burns a passionate intensity. They perceive the world with a heightened sensory awareness, seeking to capture the beauty and tragedy of the moment without imposing a judgment upon it.",
+                        'INFM(P)': "The Introverted Feeling type with Intuition is the idealistic dreamer and healer. Their primary orientation is toward a deep, idiosyncratic system of inner values. Unlike the ISFP, who expresses this through sensory action, the INFP explores it through possibilities and language. They are searching for a reflection of their inner ideal in the outer world. They are sensitive to inauthenticity and are driven by a desire to heal the split between 'what is' and 'what ought to be.' They are the writers and prophets of the heart, often sacrificing their own comfort for a cause that aligns with their moral vision.",
+                        'INTM(P)': "The Introverted Thinking type with Intuition is the architect of pure reason. They are driven to build accurate internal models of the universe. Their mind is a laboratory where ideas are tested for logical consistency. They are less interested in the practical value of an idea than in its theoretical correctness. They are skeptical, precise, and deeply intellectual. Their intuition provides them with flashes of possibility, which their thinking then dissects and systematizes. They can be oblivious to social niceties or physical surroundings, living almost entirely in a world of abstract concepts and intellectual exploration.",
+                        'ESTM(P)': "The Extroverted Sensation type is the ultimate realist. They are fully immersed in the stream of objective events. To them, the only thing that matters is the 'here and now.' They are vital, energetic, and driven by a hunger for sensory experience. They do not analyze motives or ponder the future; they act. They are often found in high-stakes environments where quick reflexes and adaptability are key. They have an uncanny ability to see things exactly as they are, without the filter of sentiment or theory, making them excellent problem-solvers in concrete, chaotic situations.",
+                        'ESFM(P)': "The Extroverted Sensation type with Feeling is the lover of life. Like the ESTP, they are grounded in the present reality, but their orientation is towards people and shared experiences. They approach the world with a warm, realistic optimism. They love material comforts, good food, and social gatherings. They are the most generous and hospitable of types, seeking to make every moment enjoyable. They rely on their senses to navigate relationships, noticing the physical needs and moods of others instantly. They avoid complex analysis, preferring to live fully and harmoniously in the moment.",
+                        'ENFM(P)': "The Extroverted Intuition type is the inspirer and the change-agent. They perceive the world not as a collection of objects, but as a web of fascinating possibilities. They are constantly scanning the environment for potential—in people, in projects, in ideas. They are magnetic and enthusiastic, able to rally others to their cause. However, they often loathe routine and detail. Once a possibility has been explored and the mystery is gone, they are ready to move on to the next adventure. They live for the 'spark' of creation and the discovery of new connections.",
+                        'ENTM(P)': "The Extroverted Intuition type with Thinking is the innovator and the debater. They use their intuition to see how systems can be changed or exploited, and their thinking to explain why. They are alert, outspoken, and enjoy the mental gymnastics of argument. They are not bound by tradition; in fact, they enjoy dismantling it to see if a better way exists. They are entrepreneurial in spirit, always looking for the next big idea or the leverage point in a situation. They can be inconsistent, as their loyalty is to the flow of ideas rather than to people or established procedures.",
+                        'ESTC(J)': "The Extroverted Thinking type is the natural organizer of society. They trust objective facts and universal rules. They feel a strong responsibility to ensure that the environment is structured, logical, and efficient. They are the administrators who enforce the law and the managers who ensure the job gets done. They value competence, clarity, and closure. They may seem rigid to more spontaneous types, but their rigidity comes from a deep commitment to justice and order. They express their values by doing their duty and ensuring that everyone else does theirs.",
+                        'ESFC(J)': "The Extroverted Feeling type is the harmonizer of the community. They orient themselves by the objective values of their culture—what is considered 'good,' 'polite,' and 'appropriate.' They are deeply attuned to the emotional atmosphere of their environment and work tirelessly to keep it positive. They are the hosts, the caregivers, and the upholders of social tradition. They do not seek to change the world, but to care for the people in it. They need to feel appreciated and connected, and they thrive in environments where cooperation and shared values are the norm.",
+                        'ENFC(J)': "The Extroverted Feeling type with Intuition is the charismatic pedagogue or leader. They are driven by a desire to help others realize their potential. They possess a unique ability to 'empathize' with a crowd, instinctively knowing what to say to inspire and motivate. They are often found in roles where they can guide, teach, or counsel. They are idealists who organize people not just for efficiency, but for growth. They can sometimes be over-involved in the lives of others, but their intent is almost always to foster harmony and development on a large scale.",
+                        'ENTC(J)': "The Extroverted Thinking type with Intuition is the natural born leader and executive. They have a drive to organize and lead, but unlike the ESTJ who maintains order, the ENTJ seeks to create new order. They are strategic and focus on the long-term validity of their plans. They are objective, decisive, and often intellectually intimidating. They see inefficiency as a personal failing and are relentless in eliminating it. They are happy to take charge and have little patience for confusion or half-measures. They build systems that are designed to last and to conquer."
+                    }
+                },
+                mate: {
+                    30: {
+                        'ISTC(J)': "A deep need for order to manage fear of chaos. Adaptation: 'I am safe if I am perfect and reliable.' Healing: You are worthy simply for existing, not just working.",
+                        'ISFC(J)': "Self-sacrifice as a survival strategy. Adaptation: 'I am valuable only when I serve others.' Healing: Learning to nurture your own self with the same devotion you give to others.",
+                        'INFC(J)': "Hyper-vigilance disguised as intuition. Adaptation: 'I must read the room to stay safe.' Healing: Protecting your energy and realizing you are not responsible for everyone else's emotions.",
+                        'INTC(J)': "Logic as a fortress against emotional pain. Adaptation: 'Feelings are dangerous; thinking is safe.' Healing: Dropping the intellectual shield and allowing the 'illogical' heart to speak.",
+                        'ISTM(P)': "Detachment as a shield for sensitivity. Adaptation: 'I need total autonomy to avoid being controlled.' Healing: Connecting your independence with the vulnerability of needing others.",
+                        'ISFM(P)': "Silence as a defense for a sensitive soul. Adaptation: 'It is safer to be unseen.' Healing: Finding the voice to express your intense inner values to the world.",
+                        'INFM(P)': "Dreaming as an escape from a painful reality. Adaptation: 'The real world is too harsh.' Healing: validating your own grief and anger, not just your ideals.",
+                        'INTM(P)': "The ivory tower as a sanctuary. Adaptation: 'I will live in my mind where I cannot be hurt.' Healing: Embodiment—feeling the physical sensations of emotion in the body.",
+                        'ESTM(P)': "Action as a flight from stillness. Adaptation: 'If I stop moving, I will feel the pain.' Healing: Finding safety in stillness and the quiet of your own company.",
+                        'ESFM(P)': "Performance as a plea for love. Adaptation: 'I must be happy to be accepted.' Healing: Embracing your sadness and realizing you don't have to entertain to be loved.",
+                        'ENFM(P)': "Enthusiasm as a defense against depth. Adaptation: 'I must keep moving to avoid being trapped.' Healing: Staying with the discomfort of commitment and deep, difficult feelings.",
+                        'ENTM(P)': "Debating to keep people at a distance. Adaptation: 'I will outsmart my vulnerability.' Healing: Admitting that you cannot logic your way out of human emotional needs.",
+                        'ESTC(J)': "Control as a manager of anxiety. Adaptation: 'If I don't control everything, disaster will strike.' Healing: Letting go and trusting that the world will not end if you rest.",
+                        'ESFC(J)': "Fawning as a trauma response. Adaptation: 'I must please everyone to ensure my survival.' Healing: The revolutionary act of saying 'No' and prioritizing your own needs.",
+                        'ENFC(J)': "Fixing others to avoid the self. Adaptation: 'I am the helper, not the helpless.' Healing: Allowing yourself to be the one who is held and supported.",
+                        'ENTC(J)': "Power as a substitute for connection. Adaptation: 'I must be strong and invincible.' Healing: Realizing that true leadership requires the vulnerability of the heart."
+                    },
+                    60: {
+                        'ISTC(J)': "The need for rigid structure often stems from a childhood environment that felt chaotic or unpredictable. This type finds safety in rules and reliability. Their 'duty' is a coping mechanism to ensure they are never blamed or found wanting. Healing involves recognizing that their worth is intrinsic, not earned through endless toil and correctness.",
+                        'ISFC(J)': "This type often develops in children who were praised only for being 'good' and 'quiet.' They suppress their own needs to maintain attachment with caregivers. The compulsion to serve is a way to buy safety and love. True authenticity requires breaking the cycle of self-sacrifice and learning that having personal needs is not 'selfish.'",
+                        'INFC(J)': "Highly sensitive children often become the emotional caretakers of their families. Their 'intuition' is a honed survival skill—hyper-vigilance to the moods of adults. They absorb others' pain to prevent conflict. Healing is the process of establishing boundaries, realizing they can be empathetic without becoming a dumping ground for the world's emotions.",
+                        'INTC(J)': "When the emotional environment is confusing or unsafe, a child may retreat into the cold clarity of logic. The INTJ's strategic mind is a fortress built to keep chaos out. They devalue feelings because feelings once hurt. Wholeness comes from daring to lower the drawbridge and integrate their suppressed emotional self with their brilliant mind.",
+                        'ISTM(P)': "This type often reflects a child who felt smothered or controlled. Their mechanical detachment and need for space are defenses against enmeshment. They 'fix' things because things are easier to understand than people. Healing involves realizing that intimacy does not equal a loss of self, and that they can be connected while remaining free.",
+                        'ISFM(P)': "A sensitive child who learned that their expression was unwelcome may retreat into silence. They hold their values tightly inside because sharing them feels dangerous. Their 'go with the flow' attitude is a way to avoid conflict. Authenticity means finding the courage to make their inner world visible and risking the noise of confrontation.",
+                        'INFM(P)': "The 'idealist' is often a soul wounded by the harshness of reality. They retreat into a fantasy world of 'how things should be' to escape the pain of 'how things are.' This dissociation protects them from grief. Healing requires grounding themselves in the present and accepting that they can be whole even in a broken world.",
+                        'INTM(P)': "Faced with an emotionally overwhelming world, this child retreats into the abstract. Ideas are safe; people are not. They dissociate from their bodies to live entirely in their heads. Their logic is a way to make sense of a senseless trauma. Healing is a journey of 're-inhabiting' the body and feeling the emotions they analyzed away.",
+                        'ESTM(P)': "The drive for constant sensation can be a way to numb inner pain. Adrenaline is a powerful anesthetic. By staying in the 'now' and moving fast, the ESTP avoids the shadow of the past. Healing implies stopping the car, turning off the noise, and sitting with the anxiety that arises in the silence.",
+                        'ESFM(P)': "The 'class clown' or performer is often a child who felt invisible unless they were entertaining. They learned to equate 'attention' with 'love.' They fear that if they stop smiling, they will be abandoned. Authenticity involves dropping the mask and trusting that their sorrow and silence are just as lovable as their joy.",
+                        'ENFM(P)': "This type's flight from boredom and commitment can be a flight from the self. Deep emotional intimacy feels like a trap because, in the past, being 'pinned down' meant being controlled or hurt. They keep moving to stay free. Healing is finding the freedom within commitment, rather than outside of it.",
+                        'ENTM(P)': "Intellectual sparring is a sophisticated defense mechanism. By turning everything into a debate, the ENTP keeps the engagement on a mental level, avoiding emotional vulnerability. They control the interaction to avoid being hurt. Healing involves stepping down from the podium and allowing themselves to be seen, not just heard.",
+                        'ESTC(J)': "The urge to organize and command often hides a deep, infantile fear of helplessness. If they are not in charge, they feel vulnerable. They project their internal anxiety onto the external world, trying to control it so they don't have to feel fear. True strength is admitting they cannot control everything.",
+                        'ESFC(J)': "This type is the classic 'parentified' child. They learned that their survival depended on keeping everyone else happy and the social group cohesive. They have no sense of self separate from the group's approval. Healing is the terrifying but necessary process of individuation—finding out who they are when no one needs them.",
+                        'ENFC(J)': "The charismatic leader who 'saves' others is often trying to save their own inner child. By focusing entirely on the potential of others, they avoid looking at their own wounds. They give the love they desperately crave to receive. Healing means turning that powerful, nurturing gaze inward and becoming their own parent.",
+                        'ENTC(J)': "This powerful will is often forged in a fire where 'weakness' was punished. They learned to view their own emotions as liabilities to be crushed. They conquer the world to prove they are not victims. Wholeness comes from accepting that their vulnerability is not a weakness, but the source of their true humanity."
+                    },
+                    100: {
+                        'ISTC(J)': "In a trauma-informed light, the ISTJ's rigid adherence to duty and detail acts as a container for anxiety. For a child raised in an unpredictable environment, 'following the rules' became the only way to guarantee safety. Their reliance on past experience is a reluctance to trust the unknown, which once proved dangerous. They suppress their own needs to be the 'reliable one.' The path to authenticity involves softening this rigidity. They must learn that mistakes are human, not fatal, and that they can be loved for who they are, not just for the order they maintain.",
+                        'ISFC(J)': "The ISFJ often represents the 'good child' adaptation. In families where parents were emotionally immature or demanding, this child learned to secure attachment by becoming invisible and serviceable. They anticipate needs to avoid rejection. This hyper-attunement to others leads to a profound disconnection from their own bodily signals and desires, often resulting in physical illness or burnout. Healing is a process of compassionate inquiry: 'What does my body need right now?' It is the realization that self-care is not selfish, but the essential foundation for any genuine care of others.",
+                        'INFC(J)': "The INFJ's 'mystical' insight is often a byproduct of high-stakes emotional survival. As children, they had to read the microscopic shifts in their parents' moods to avoid danger or shame. This created a porous boundary where they absorb the world's pain as their own. They feel responsible for the collective emotional climate. Authenticity for the INFJ involves building an energetic wall. They must learn to distinguish between 'my feelings' and 'your feelings,' and to relinquish the burden of saving the world in favor of simply living in it.",
+                        'INTC(J)': "The INTJ's 'mastermind' persona is a brilliant defense against a world that made no emotional sense. If the caregivers were irrational or chaotic, the child retreated into a sanctuary of logic. They decided that 'feelings' were the problem and 'thinking' was the solution. They hoard knowledge and autonomy to ensure they never have to depend on unreliable others. Healing involves the courageous descent from the head to the heart. It means accepting that human connection is inherently messy and illogical, and that this messiness is where life truly happens.",
+                        'ISTM(P)': "The ISTP's cool detachment is often a boundary set against intrusion. If a child's boundaries were repeatedly violated, they learned to shut down and withdraw into a private, mechanical world where they had total control. Their focus on 'how things work' is a relief from the baffling complexity of 'how people feel.' True freedom for the ISTP is not just isolation; it is the ability to be in a relationship without losing oneself. It is learning that they can share their inner world without being engulfed by the other.",
+                        'ISFM(P)': "The ISFP's intense privacy often protects a core self that was shamed or rejected. They learned that their deep feelings were 'too much' or 'wrong.' Consequently, they express themselves only through safe, non-verbal channels like art or action. They float along to avoid the friction of asserting their will. Healing involves finding their voice. It is the realization that their values are worth fighting for and that their authentic self deserves to take up space in the world, even if it causes conflict.",
+                        'INFM(P)': "The INFP's idealism is a beautiful but painful adaptation. By living in a world of 'what could be,' they dissociate from the pain of the present. They are often carrying a deep grief for the loss of innocence—their own or the world's. They feel everything intensely but often lack the skin to protect themselves. Healing is not toughening up, but grounding down. It is accepting that the world is flawed and that they can be effective within it, rather than retreating into a purity that doesn't exist.",
+                        'INTM(P)': "The INTP's dissociation into logic is a profound flight response. Faced with emotional overwhelm, they 'checked out' of their bodies and moved into their minds. They view emotions as data to be analyzed rather than experiences to be felt. This protects them from pain but also starves them of joy. Healing is the terrifying process of re-embodiment. It involves stopping the endless analysis and allowing themselves to simply feel—fear, sadness, joy—without needing to understand or categorize it.",
+                        'ESTM(P)': "The ESTP's hunger for stimulation is often a flight from the void. Trauma can leave a sensation of emptiness or numbness that the ESTP tries to fill with intensity—speed, risk, noise. They are running to stay ahead of the shadows. If they stop, they might have to feel the grief or fear they have been outrunning. Healing comes from the cultivation of stillness. It is learning that they are enough, even when they are doing nothing, and that they can survive the quiet.",
+                        'ESFM(P)': "The ESFP's role as the 'entertainer' can mask a deep insecurity. They learned that they were lovable only when they were 'on.' They manage the anxiety of the room by becoming the center of attention, ensuring everyone is happy so they can feel safe. This performance is exhausting. Authenticity is the realization that they are not responsible for everyone's joy. It is allowing themselves to be 'boring,' sad, or quiet, and trusting that their true friends will remain.",
+                        'ENFM(P)': "The ENFP's oscillation between enthusiasm and boredom is a search for the 'perfect' attachment that won't hurt. They idealize new people and projects, hoping this one will be the answer, only to flee when the reality sets in. They fear the 'trap' of mundane reality because it feels like death to their spirit. Healing is making friends with the mundane. It is staying with the difficult parts of relationships and projects, realizing that true depth is found on the other side of boredom.",
+                        'ENTM(P)': "The ENTP's devil's advocate persona protects a tender heart. By intellectualizing every interaction, they keep people at arm's length. They fear that if they are serious or vulnerable, they will be ridiculed or rejected. So, they beat everyone to the punch with wit and debate. Healing is the dropping of the weapon. It is engaging with others not as intellectual sparring partners, but as fellow humans. It is risking the possibility of being 'wrong' in order to be connected.",
+                        'ESTC(J)': "The ESTJ's rigidity is a monument to a frightened child who needed to create order to survive. They believe that if they relax their grip, the world will fall apart. They over-function to compensate for an internal sense of powerlessness. Their judgment of others is a projection of their own harsh inner critic. Healing involves self-compassion. It is softening the demands they place on themselves, which allows them to soften their demands on others. It is trusting that the world can spin without their constant assistance.",
+                        'ESFC(J)': "The ESFJ's compulsive caretaking is a trauma bond. They have been trained to believe that their needs are secondary to the group's. They feel guilty if they are not serving. This leads to 'co-dependent' relationships where they enable others to feel needed. Healing is the reclaiming of the 'I.' It is the understanding that they have a right to exist, to have preferences, and to rest, regardless of whether it pleases the group. It is learning to receive.",
+                        'ENFC(J)': "The ENFJ's focus on potential is a deflection. They see the best in everyone else so they don't have to look at the broken parts of themselves. They are the 'therapist' to everyone, a role that keeps them in control and above the messiness of mutual intimacy. Healing involves stepping down from the pedestal. It is allowing themselves to be the one who is confused, broken, and in need of guidance. It is accepting that they are worthy of love even when they are not useful.",
+                        'ENTC(J)': "The ENTJ's drive for power is a compensation for a loss of power in childhood. They decided early on that it is better to be the hammer than the nail. They armor themselves with competence and efficiency, viewing emotion as a weakness that can be exploited. They crush obstacles, including their own feelings. Healing is the integration of the 'feminine' aspects of receiving, feeling, and waiting. It is realizing that true power includes the capacity to be gentle and that vulnerability is the ultimate courage."
+                    }
+                },
+                fromm: {
+                    30: {
+                        'ISTC(J)': "The Hoarding Orientation. Finds security in saving, ordering, and possessing duty. Virtue: Reliability. Vice: Rigidity. Productivity lies in sharing stability, not hoarding it behind walls of tradition.",
+                        'ISFC(J)': "The Receptive-Hoarder. Finds identity in serving authority and tradition. Prone to symbiotic attachment. Freedom is found in developing a humanistic conscience separate from the role of 'servant.'",
+                        'INFC(J)': "Productive Idealism vs. Masochistic Loyalty. Sees a better human future. Danger: Unproductive martyrdom and wishing to be 'saved.' Goal: Actively building ideals rather than just dreaming them.",
+                        'INTC(J)': "Rational Builder vs. Intellectual Hoarder. Hoards autonomy and ideas to escape a chaotic world. Challenge: To use systems to connect with humanity, not to remain in detached superiority.",
+                        'ISTM(P)': "Productive Craftsmanship vs. Marketing Pragmatism. Adapts skills to the market. Risk: Becoming a tool to be used. Goal: Rooting their craft in a productive, independent sense of self.",
+                        'ISFM(P)': "The Art of Being vs. Passive Reception. Focused on the experience of the now. Risk: Passive appreciation without creation. Goal: Transforming sensitivity into productive action and expression.",
+                        'INFM(P)': "Humanistic Conscience vs. Withdrawal. At odds with the 'marketing' world. Risk: Retreating into ideals to escape reality. Goal: The courage to act on values in an automaton society.",
+                        'INTM(P)': "Intellectual Hoarding. Hoards knowledge as a defense. Risk: Detached observation without participation. Productivity: creating and relating with knowledge to foster reason in the shared world.",
+                        'ESTM(P)': "Exploitative-Marketing Mix. Takes what is needed and sells the self. Risk: Opportunism. Goal: Moving from using others to using resourcefulness for creative, life-affirming ends.",
+                        'ESFM(P)': "The Marketing Orientation. Personality is the commodity. Fear: Being 'unsellable.' Goal: Discovering the authentic self that exists beneath the performance and the need for applause.",
+                        'ENFM(P)': "Marketing with Purpose. Sells possibilities. Risk: Becoming an automaton of one's own charisma. Productivity: Committing to one ideal deeply, rather than marketing many superficially.",
+                        'ENTM(P)': "Exploitative Intellectualism. Uses ideas as currency to gain power. Risk: Debating to win rather than to find truth. Goal: Using reason for genuine human betterment, not just leverage.",
+                        'ESTC(J)': "The Authoritarian Character. Finds security in hierarchy and control. Risk: Loving the dead order (necrophilia) over living chaos. Goal: Choosing biophilia—love of life and growth—over control.",
+                        'ESFC(J)': "The Automaton Conformist. Identity derived wholly from social approval. Risk: Loss of self in the crowd. Goal: The terrifying act of developing a personal conscience separate from expectation.",
+                        'ENFC(J)': "Marketing Goodness. Sells ideals and guidance. Risk: Manipulating others 'for their own good.' Goal: Allowing others the freedom to be themselves, rather than molding them.",
+                        'ENTC(J)': "Exploitative Leadership. View people as resources for the mission. Risk: Devaluing the human for the goal. Goal: Ensuring systems serve humanistic ends, not just the accumulation of power."
+                    },
+                    60: {
+                        'ISTC(J)': "A classic example of the 'hoarding orientation.' They find security not in growth, but in conservation—saving facts, upholding duties, and maintaining order. They build a fortress of reliability against the unpredictability of life. Their challenge is to move from a defensive posture of 'holding on' to a productive posture of 'building with,' allowing life to flow rather than freezing it.",
+                        'ISFC(J)': "This type combines 'receptive' and 'hoarding' traits. They seek to be loved by being useful to an authority or group (receptive) and protect the traditions of that group (hoarding). They risk a symbiotic dependence, living through others. The path to freedom is realizing that their conscience must be their own, not just an internalization of social rules.",
+                        'INFC(J)': "Possesses a 'productive' vision for humanity but often struggles with the 'receptive' wish to be rescued or the 'masochistic' wish to suffer for a cause. They see through the 'marketing' veneer of society. Their task is to translate their vision into reality without withdrawing from the world or becoming a martyr to it.",
+                        'INTC(J)': "The 'hoarding' of the intellect. They seek to master the world through reason, keeping their emotions and ideas within a controlled system. They value autonomy, which is Fromm's goal, but often achieve it by severing ties with others. True productivity for them is using their rationality to serve life (biophilia) rather than just checking systems.",
+                        'ISTM(P)': "A blend of 'productive' skill and 'marketing' adaptability. They are the independent artisan, yet in the modern world, they risk becoming a commodity—selling their skills to the highest bidder without regard for the end. They must ensure they are the masters of their tools, not just tools of the market.",
+                        'ISFM(P)': "Focused on 'being' rather than 'having,' which aligns with Fromm's ideal. They experience life directly. However, they risk a 'receptive' passivity, waiting for the world to give them beauty. Productivity requires that they actively express their values, engaging with the world rather than just observing it from a safe distance.",
+                        'INFM(P)': "The 'humanist' conscience. They are naturally repelled by the 'marketing orientation' where people are things. They preserve the sanctity of the individual. However, they risk an 'escape from freedom' by retreating into a private utopia. Their challenge is to bring their love of life into the concrete, messy public sphere.",
+                        'INTM(P)': "The 'hoarder' of abstract truth. They withdraw from the confusion of relationship into the clarity of logic. They treat knowledge as a possession. Fromm would urge them to make their reason 'productive'—to use it to connect with others and solve human problems, rather than building a castle of theory where no one else can live.",
+                        'ESTM(P)': "The 'exploitative' orientation is strong here—they see the world as a fruit to be seized. They are active and vital, but may view others as objects to be outsmarted. The shift to productivity involves using their immense energy to create value for the whole, rather than just extracting value for the self.",
+                        'ESFM(P)': "The 'marketing orientation' par excellence. They are adaptable, fashionable, and socially attuned—they 'sell' their personality well. The danger is the loss of the self; if they are not 'bought' (liked), they feel they are nothing. Freedom is finding a core of self that is not for sale.",
+                        'ENFM(P)': "They 'market' potential. They are often the 'automaton' of enthusiasm, feeling what they are expected to feel—excitement. They sell themselves as the inspirer. True productivity is moving beyond the need for novelty and social applause to find a genuine, consistent commitment to a humanistic cause.",
+                        'ENTM(P)': "The 'exploitative' intellectual. They use ideas to manipulate the environment and gain an advantage. They treat debate as a marketplace competition. To become 'productive,' they must stop using reason as a weapon for dominance and start using it as a tool for understanding and shared growth.",
+                        'ESTC(J)': "The 'authoritarian' character. They admire power and despise weakness. They find safety in the hierarchy—ruling those below, obeying those above. This is an escape from the anxiety of freedom. The path to productivity is to value people more than rules, and to choose the chaos of life over the order of death.",
+                        'ESFC(J)': "The 'conformist.' They alleviate the anxiety of separation by becoming exactly what society expects. They are 'good' in the conventional sense, but Fromm asks: Are they 'true'? They must dare to develop a conviction that might differ from the group, moving from 'we feel' to 'I feel.'",
+                        'ENFC(J)': "The 'marketer' of guidance. They package their care and insight. While often benevolent, there can be a hidden 'exploitation'—guiding others to validate their own role as the leader. The productive goal is to empower others to be free, even if that means they no longer need the ENFJ.",
+                        'ENTC(J)': "The 'exploitative' builder. They view the world as raw material to be shaped by their will. They are productive in the material sense, but often 'necrophilous'—treating people like cogs in a machine. The challenge is to cultivate 'biophilia'—a love for the organic, uncontrollable growth of life and people."
+                    },
+                    100: {
+                        'ISTC(J)': "In Fromm's view, the ISTJ embodies the Hoarding Orientation. They find security in a world of constant change by building a wall of order, duty, and memory. They 'have' their truth and they hold onto it. They are suspicious of the new because it threatens their accumulated stock of experience. While this makes them incredibly reliable, it stems from a fear of the unknown flow of life. Fromm would encourage the ISTJ to realize that true security comes not from fortifying the self against the world, but from the productive act of living—sharing their stability without demanding that the world stop changing.",
+                        'ISFC(J)': "The ISFJ represents a fusion of the Receptive and Hoarding orientations. They look for a source of 'good' outside themselves—a family, a boss, a tradition—and then devote themselves to 'hoarding' or preserving it. They find their identity in this symbiotic attachment, often sacrificing their own freedom to remain safe under the umbrella of authority. Fromm's 'fear of freedom' is acute here; standing alone is terrifying. The path to the Productive Character is to recognize that they can be kind and helpful without surrendering their own sovereignty—to serve from a place of strength, not dependency.",
+                        'INFC(J)': "The INFJ is often a Productive Idealist trapped in a world of Marketing. They have a deep 'biophilia' (love of life/growth) and a vision for what humanity could be. However, they can fall into a 'masochistic' loyalty to this vision, sacrificing their actual life for the abstract ideal. They may also secretly desire a 'magic helper' (Receptive) to save them from the harshness of reality. To be fully productive, the INFJ must engage with the world as it is, using their insight to effect concrete humanistic change rather than withdrawing into a fortress of superior moral intuition.",
+                        'INTC(J)': "The INTJ represents the Hoarding of Reason. They use their intellect to build a system of understanding that gives them control over reality. By 'owning' the truth, they feel safe from the chaos of human emotion and social unpredictability. They value autonomy, which Fromm praises, but they often achieve it through isolation (withdrawal). The challenge for the INTJ is to move from 'having' knowledge to 'being' in the world—to use their systems not just to defend against the crowd, but to genuinely improve the human condition in a way that respects individual freedom.",
+                        'ISTM(P)': "The ISTP is the Productive Artisan, yet they operate with a Marketing coolness. They have a tangible relationship with reality (not hoarding illusions), which is healthy. However, they often treat themselves as a versatile instrument to be applied to whatever task arises, risking a sense of detachment. They may view the world as a series of problems to be fixed rather than a living whole to be experienced. Fromm would ask the ISTP to connect their mechanical mastery with a moral center—to not just ask 'does it work?' but 'does it serve life?'",
+                        'ISFM(P)': "The ISFP naturally leans toward the Productive orientation of Being. They value the experience of the moment over the accumulation of possessions or status ('Having'). They are often immune to the 'automaton conformity' of society. However, their freedom can be passive. They may drift (Receptive), waiting for life to happen to them, rather than actively shaping it. Fromm's concept of 'productive love' and 'productive work' requires active participation. The ISFP must learn to impose their will gently on the world, creating and connecting, rather than just sensing and appreciating.",
+                        'INFM(P)': "The INFP feels the Alienation of the modern world deeply. They are the critics of the Marketing Orientation, refusing to sell their souls. However, their defense is often withdrawal. They retreat into an inner world of ideals, which can be a form of 'magic' thinking—believing that their good intentions define them, regardless of their actions. Fromm would challenge the INFP to practice the 'art of loving' in the real world. Values are only 'productive' when they are lived out in the difficult, gritty arena of human relationships, not just cherished in private.",
+                        'INTM(P)': "The INTP is the Hoarder of Logic. They build elaborate intellectual castles to keep the irrational world at bay. They derive a sense of power from 'knowing,' often without the need for 'doing.' This detachment shields them from the anxiety of freedom and connection. Fromm would argue that reason is only one part of the human experience. To be whole, the INTP must integrate their intellect with 'productive love'—the ability to care for and be responsible for others. They must risk the uncertainty of relationship to ensure their logic serves humanity, not just their own ego.",
+                        'ESTM(P)': "The ESTP often displays the Exploitative Orientation. They see the world as a collection of resources to be used, seized, or outsmarted. They are dynamic and active, but their activity can be predatory rather than productive. They may treat people as objects in their game. However, they are not 'hoarders'; they are alive and vital. The shift to a Productive Character involves redirecting this vitality. Instead of 'taking' from the world, the ESTP can 'give' by using their resourcefulness to solve problems that benefit the community, moving from manipulation to genuine creation.",
+                        'ESFM(P)': "The ESFP is at risk of the Marketing Orientation. They are acutely aware of how they are perceived and are experts at adapting their personality to be 'attractive' in the social marketplace. They fear that without this external validation, they cease to exist. They are the 'automaton' of joy. Fromm's challenge to the ESFP is to find the self that exists when the audience leaves. True joy comes from 'productive activity'—acting from one's center—rather than the frantic activity of keeping up appearances. They must learn to be, not just to appear.",
+                        'ENFM(P)': "The ENFP sells Inspiration. They are the 'marketers' of the new. While they are often genuinely life-loving (biophilous), they can become 'alienated' from themselves, jumping from role to role to avoid the stillness where the true self resides. They risk becoming a mirror of what others want them to be—the exciting catalyst. Fromm would urge the ENFP to stop 'selling' their potential and start 'realizing' it. This requires the discipline to stick with one thing and one person, moving from the surface level of infinite possibility to the deep level of concrete reality.",
+                        'ENTM(P)': "The ENTP combines Exploitative and Marketing traits in the intellectual sphere. They 'sell' ideas and 'exploit' logical loopholes. They love the game of debate, often valuing the victory over the truth. This can lead to a cynical detachment. To become Productive, the ENTP must align their brilliance with a humanistic conscience. They must stop viewing life as a puzzle to be hacked and start viewing it as a shared existence to be nurtured. They need to use their innovation to expand freedom for all, not just to prove their own superiority.",
+                        'ESTC(J)': "The ESTJ is the archetype of the Authoritarian Character. They escape the terrifying ambiguity of freedom by merging with the 'system.' They dominate those below and submit to the rules above. They value 'Law and Order' (dead structures) over the messy vitality of life. This is a 'necrophilous' tendency—a love of control. Fromm's prescription is to embrace the uncertainty of freedom. The ESTJ must learn that true authority comes from within (rational authority), not from a title or a rulebook, and that order is meant to serve people, not the other way around.",
+                        'ESFC(J)': "The ESFJ is the Automaton Conformist. They find safety by erasing the boundary between themselves and the social group. They believe what 'one' is supposed to believe; they feel what 'one' is supposed to feel. This is a defense against the terror of isolation. While their care is often genuine, it lacks the 'freedom' of a personal choice—it is a compulsion. The path to the Productive Character is individuation. The ESFJ must learn to stand alone and say 'I,' so that when they say 'I love,' it is a free gift, not a social tax.",
+                        'ENFC(J)': "The ENFJ exerts a Benevolent Authority. They want to guide others to their 'best selves,' but this can mask a need to control the emotional environment. It is a subtle form of 'exploitation'—using others as a canvas for their own ideals. They sell a vision of the future. Fromm would warn against the 'Great Inquisitor' complex—taking away others' burden of freedom in the name of love. True 'productive love' respects the other's separateness. The ENFJ must allow others to fail or disagree, accepting that they cannot (and should not) save everyone.",
+                        'ENTC(J)': "The ENTJ is the Exploitative Builder. They have a 'productive' drive to create, but they often view humans as capital—means to an end. They are efficient, but efficiency can be the enemy of humanity. They risk becoming a 'robot' of achievement, alienated from their own heart and the hearts of others. Fromm's humanism calls the ENTJ to recognize that man is an end in himself, not a tool. The ENTJ becomes truly great when their systems facilitate human freedom and well-being, rather than just maximizing output or power."
+                    }
+                }
             };
+            /* === MODIFICATION END === */
+            
+            /* === MODIFICATION START: Use `let` for variable instead of const === */
+            let personalityDescriptions = typeData.jung[30]; // Default
+            /* === MODIFICATION END === */
             
             // --- NEW: Data for the profile grid ---
             const profileGridData = [
@@ -1414,6 +1960,12 @@
             // --- DOM Elements ---
             const coverPage = document.getElementById('coverPage');
             const startBtn = document.getElementById('startBtn');
+            /* === NEW: Settings Page Elements === */
+            const settingsPage = document.getElementById('settingsPage');
+            const launchQuizBtn = document.getElementById('launchQuizBtn');
+            /* === END NEW === */
+            const perspectiveSelect = document.getElementById('perspectiveSelect');
+            const detailSelect = document.getElementById('detailSelect');
             const quizSection = document.getElementById('quizSection');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -2211,14 +2763,39 @@
 
 
             // --- Event Listeners ---
+            
+            /* === MODIFICATION: Start Button now goes to Settings Page === */
             startBtn.addEventListener('click', () => { 
-                if (isAdvancing) return; 
-                isAdvancing = true;    
                 coverPage.style.display = 'none'; 
+                settingsPage.style.display = 'flex'; // Show settings page
+            });
+            /* === END MODIFICATION === */
+
+            /* === NEW: Launch Quiz Button from Settings Page === */
+            launchQuizBtn.addEventListener('click', () => {
+                if (isAdvancing) return; 
+                
+                // Capture Selection and Update Definitions
+                const selectedStyle = perspectiveSelect.value;
+                const selectedDetail = detailSelect.value;
+                
+                // Update the global letterDescriptions object with the selected data
+                if (definitionsData[selectedStyle] && definitionsData[selectedStyle][selectedDetail]) {
+                    letterDescriptions = definitionsData[selectedStyle][selectedDetail];
+                }
+                
+                // Update the global personalityDescriptions object with the selected data
+                if (typeData[selectedStyle] && typeData[selectedStyle][selectedDetail]) {
+                    personalityDescriptions = typeData[selectedStyle][selectedDetail];
+                }
+
+                isAdvancing = true;    
+                settingsPage.style.display = 'none'; 
                 quizSection.style.display = 'block'; 
                 document.body.style.overflow = 'auto'; 
                 showQuestion(true); 
             });
+            /* === END NEW === */
 
             prevBtn.addEventListener('click', () => {
                 if (isAdvancing) return; 
