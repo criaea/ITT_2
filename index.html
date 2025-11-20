@@ -599,119 +599,192 @@
         }
         /* === END MODIFICATION === */
 
-        /* --- Letter Definition Grid Styles --- */
+        /* === MODIFICATION: Improved Result Page Styles === */
+        
+        /* General Card Style for Results Sections */
+        .results-card-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+
+        /* Hero Section (Chart + Type) */
+        .results-hero {
+            text-align: center;
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            border-bottom: 4px solid #6a11cb; /* Accent bottom border */
+        }
+
+        .personality-type-display {
+            font-family: 'Cinzel', serif; /* Ensure serif font for impact */
+            font-size: 4rem; 
+            font-weight: 700; 
+            color: #2c3e50; 
+            text-align: center; 
+            margin-top: 10px; 
+            margin-bottom: 10px;
+            letter-spacing: 3px; 
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+
+        .personality-words-display {
+            font-size: 1.1rem;
+            color: #555; 
+            text-align: center;
+            letter-spacing: 1px;
+            font-weight: 500; 
+            padding: 10px 20px; 
+            border-top: 1px solid #e0e6ed;
+            border-bottom: none; /* Removed bottom border */
+            margin-top: 15px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50px;
+            display: inline-block;
+        }
+        
+        /* Improved Description Text */
+        #desc-overview {
+            font-family: 'Comfortaa', cursive; /* Use the softer font for body text */
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+            text-align: center;
+            max-width: 700px;
+            margin: 20px auto 0 auto;
+            font-style: normal; /* Removed italic for better readability */
+        }
+
+        /* Letter Definition Grid Styles - Enhanced */
         .letter-definitions-grid {
             display: grid;
-            grid-template-columns: 1fr; 
+            grid-template-columns: 1fr 1fr; /* 2 columns on desktop */
             gap: 20px;
             margin: 30px 0;
             display: none; /* Hidden by default, shown by JS */
         }
+        
+        @media (max-width: 768px) {
+             .letter-definitions-grid {
+                grid-template-columns: 1fr; /* 1 column on mobile */
+             }
+        }
 
         .letter-card {
             background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid #ccc; /* Default border, color set by JS */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #e0e6ed;
+            border-left: 6px solid #ccc; /* Thick colored left border */
             transition: all 0.3s ease;
             overflow: hidden; 
         }
 
         .letter-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
         }
 
         .letter-card-title {
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: #2c3e50;
             margin-bottom: 0; 
             padding: 20px; 
-            padding-right: 50px; /* for icon */
+            padding-right: 40px; 
             cursor: pointer; 
             position: relative; 
             list-style: none; 
+            background-color: #fff;
         }
         
-        .letter-card-title::-webkit-details-marker {
-            display: none;
-        }
-
         /* Custom arrow for letter card */
         .letter-card-title::after {
-            content: '+';
+            content: '›'; /* Simple arrow */
             font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem; 
+            font-size: 2rem; 
             font-weight: 300;
-            color: #2575fc;
+            color: #ccc; /* Match default border */
             position: absolute;
             right: 20px;
             top: 50%;
-            transform: translateY(-50%);
-            transition: transform 0.2s ease;
+            transform: translateY(-55%) rotate(90deg);
+            transition: transform 0.3s ease;
+            line-height: 0;
         }
 
         .letter-card[open] > .letter-card-title::after {
-            content: '−';
-            transform: translateY(-50%) rotate(180deg);
+             transform: translateY(-55%) rotate(270deg); /* Flip up */
+             color: #2575fc;
         }
 
         .letter-card-desc {
             font-size: 0.95rem;
             line-height: 1.6;
-            color: #34495e;
-            padding: 0 20px 20px 20px; 
+            color: #555;
+            padding: 0 25px 25px 25px; 
+            border-top: 1px solid #f5f5f5;
+            background-color: #fafafa; /* Slight grey bg for text area */
         }
 
-        /* --- Result Details Section Styles (Container) --- */
+        /* Result Details Section (Converse Profile Bubble) */
         .results-details {
             margin-top: 40px;
-            padding: 30px;
-            /* border-top: 1px solid #d1d5db; */ /* Line removed */
-            background-color: #f8f9fa; /* Light gray background */
-            border-radius: 10px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 20px;
             border: 1px solid #e0e6ed;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05); /* Softer, larger shadow */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Add a subtle top colored line to details bubbles */
+        .results-details::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #e0e6ed, #fff);
         }
 
+        /* Personal Discover Accordion */
         .result-section {
-            margin-bottom: 15px; 
+            margin-bottom: 25px; 
             background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
             border: 1px solid #e0e6ed;
             overflow: hidden; 
         }
 
-        .result-section[open] {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-        }
-
         .result-section-title {
-            font-size: 1.25rem; 
+            font-size: 1.3rem; 
             font-weight: 600;
             color: #2c3e50;
-            margin-bottom: 0; 
-            padding: 18px 25px;
-            border-bottom: none; 
-            display: block; 
+            background-color: #f8f9fa;
+            padding: 20px 25px;
             cursor: pointer;
             position: relative;
-            list-style: none; /* Remove default marker */
+            list-style: none;
+            transition: background-color 0.2s;
+        }
+        
+        .result-section-title:hover {
+            background-color: #f1f4f8;
         }
 
-        .result-section-title::-webkit-details-marker {
-            display: none; 
-        }
-
-        /* Custom Accordion Arrow */
+        /* Accordion Arrow */
         .result-section-title::after {
             content: '+';
             font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 300;
-            color: #2575fc;
+            color: #6a11cb;
             position: absolute;
             right: 25px;
             top: 50%;
@@ -720,29 +793,14 @@
         }
 
         .result-section[open] > .result-section-title::after {
-            content: '−'; /* Minus sign */
+            content: '−';
             transform: translateY(-50%) rotate(180deg);
         }
+        
+        /* === END MODIFICATION === */
 
-        .result-section-content {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: #34495e;
-            padding: 25px; 
-        }
-
-        /* Style for the main overview paragraph */
-        #desc-overview {
-            font-style: italic;
-            font-size: 1.1rem;
-            color: #2c3e50;
-        }
-
-        .placeholder {
-            color: #7f8c8d;
-            font-style: italic;
-        }
-
+        /* --- Result Details Section Styles (Container) --- */
+        /* (Some old styles replaced by above, keeping others) */
         /* --- NEW: Profile Grid Styles --- */
         .profile-grid-container {
             margin-top: 40px;
@@ -1142,6 +1200,12 @@
                 min-width: 600px; 
             }
             /* --- END MODIFIED --- */
+            
+             /* === MODIFICATION: Make letter grid single column on mobile === */
+             .letter-definitions-grid {
+                grid-template-columns: 1fr; 
+             }
+             /* === END MODIFICATION === */
         }
         
         /* --- Print Styles --- */
@@ -1199,9 +1263,10 @@
             .letter-card, 
             .profile-grid-container, 
             .result-section-static, 
-            .chart-container,
-            .profile-grid,
-            .results-details { /* --- NEW --- */
+            .chart-container, 
+            .profile-grid, 
+            .results-card-container, /* --- NEW: Keep result card intact on page break --- */
+            .results-details { 
                 page-break-inside: avoid;
             }
 
@@ -1322,7 +1387,7 @@
                 <p class="settings-subtitle">Select your preferred perspective and depth.</p>
                 
                 <div class="custom-select-wrapper">
-                    <label for="perspectiveSelect">Psychological Style</label>
+                    <label for="perspectiveSelect">Style</label>
                     <select id="perspectiveSelect" class="custom-select">
                         <option value="jung">Carl Jung (Original Theories)</option>
                         <option value="mate">Gabor Maté (Trauma & Authenticity)</option>
@@ -1388,38 +1453,50 @@
         <div id="resultsPage" style="display: none;">
             
             <div id="print-page-1">
-                <h1>Your Results</h1>
-                <div class="chart-container">
-                    <!-- === MODIFICATION: Replaced Canvas with SVG for D3 === -->
-                    <svg id="mainResultsChart" viewBox="0 0 600 400"></svg>
-                    <!-- === END MODIFICATION === -->
-                </div>
                 
-                <div id="personalityType" class="personality-type-display"></div> 
+                <!-- === MODIFICATION: Wrapped Top Result in a Hero Card === -->
+                <div class="results-card-container results-hero">
+                    <h1 style="margin-bottom: 10px; font-size: 1.8rem; color: #888; font-weight: 400; font-family: 'Comfortaa', cursive;">Your Results</h1>
+                    
+                    <div id="personalityType" class="personality-type-display"></div> 
+                    
+                    <div class="chart-container">
+                        <svg id="mainResultsChart" viewBox="0 0 600 400"></svg>
+                    </div>
 
-                <div class="result-section-static">
-                    <div id="personalityWords" class="personality-words-display"></div> 
-                    <p id="desc-overview" class="result-section-content"></p>
+                    <div class="result-section-static">
+                        <div id="personalityWords" class="personality-words-display"></div> 
+                        <p id="desc-overview" class="result-section-content"></p>
+                    </div>
+                </div>
+                <!-- === END MODIFICATION === -->
+                
+            </div>
+
+            <!-- === MODIFICATION: Letter Grid Structure === -->
+            <!-- Added a wrapper for spacing -->
+            <div style="margin: 40px 0;">
+                <h3 style="text-align: center; color: #888; font-weight: 400; margin-bottom: 20px; font-family: 'Comfortaa', cursive;">Detailed Breakdown</h3>
+                <div class="letter-definitions-grid" id="letter-grid">
+                    <details class="letter-card" id="letter-card-0">
+                        <summary class="letter-card-title" id="letter-title-0"></summary>
+                        <p class="letter-card-desc" id="letter-desc-0"></p>
+                    </details>
+                    <details class="letter-card" id="letter-card-1">
+                        <summary class="letter-card-title" id="letter-title-1"></summary>
+                        <p class="letter-card-desc" id="letter-desc-1"></p>
+                    </details>
+                    <details class="letter-card" id="letter-card-2">
+                        <summary class="letter-card-title" id="letter-title-2"></summary>
+                        <p class="letter-card-desc" id="letter-desc-2"></p>
+                    </details>
+                    <details class="letter-card" id="letter-card-3">
+                        <summary class="letter-card-title" id="letter-title-3"></summary>
+                        <p class="letter-card-desc" id="letter-desc-3"></p>
+                    </details>
                 </div>
             </div>
-            <div class="letter-definitions-grid" id="letter-grid">
-                <details class="letter-card" id="letter-card-0">
-                    <summary class="letter-card-title" id="letter-title-0"></summary>
-                    <p class="letter-card-desc" id="letter-desc-0"></p>
-                </details>
-                <details class="letter-card" id="letter-card-1">
-                    <summary class="letter-card-title" id="letter-title-1"></summary>
-                    <p class="letter-card-desc" id="letter-desc-1"></p>
-                </details>
-                <details class="letter-card" id="letter-card-2">
-                    <summary class="letter-card-title" id="letter-title-2"></summary>
-                    <p class="letter-card-desc" id="letter-desc-2"></p>
-                </details>
-                <details class="letter-card" id="letter-card-3">
-                    <summary class="letter-card-title" id="letter-title-3"></summary>
-                    <p class="letter-card-desc" id="letter-desc-3"></p>
-                </details>
-            </div>
+            <!-- === END MODIFICATION === -->
             
             <details class="result-section" id="personal-discover-section">
                 <summary class="result-section-title">Personal Discover</summary>
@@ -1508,88 +1585,88 @@
     document.addEventListener('DOMContentLoaded', () => {
 
             // --- Questions Data ---
-            /* === MODIFICATION START: Replaced entire questions array with the correct 80 questions === */
+            /* === MODIFICATION START: Corrected grammar, syntax, and typos for all 80 questions === */
             const questions = [
-                { type: "S/N", text: "Are you", options: ["observant of your surroundings", "introspective and thinking"] },
-                { type: "E/I", text: "Waiting for the train, do you?", options: ["chat to others", "stay silent"] },
-                { type: "T/F", text: "When dealing with people are you?", options: ["Direct", "gentle"] },
-                { type: "J/P", text: "Does workplace clutter?", options: ["stress you", "are you indifferent"] },
-                { type: "T/F", text: "Which is easier for you to give?", options: ["critical/direct feedback", "avoid the vital details"] },
-                { type: "S/N", text: "Do you?", options: ["Keep to the tried and trusted", "speculate about possibilities"] },
-                { type: "J/P", text: "Do you?", options: ["decide instantaneously", "linger over decision making"] },
-                { type: "S/N", text: "Are you?", options: ["factual", "imaginative"] },
-                { type: "E/I", text: "When the phone rings do you?", options: ["rush to it", "leave others get it"] },
-                { type: "T/F", text: "Do you place importance on?", options: ["hard data", "opinion"] },
-                { type: "J/P", text: "Do you prefer agreements to?", options: ["be written up and signed", "agreed on word and a handshake"] },
-                { type: "T/F", text: "When evaluating others are you?", options: ["impersonal and objective", "subjective and personal"] },
-                { type: "S/N", text: "Are you more interested in?", options: ["what is real", "what is possible"] },
-                { type: "J/P", text: "Are you more at ease?", options: ["When matters are complete", "with work in progress"] },
-                { type: "S/N", text: "Are you always", options: ["Up to date with the news", "some what out of touch"] },
-                { type: "E/I", text: "When socialising do you?", options: ["speak with many people", "a few friends"] },
-                { type: "T/F", text: "When you are communicating with others do you?", options: ["talk directly", "talk diplomatically"] },
-                { type: "J/P", text: "Do you prefer?", options: ["a detailed outline of work done", "a list of completed tasks"] },
-                { type: "T/F", text: "Do you prefer?", options: ["A rational consistent approach", "harmonious personal approach"] },
-                { type: "S/N", text: "Do you like authors who?", options: ["write hard facts", "use metaphors"] },
-                { type: "J/P", text: "Are you more comfortable?", options: ["after a decision", "before a decision"] },
-                { type: "S/N", text: "Are visionaries?", options: ["annoying", "fascinating"] },
-                { type: "E/I", text: "Does being at a party?", options: ["energise you", "drain you"] },
-                { type: "T/F", text: "In an argument/discussion do you?", options: ["act confrontational", "do you seek collaborative solutions"] },
-                { type: "J/P", text: "For you is giving feedback?", options: ["easy", "difficult"] },
-                { type: "T/F", text: "Which is preferable for you?", options: ["to be just", "to be understanding"] },
-                { type: "S/N", text: "‘’Common sense’’ is?", options: ["usually reliable", "occasionally questionable"] },
-                { type: "J/P", text: "Do you?", options: ["do one job at a time", "work at many jobs simultaneously"] },
-                { type: "S/N", text: "Do you say?", options: ["what is on your mind", "express many opinions"] },
-                { type: "E/I", text: "In a group of people do you?", options: ["talk a lot", "listen mostly"] },
-                { type: "T/F", text: "Which sums you up best?", options: ["cool headed", "warm hearted"] },
-                { type: "J/P", text: "Are you?", options: ["organised", "spontaneous"] },
-                { type: "T/F", text: "In work situations do you?", options: ["give orders", "get everyone to find solutions"] },
-                { type: "S/N", text: "Do you prefer?", options: ["sensible /factual people", "people who explore options"] },
-                { type: "J/P", text: "Do you prefer to?", options: ["work to deadlines", "work whenever"] },
-                { type: "S/N", text: "Which do you consider best?", options: ["ability to follow a plan", "adapt and adjust plans"] },
-                { type: "E/I", text: "Are you?", options: ["a social person", "a private person"] },
-                { type: "T/F", text: "Which are you?", options: ["a logical person", "a feeling person"] },
-                { type: "J/P", text: "Do you decide?", options: ["based on analysis", "on a considered hunch"] },
-                { type: "T/F", text: "Which is most satisfying for you?", options: ["thorough discussion", "reaching agreement"] },
-                { type: "S/N", text: "After a meal do you?", options: ["tidy up immediately", "leave it until later"] },
-                { type: "J/P", text: "Does your behaviour be?", options: ["hurried", "laid back"] },
-                { type: "S/N", text: "Do you hear what is said as?", options: ["all the story", "most of the story"] },
-                { type: "E/I", text: "Do you?", options: ["share your feelings easily", "act reserved"] },
-                { type: "T/F", text: "Are you?", options: ["an uncompromising person", "a collaborative person"] },
-                { type: "J/P", text: "Do you find it?", options: ["is stressful to change", "easy to reschedule meetings"] },
-                { type: "T/F", text: "Are you?", options: ["tough minded", "fair minded"] },
-                { type: "S/N", text: "When evaluating a situation do you", options: ["see only what is in front of you", "can you imagine more possibilities"] },
-                { type: "J/P", text: "Is your approach?", options: ["ensure everything is arranged", "just let things happen"] },
-                { type: "S/N", text: "Do you only trust?", options: ["past experiences", "all possibilities are worth checking"] },
-                { type: "E/I", text: "Do you?", options: ["know a little about everything", "know much about a few things"] },
-                { type: "T/F", text: "Are you convinced, more often, by?", options: ["hard evidence", "possible outside the box solutions"] },
-                { type: "J/P", text: "Is your approach to life?", options: ["structure", "flexible"] },
-                { type: "T/F", text: "Which is the greatest asset?", options: ["strength of will", "strength of fair compassion"] },
-                { type: "S/N", text: "Do you always feel?", options: ["down to earth", "day dream a little"] },
-                { type: "J/P", text: "How do you cope with unexpected events?", options: ["get a good handle on things", "get very stressed"] },
-                { type: "S/N", text: "Do you act in?", options: ["Routine way", "whimsical way"] },
-                { type: "E/I", text: "Are you?", options: ["a good conversationalist", "a good listener"] },
-                { type: "T/F", text: "Are you?", options: ["tough skinned", "sensitive"] },
-                { type: "J/P", text: "Do you tend to?", options: ["rely on old ways of doing", "be on the look out for new ways"] },
-                { type: "T/F", text: "Do you prefer to?", options: ["operate the production machine", "manage the team of people"] },
-                { type: "S/N", text: "Are you more?", options: ["practical", "ingenious"] },
-                { type: "J/P", text: "Are you?", options: ["more punctual", "leisurely /nonchalant"] },
-                { type: "S/N", text: "Do you approach work in?", options: ["an organised and principaled way", "in an innovative and flexible way"] },
-                { type: "E/I", text: "Are you?", options: ["social and outgoing", "reserved and quite"] },
-                { type: "T/F", text: "Do you most trust?", options: ["your experience", "your hunches"] },
-                { type: "J/P", text: "Do you", options: ["are always on the go", "relax, easy going"] },
-                { type: "T/F", text: "Which is the greatest error?", options: ["being too passionate", "being too objective"] }, // Corrected T/Failure
-                { type: "S/N", text: "Do you tend to be more?", options: ["More deliberate", "more spontaneous"] },
-                { type: "J/P", text: "In evaluating others what influences you most?", options: ["laws", "circumstances"] },
-                { type: "S/N", text: "Which do you prefer in stories/film?", options: ["action", "fantasy"] },
-                { type: "E/I", text: "In your sports club do you?", options: ["promote activities", "do you do the administration"] },
-                { type: "T/F", text: "Which is more difficult for you to?", options: ["to identify with others", "to utilise others"] },
-                { type: "J/P", text: "Are you?", options: ["a deadlines person", "a just whenever person"] },
-                { type: "T/F", text: "Which is most vital?", options: ["following the to do list", "teamwork"] },
-                { type: "S/N", text: "Are you?", options: ["easy to talk to/approach", "shy and reserved"] },
-                { type: "J/P", text: "When do you plan your annual holidays?", options: ["months before", "weeks before"] },
-                { type: "S/N", text: "Are you attracted to?", options: ["the fundamentals", "the promise"] },
-                { type: "T/F", text: "For you which is more important?", options: ["follow the rules", "everyone take full responsibility"] },
-                { type: "J/P", text: "Do you use?", options: ["written work schedules", "rely on my memory"] }
+                { type: "S/N", text: "Are you:", options: ["Observant of your surroundings", "Introspective and thinking"] },
+                { type: "E/I", text: "While waiting for the train, do you:", options: ["Chat with others", "Stay silent"] },
+                { type: "T/F", text: "When dealing with people, are you:", options: ["Direct", "Gentle"] },
+                { type: "J/P", text: "Does workplace clutter:", options: ["Stress you", "Leave you indifferent"] },
+                { type: "T/F", text: "Which is easier for you to give?", options: ["Critical/Direct feedback", "Vague feedback (avoiding details)"] },
+                { type: "S/N", text: "Do you:", options: ["Stick to the tried and trusted", "Speculate about possibilities"] },
+                { type: "J/P", text: "Do you:", options: ["Decide instantaneously", "Linger over decision making"] },
+                { type: "S/N", text: "Are you:", options: ["Factual", "Imaginative"] },
+                { type: "E/I", text: "When the phone rings, do you:", options: ["Rush to answer it", "Let others answer"] },
+                { type: "T/F", text: "Do you place importance on:", options: ["Hard data", "Opinion"] },
+                { type: "J/P", text: "Do you prefer agreements to be:", options: ["Written up and signed", "Agreed on word and a handshake"] },
+                { type: "T/F", text: "When evaluating others, are you:", options: ["Impersonal and objective", "Subjective and personal"] },
+                { type: "S/N", text: "Are you more interested in:", options: ["What is real", "What is possible"] },
+                { type: "J/P", text: "Are you more at ease:", options: ["When matters are complete", "With work in progress"] },
+                { type: "S/N", text: "Are you always:", options: ["Up to date with the news", "Somewhat out of touch"] },
+                { type: "E/I", text: "When socialising, do you:", options: ["Speak with many people", "Speak with a few friends"] },
+                { type: "T/F", text: "When you are communicating with others, do you:", options: ["Talk directly", "Talk diplomatically"] },
+                { type: "J/P", text: "Do you prefer:", options: ["A detailed outline of work done", "A list of completed tasks"] },
+                { type: "T/F", text: "Do you prefer:", options: ["A rational, consistent approach", "A harmonious, personal approach"] },
+                { type: "S/N", text: "Do you like authors who:", options: ["Write hard facts", "Use metaphors"] },
+                { type: "J/P", text: "Are you more comfortable:", options: ["After a decision is made", "Before a decision is made"] },
+                { type: "S/N", text: "Do you find visionaries:", options: ["Annoying", "Fascinating"] },
+                { type: "E/I", text: "Does being at a party:", options: ["Energise you", "Drain you"] },
+                { type: "T/F", text: "In an argument or discussion, do you:", options: ["Act confrontationally", "Seek collaborative solutions"] },
+                { type: "J/P", text: "For you, is giving feedback:", options: ["Easy", "Difficult"] },
+                { type: "T/F", text: "Which is preferable for you?", options: ["To be just", "To be understanding"] },
+                { type: "S/N", text: "Is 'Common sense':", options: ["Usually reliable", "Occasionally questionable"] },
+                { type: "J/P", text: "Do you:", options: ["Do one job at a time", "Work at many jobs simultaneously"] },
+                { type: "S/N", text: "Do you:", options: ["Say what is on your mind", "Express many opinions"] },
+                { type: "E/I", text: "In a group of people, do you:", options: ["Talk a lot", "Mostly listen"] },
+                { type: "T/F", text: "Which sums you up best?", options: ["Cool-headed", "Warm-hearted"] },
+                { type: "J/P", text: "Are you:", options: ["Organised", "Spontaneous"] },
+                { type: "T/F", text: "In work situations, do you:", options: ["Give orders", "Get everyone to find solutions"] },
+                { type: "S/N", text: "Do you prefer:", options: ["Sensible/Factual people", "People who explore options"] },
+                { type: "J/P", text: "Do you prefer to:", options: ["Work to deadlines", "Work whenever"] },
+                { type: "S/N", text: "Which ability do you consider best?", options: ["Ability to follow a plan", "Ability to adapt and adjust plans"] },
+                { type: "E/I", text: "Are you:", options: ["A social person", "A private person"] },
+                { type: "T/F", text: "Which are you?", options: ["A logical person", "A feeling person"] },
+                { type: "J/P", text: "Do you decide:", options: ["Based on analysis", "On a considered hunch"] },
+                { type: "T/F", text: "Which is most satisfying for you?", options: ["Thorough discussion", "Reaching agreement"] },
+                { type: "S/N", text: "After a meal, do you:", options: ["Tidy up immediately", "Leave it until later"] },
+                { type: "J/P", text: "Is your behaviour:", options: ["Hurried", "Laid back"] },
+                { type: "S/N", text: "Do you hear what is said as:", options: ["The whole story", "Most of the story"] },
+                { type: "E/I", text: "Do you:", options: ["Share your feelings easily", "Act reserved"] },
+                { type: "T/F", text: "Are you:", options: ["An uncompromising person", "A collaborative person"] },
+                { type: "J/P", text: "Do you find it:", options: ["Stressful to change plans", "Easy to reschedule meetings"] },
+                { type: "T/F", text: "Are you:", options: ["Tough-minded", "Fair-minded"] },
+                { type: "S/N", text: "When evaluating a situation, do you:", options: ["See only what is in front of you", "Imagine more possibilities"] },
+                { type: "J/P", text: "Is your approach to:", options: ["Ensure everything is arranged", "Just let things happen"] },
+                { type: "S/N", text: "Do you only trust:", options: ["Past experiences", "That all possibilities are worth checking"] },
+                { type: "E/I", text: "Do you:", options: ["Know a little about everything", "Know much about a few things"] },
+                { type: "T/F", text: "Are you convinced more often by:", options: ["Hard evidence", "Possible outside-the-box solutions"] },
+                { type: "J/P", text: "Is your approach to life:", options: ["Structured", "Flexible"] },
+                { type: "T/F", text: "Which is the greatest asset?", options: ["Strength of will", "Strength of fair compassion"] },
+                { type: "S/N", text: "Do you always feel:", options: ["Down to earth", "Like you daydream a little"] },
+                { type: "J/P", text: "How do you cope with unexpected events?", options: ["Get a good handle on things", "Get very stressed"] },
+                { type: "S/N", text: "Do you act in a:", options: ["Routine way", "Whimsical way"] },
+                { type: "E/I", text: "Are you:", options: ["A good conversationalist", "A good listener"] },
+                { type: "T/F", text: "Are you:", options: ["Thick-skinned", "Sensitive"] },
+                { type: "J/P", text: "Do you tend to:", options: ["Rely on old ways of doing", "Be on the lookout for new ways"] },
+                { type: "T/F", text: "Do you prefer to:", options: ["Operate the production machine", "Manage the team of people"] },
+                { type: "S/N", text: "Are you more:", options: ["Practical", "Ingenious"] },
+                { type: "J/P", text: "Are you:", options: ["More punctual", "Leisurely/Nonchalant"] },
+                { type: "S/N", text: "Do you approach work in:", options: ["An organised and principled way", "An innovative and flexible way"] },
+                { type: "E/I", text: "Are you:", options: ["Social and outgoing", "Reserved and quiet"] },
+                { type: "T/F", text: "Do you most trust:", options: ["Your experience", "Your hunches"] },
+                { type: "J/P", text: "Are you:", options: ["Always on the go", "Relaxed, easy going"] },
+                { type: "T/F", text: "Which is the greater error?", options: ["Being too passionate", "Being too objective"] },
+                { type: "S/N", text: "Do you tend to be more:", options: ["Deliberate", "Spontaneous"] },
+                { type: "J/P", text: "In evaluating others, what influences you most?", options: ["Laws", "Circumstances"] },
+                { type: "S/N", text: "Which do you prefer in stories/film?", options: ["Action", "Fantasy"] },
+                { type: "E/I", text: "In your sports club, do you:", options: ["Promote activities", "Do the administration"] },
+                { type: "T/F", text: "Which is more difficult for you?", options: ["To identify with others", "To utilise others"] },
+                { type: "J/P", text: "Are you:", options: ["A deadlines person", "A 'just whenever' person"] },
+                { type: "T/F", text: "Which is most vital?", options: ["Following the to-do list", "Teamwork"] },
+                { type: "S/N", text: "Are you:", options: ["Easy to talk to/approach", "Shy and reserved"] },
+                { type: "J/P", text: "When do you plan your annual holidays?", options: ["Months before", "Weeks before"] },
+                { type: "S/N", text: "Are you attracted to:", options: ["The fundamentals", "The promise"] },
+                { type: "T/F", text: "For you, which is more important?", options: ["Following the rules", "Everyone taking full responsibility"] },
+                { type: "J/P", text: "Do you use:", options: ["Written work schedules", "Your memory"] }
             ];
             /* === MODIFICATION END === */
 
@@ -2338,13 +2415,30 @@
                         const letter = finalData[i].letter; // 'E', 'S', 'T', 'J'
                         const fullWord = wordMap[letter]; // 'Extroverted', 'Sensate', 'Thinking', 'Considered'
                         const description = letterDescriptions[letter];
-                        const color = colorMap[letter].border; 
-                        const bgColor = color.replace(', 1)', ', 0.1)');
+                        
+                        /* === MODIFICATION: Enhanced Color Coding for Cards === */
+                        // We use the D3 colors we defined earlier for consistent branding
+                        // E/I = Yellow/Blue (#eae400, #44b3e1)
+                        // S/N = Orange/Purple (#ff9900, #782170)
+                        // T/F = Blue/Green (#215c98, #4ea72e)
+                        // J/P = Red/Brown (#eb1515, #996633)
+                        
+                        const d3Colors = {
+                            'E': '#eae400', 'I': '#44b3e1',
+                            'S': '#ff9900', 'N': '#782170',
+                            'T': '#215c98', 'F': '#4ea72e',
+                            'J': '#eb1515', 'P': '#996633'
+                        };
+                        
+                        const borderColor = d3Colors[letter] || '#ccc';
+                        /* === END MODIFICATION === */
 
                         const cardElement = document.getElementById(`letter-card-${i}`); 
                         
-                        cardElement.style.borderColor = color;
-                        cardElement.style.backgroundColor = bgColor; 
+                        /* === MODIFICATION: Apply border color to the left side only === */
+                        cardElement.style.borderLeftColor = borderColor;
+                        cardElement.style.backgroundColor = '#fff'; // Keep clean white background
+                        /* === END MODIFICATION === */
 
                         // --- MODIFIED: Add suffix for J/P ---
                         let titleHTML = fullWord;
@@ -2366,11 +2460,22 @@
                         const letter = otherLetters[i]; // 'I', 'N', 'F', 'P'
                         const fullWord = wordMap[letter]; // 'Introverted', 'iNtuitive', 'Feeling', 'iMpromptu'
                         const description = letterDescriptions[letter];
-                        const color = colorMap[letter].border;
+                        
+                        /* === MODIFICATION: Enhanced Color Coding for Converse Cards === */
+                        const d3Colors = {
+                            'E': '#eae400', 'I': '#44b3e1',
+                            'S': '#ff9900', 'N': '#782170',
+                            'T': '#215c98', 'F': '#4ea72e',
+                            'J': '#eb1515', 'P': '#996633'
+                        };
+                        const borderColor = d3Colors[letter] || '#ccc';
+                        /* === END MODIFICATION === */
 
                         const cardElement = document.getElementById(`other-letter-card-${i}`);
                         
-                        cardElement.style.borderColor = color;
+                        /* === MODIFICATION: Apply border color to the left side only === */
+                        cardElement.style.borderLeftColor = borderColor;
+                        /* === END MODIFICATION === */
                         
                         // --- MODIFIED: Add suffix for J/P ---
                         let titleHTML = fullWord;
