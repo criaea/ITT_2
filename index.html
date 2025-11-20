@@ -599,192 +599,119 @@
         }
         /* === END MODIFICATION === */
 
-        /* === MODIFICATION: Improved Result Page Styles === */
-        
-        /* General Card Style for Results Sections */
-        .results-card-container {
-            background: #fff;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid #f0f0f0;
-        }
-
-        /* Hero Section (Chart + Type) */
-        .results-hero {
-            text-align: center;
-            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-            border-bottom: 4px solid #6a11cb; /* Accent bottom border */
-        }
-
-        .personality-type-display {
-            font-family: 'Cinzel', serif; /* Ensure serif font for impact */
-            font-size: 4rem; 
-            font-weight: 700; 
-            color: #2c3e50; 
-            text-align: center; 
-            margin-top: 10px; 
-            margin-bottom: 10px;
-            letter-spacing: 3px; 
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
-        }
-
-        .personality-words-display {
-            font-size: 1.1rem;
-            color: #555; 
-            text-align: center;
-            letter-spacing: 1px;
-            font-weight: 500; 
-            padding: 10px 20px; 
-            border-top: 1px solid #e0e6ed;
-            border-bottom: none; /* Removed bottom border */
-            margin-top: 15px;
-            background-color: rgba(255,255,255,0.5);
-            border-radius: 50px;
-            display: inline-block;
-        }
-        
-        /* Improved Description Text */
-        #desc-overview {
-            font-family: 'Comfortaa', cursive; /* Use the softer font for body text */
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #444;
-            text-align: center;
-            max-width: 700px;
-            margin: 20px auto 0 auto;
-            font-style: normal; /* Removed italic for better readability */
-        }
-
-        /* Letter Definition Grid Styles - Enhanced */
+        /* --- Letter Definition Grid Styles --- */
         .letter-definitions-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 columns on desktop */
+            grid-template-columns: 1fr; 
             gap: 20px;
             margin: 30px 0;
             display: none; /* Hidden by default, shown by JS */
         }
-        
-        @media (max-width: 768px) {
-             .letter-definitions-grid {
-                grid-template-columns: 1fr; /* 1 column on mobile */
-             }
-        }
 
         .letter-card {
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #e0e6ed;
-            border-left: 6px solid #ccc; /* Thick colored left border */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #ccc; /* Default border, color set by JS */
             transition: all 0.3s ease;
             overflow: hidden; 
         }
 
         .letter-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
 
         .letter-card-title {
             font-weight: 700;
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             color: #2c3e50;
             margin-bottom: 0; 
             padding: 20px; 
-            padding-right: 40px; 
+            padding-right: 50px; /* for icon */
             cursor: pointer; 
             position: relative; 
             list-style: none; 
-            background-color: #fff;
         }
         
+        .letter-card-title::-webkit-details-marker {
+            display: none;
+        }
+
         /* Custom arrow for letter card */
         .letter-card-title::after {
-            content: '›'; /* Simple arrow */
+            content: '+';
             font-family: 'Poppins', sans-serif;
-            font-size: 2rem; 
+            font-size: 1.5rem; 
             font-weight: 300;
-            color: #ccc; /* Match default border */
+            color: #2575fc;
             position: absolute;
             right: 20px;
             top: 50%;
-            transform: translateY(-55%) rotate(90deg);
-            transition: transform 0.3s ease;
-            line-height: 0;
+            transform: translateY(-50%);
+            transition: transform 0.2s ease;
         }
 
         .letter-card[open] > .letter-card-title::after {
-             transform: translateY(-55%) rotate(270deg); /* Flip up */
-             color: #2575fc;
+            content: '−';
+            transform: translateY(-50%) rotate(180deg);
         }
 
         .letter-card-desc {
             font-size: 0.95rem;
             line-height: 1.6;
-            color: #555;
-            padding: 0 25px 25px 25px; 
-            border-top: 1px solid #f5f5f5;
-            background-color: #fafafa; /* Slight grey bg for text area */
+            color: #34495e;
+            padding: 0 20px 20px 20px; 
         }
 
-        /* Result Details Section (Converse Profile Bubble) */
+        /* --- Result Details Section Styles (Container) --- */
         .results-details {
             margin-top: 40px;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 20px;
+            padding: 30px;
+            /* border-top: 1px solid #d1d5db; */ /* Line removed */
+            background-color: #f8f9fa; /* Light gray background */
+            border-radius: 10px;
             border: 1px solid #e0e6ed;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.05); /* Softer, larger shadow */
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Add a subtle top colored line to details bubbles */
-        .results-details::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #e0e6ed, #fff);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
 
-        /* Personal Discover Accordion */
         .result-section {
-            margin-bottom: 25px; 
+            margin-bottom: 15px; 
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border: 1px solid #e0e6ed;
             overflow: hidden; 
         }
 
-        .result-section-title {
-            font-size: 1.3rem; 
-            font-weight: 600;
-            color: #2c3e50;
-            background-color: #f8f9fa;
-            padding: 20px 25px;
-            cursor: pointer;
-            position: relative;
-            list-style: none;
-            transition: background-color 0.2s;
-        }
-        
-        .result-section-title:hover {
-            background-color: #f1f4f8;
+        .result-section[open] {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
 
-        /* Accordion Arrow */
+        .result-section-title {
+            font-size: 1.25rem; 
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0; 
+            padding: 18px 25px;
+            border-bottom: none; 
+            display: block; 
+            cursor: pointer;
+            position: relative;
+            list-style: none; /* Remove default marker */
+        }
+
+        .result-section-title::-webkit-details-marker {
+            display: none; 
+        }
+
+        /* Custom Accordion Arrow */
         .result-section-title::after {
             content: '+';
             font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 300;
-            color: #6a11cb;
+            color: #2575fc;
             position: absolute;
             right: 25px;
             top: 50%;
@@ -793,14 +720,29 @@
         }
 
         .result-section[open] > .result-section-title::after {
-            content: '−';
+            content: '−'; /* Minus sign */
             transform: translateY(-50%) rotate(180deg);
         }
-        
-        /* === END MODIFICATION === */
 
-        /* --- Result Details Section Styles (Container) --- */
-        /* (Some old styles replaced by above, keeping others) */
+        .result-section-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #34495e;
+            padding: 25px; 
+        }
+
+        /* Style for the main overview paragraph */
+        #desc-overview {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+
+        .placeholder {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
         /* --- NEW: Profile Grid Styles --- */
         .profile-grid-container {
             margin-top: 40px;
@@ -1110,16 +1052,6 @@
                 display: none !important;
             }
         }
-
-        /* === NEW: Fix for Language Dropdown Height === */
-        /* This restricts the dropdown height and adds a scrollbar */
-        .goog-te-menu-frame {
-            max-height: 80vh !important; /* Max height is 80% of the screen */
-            overflow-y: auto !important; /* Add scrollbar if needed */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
-            border-radius: 12px !important;
-        }
-        /* === END NEW === */
         /* === END NEW === */
 
         
@@ -1210,12 +1142,6 @@
                 min-width: 600px; 
             }
             /* --- END MODIFIED --- */
-            
-             /* === MODIFICATION: Make letter grid single column on mobile === */
-             .letter-definitions-grid {
-                grid-template-columns: 1fr; 
-             }
-             /* === END MODIFICATION === */
         }
         
         /* --- Print Styles --- */
@@ -1273,10 +1199,9 @@
             .letter-card, 
             .profile-grid-container, 
             .result-section-static, 
-            .chart-container, 
-            .profile-grid, 
-            .results-card-container, /* --- NEW: Keep result card intact on page break --- */
-            .results-details { 
+            .chart-container,
+            .profile-grid,
+            .results-details { /* --- NEW --- */
                 page-break-inside: avoid;
             }
 
@@ -1397,7 +1322,7 @@
                 <p class="settings-subtitle">Select your preferred perspective and depth.</p>
                 
                 <div class="custom-select-wrapper">
-                    <label for="perspectiveSelect">Style</label>
+                    <label for="perspectiveSelect">Psychological Style</label>
                     <select id="perspectiveSelect" class="custom-select">
                         <option value="jung">Carl Jung (Original Theories)</option>
                         <option value="mate">Gabor Maté (Trauma & Authenticity)</option>
@@ -1463,50 +1388,38 @@
         <div id="resultsPage" style="display: none;">
             
             <div id="print-page-1">
-                
-                <!-- === MODIFICATION: Wrapped Top Result in a Hero Card === -->
-                <div class="results-card-container results-hero">
-                    <h1 style="margin-bottom: 10px; font-size: 1.8rem; color: #888; font-weight: 400; font-family: 'Comfortaa', cursive;">Your Results</h1>
-                    
-                    <div id="personalityType" class="personality-type-display"></div> 
-                    
-                    <div class="chart-container">
-                        <svg id="mainResultsChart" viewBox="0 0 600 400"></svg>
-                    </div>
-
-                    <div class="result-section-static">
-                        <div id="personalityWords" class="personality-words-display"></div> 
-                        <p id="desc-overview" class="result-section-content"></p>
-                    </div>
+                <h1>Your Results</h1>
+                <div class="chart-container">
+                    <!-- === MODIFICATION: Replaced Canvas with SVG for D3 === -->
+                    <svg id="mainResultsChart" viewBox="0 0 600 400"></svg>
+                    <!-- === END MODIFICATION === -->
                 </div>
-                <!-- === END MODIFICATION === -->
                 
-            </div>
+                <div id="personalityType" class="personality-type-display"></div> 
 
-            <!-- === MODIFICATION: Letter Grid Structure === -->
-            <!-- Added a wrapper for spacing -->
-            <div style="margin: 40px 0;">
-                <h3 style="text-align: center; color: #888; font-weight: 400; margin-bottom: 20px; font-family: 'Comfortaa', cursive;">Detailed Breakdown</h3>
-                <div class="letter-definitions-grid" id="letter-grid">
-                    <details class="letter-card" id="letter-card-0">
-                        <summary class="letter-card-title" id="letter-title-0"></summary>
-                        <p class="letter-card-desc" id="letter-desc-0"></p>
-                    </details>
-                    <details class="letter-card" id="letter-card-1">
-                        <summary class="letter-card-title" id="letter-title-1"></summary>
-                        <p class="letter-card-desc" id="letter-desc-1"></p>
-                    </details>
-                    <details class="letter-card" id="letter-card-2">
-                        <summary class="letter-card-title" id="letter-title-2"></summary>
-                        <p class="letter-card-desc" id="letter-desc-2"></p>
-                    </details>
-                    <details class="letter-card" id="letter-card-3">
-                        <summary class="letter-card-title" id="letter-title-3"></summary>
-                        <p class="letter-card-desc" id="letter-desc-3"></p>
-                    </details>
+                <div class="result-section-static">
+                    <div id="personalityWords" class="personality-words-display"></div> 
+                    <p id="desc-overview" class="result-section-content"></p>
                 </div>
             </div>
-            <!-- === END MODIFICATION === -->
+            <div class="letter-definitions-grid" id="letter-grid">
+                <details class="letter-card" id="letter-card-0">
+                    <summary class="letter-card-title" id="letter-title-0"></summary>
+                    <p class="letter-card-desc" id="letter-desc-0"></p>
+                </details>
+                <details class="letter-card" id="letter-card-1">
+                    <summary class="letter-card-title" id="letter-title-1"></summary>
+                    <p class="letter-card-desc" id="letter-desc-1"></p>
+                </details>
+                <details class="letter-card" id="letter-card-2">
+                    <summary class="letter-card-title" id="letter-title-2"></summary>
+                    <p class="letter-card-desc" id="letter-desc-2"></p>
+                </details>
+                <details class="letter-card" id="letter-card-3">
+                    <summary class="letter-card-title" id="letter-title-3"></summary>
+                    <p class="letter-card-desc" id="letter-desc-3"></p>
+                </details>
+            </div>
             
             <details class="result-section" id="personal-discover-section">
                 <summary class="result-section-title">Personal Discover</summary>
@@ -2425,30 +2338,13 @@
                         const letter = finalData[i].letter; // 'E', 'S', 'T', 'J'
                         const fullWord = wordMap[letter]; // 'Extroverted', 'Sensate', 'Thinking', 'Considered'
                         const description = letterDescriptions[letter];
-                        
-                        /* === MODIFICATION: Enhanced Color Coding for Cards === */
-                        // We use the D3 colors we defined earlier for consistent branding
-                        // E/I = Yellow/Blue (#eae400, #44b3e1)
-                        // S/N = Orange/Purple (#ff9900, #782170)
-                        // T/F = Blue/Green (#215c98, #4ea72e)
-                        // J/P = Red/Brown (#eb1515, #996633)
-                        
-                        const d3Colors = {
-                            'E': '#eae400', 'I': '#44b3e1',
-                            'S': '#ff9900', 'N': '#782170',
-                            'T': '#215c98', 'F': '#4ea72e',
-                            'J': '#eb1515', 'P': '#996633'
-                        };
-                        
-                        const borderColor = d3Colors[letter] || '#ccc';
-                        /* === END MODIFICATION === */
+                        const color = colorMap[letter].border; 
+                        const bgColor = color.replace(', 1)', ', 0.1)');
 
                         const cardElement = document.getElementById(`letter-card-${i}`); 
                         
-                        /* === MODIFICATION: Apply border color to the left side only === */
-                        cardElement.style.borderLeftColor = borderColor;
-                        cardElement.style.backgroundColor = '#fff'; // Keep clean white background
-                        /* === END MODIFICATION === */
+                        cardElement.style.borderColor = color;
+                        cardElement.style.backgroundColor = bgColor; 
 
                         // --- MODIFIED: Add suffix for J/P ---
                         let titleHTML = fullWord;
@@ -2470,22 +2366,11 @@
                         const letter = otherLetters[i]; // 'I', 'N', 'F', 'P'
                         const fullWord = wordMap[letter]; // 'Introverted', 'iNtuitive', 'Feeling', 'iMpromptu'
                         const description = letterDescriptions[letter];
-                        
-                        /* === MODIFICATION: Enhanced Color Coding for Converse Cards === */
-                        const d3Colors = {
-                            'E': '#eae400', 'I': '#44b3e1',
-                            'S': '#ff9900', 'N': '#782170',
-                            'T': '#215c98', 'F': '#4ea72e',
-                            'J': '#eb1515', 'P': '#996633'
-                        };
-                        const borderColor = d3Colors[letter] || '#ccc';
-                        /* === END MODIFICATION === */
+                        const color = colorMap[letter].border;
 
                         const cardElement = document.getElementById(`other-letter-card-${i}`);
                         
-                        /* === MODIFICATION: Apply border color to the left side only === */
-                        cardElement.style.borderLeftColor = borderColor;
-                        /* === END MODIFICATION === */
+                        cardElement.style.borderColor = color;
                         
                         // --- MODIFIED: Add suffix for J/P ---
                         let titleHTML = fullWord;
