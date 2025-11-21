@@ -1,3 +1,4 @@
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1512,11 +1513,11 @@
         </div>
     </div>
     
-    <!-- === NEW: Google Translate Initialization Script === -->
-    <script type="text/javascript">
+   <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
-                pageLanguage: 'en', 
+                pageLanguage: 'en',
+                includedLanguages: 'it,es,fr,pl', // This line limits the languages
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element');
